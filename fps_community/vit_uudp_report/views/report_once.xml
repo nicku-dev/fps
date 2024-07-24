@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="report_once">
+            <t t-foreach="docs" t-as="o">
+                <div class="page">
+                    <div>
+
+                          <table style="height:15px;">          
+                            <tr>
+                              <td></td>
+                            </tr>
+                          </table>
+
+
+                          <table style="width:100%;">          
+                            <tr>
+                              <td style="border: none; text-align: center;font-size:15px;"><b>LAPORAN PENCAIRAN DANA</b></td>
+                            </tr>
+                          </table><br/>
+
+                          <table style="width:100%; font-size:9px;">
+                            <tr>
+                              <td style="border: none;width:10%;"><b>Nomor Pengajuan</b></td>
+                              <td style="border: none; width:30%;">: <t t-esc="o.name"/></td>
+
+                              <td style="border: none; width:10%;"><b>Tanggal Pencairan</b></td>                          
+                              <td style="border: none; width:20%;">: <t t-esc="tgl_pencairan"/></td>
+                            </tr> 
+                            <tr>
+                              <td style="border: none; width:11%;"><b>Tanggal Pengajuan</b></td>                          
+                              <td style="border: none; width:30%;">: <t t-esc="o.date"/></td>
+
+                              <td style="border: none; width:10%;"><b>Responsible</b></td>                          
+                              <td style="border: none; width:20%;">: <t t-esc="o.responsible_id.name"/></td>
+                            </tr>                     
+                          </table>
+
+                          <table style="height:30px;">          
+                            <tr>
+                              <td></td>
+                            </tr>
+                          </table>
+
+                          <table style="border: 1px solid black; border-collapse: collapse; font-size:9px;">
+                          <tr>
+                            <thead>
+                                <tr>
+                                    <th style="border: 1px solid black;">No</th>
+                                    <t t-if="o.uudp_ids">
+                                      <th style="border: 1px solid black; width:20%;">Transaction</th>
+                                    </t>
+                                    <th style="border: 1px solid black; width:50%; text-align: center;">Description</th>
+                                    <th style="border: 1px solid black; width:50%;" clastyle="border: 1px solid black;" ss="text-right">Sub Total</th>
+                                </tr>
+                           </thead>
+                           <tbody class="sale_tbody">
+                                <t t-set="no" t-value="1"/>
+                                <tr t-foreach="o.uudp_ids" t-as="line">
+                                    <td style="border: 1px solid black;">
+                                      <t t-esc="no"/>
+                                    </td>
+                                    <td class="text-left" style="border: 1px solid black;">
+                                        <span t-field="line.product_id.name"/>
+                                    </td>
+
+                                    <td style="border: 1px solid black; text-align: left;">
+                                        <span t-field="line.description"/>
+                                    </td>
+
+                                    <td class="text-right" style="border: 1px solid black;">
+                                        Rp. <t t-esc="'{0:,.2f}'.format(int(line.total))"/>
+                                    </td>
+                                    <t t-set="no" t-value="no + 1"/>
+                                </tr>
+                            </tbody>
+                            <thead>
+                                <tr>
+                                    <td>
+                                      
+                                    </td>
+                                    <td>
+                                      
+                                    </td>
+
+                                    <td class="text-left">
+                                       <b>Total</b>
+                                    </td>
+
+                                    <td class="text-right" style="border: 1px solid black;">
+                                        <b>Rp. <t t-esc="'{0:,.2f}'.format(int(o.total_ajuan))"/></b>
+                                    </td>
+                                </tr>
+                            </thead> 
+                            </tr>           
+                            </table>
+
+                              <table style="height:15px;">          
+                                <tr>
+                                  <td></td>
+                                </tr>
+                              </table>
+
+                              <table style="border: 1px solid black; font-size:9px; width:50%;">
+                                  <tr>
+                                    <td><b>Nominal Pencairan</b></td>
+                                    <td>: <u><b>Rp. <t t-esc="'{0:,.2f}'.format(int(o.total_ajuan))"/></b></u></td>
+                                    <td></td>
+                                    <td></td>
+                                  </tr>
+                                  <tr>
+                                    <td><b>Terbilang</b></td>
+                                    <td colspan="3">: <t t-esc="o.terbilang"/></td>
+                                  </tr>
+                              </table>
+
+                              <table style="height:15px;">          
+                                <tr>
+                                  <td></td>
+                                </tr>
+                              </table>
+
+                              <table style="font-size:9px; width:100%;">          
+                                    <td>Notes: <t t-esc="o.notes"/></td>
+                              </table>
+
+                              <table style="height:30px;">          
+                                <tr>
+                                  <td></td>
+                                </tr>
+                              </table>
+
+                                <table style="width:100%;font-size:9px;text-align: center;">
+                                  <tr>
+                                    <td style="text-align: center; font-weight: bold;">Prepare By,</td>
+                                    <td style="text-align: center; font-weight: bold;">Approve By,</td>
+                                    <td></td>
+                                    <td style="text-align: center; font-weight: bold;">Paid By,</td>
+                                    <td style="text-align: center; font-weight: bold;">Receipt By,</td>
+                                  </tr>
+                                  <tr style="height:70px;">
+                                    <td></td>
+                                    <td></td>
+                                    <td style="text-align: center;font-size:15px;"><b><i>COMPLETE</i></b></td>
+                                    <td></td>
+                                    <td></td>
+                                  </tr>
+                                  <tr>
+                                    <td style="text-align: center;">(. . . . . . . . . . . . .)</td>
+                                    <td style="text-align: center;">(. . . . . . . . . . . . .)</td>
+                                    <td></td>
+                                    <td style="text-align: center;">(. . . . . . . . . . . . .)</td>
+                                    <td style="text-align: center;">(. . . . . . . . . . . . .)</td>
+                                  </tr>
+                                </table>
+
+                    </div>
+                </div>
+            </t>
+        </template>
+
+    </data>
+</odoo>

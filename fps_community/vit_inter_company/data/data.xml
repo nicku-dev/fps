@@ -1,0 +1,22 @@
+<odoo noupdate="1">
+
+	<record id="interco_journal" model="account.journal">
+        <field name="name">Inter Company</field>
+        <field name="code">IC</field>
+        <field name="type">general</field>
+        <field name="show_on_dashboard" eval="False"/>
+        <field name="interco_journal" eval="True"/>
+    </record>
+
+    <!-- Sequence -->
+	<record id="bank_statement_sequence" model="ir.sequence">
+		<field name="name">Bank Statement</field>
+		<field name="code">account.bank.statement</field>
+		<field name="prefix">BS/%(month)s%(y)s/</field>
+		<field name="padding">5</field>
+		<field eval="1" name="number_next"/>
+        <field eval="1" name="number_increment"/>
+        <field eval="False" name="company_id"/>
+	</record>
+
+</odoo>

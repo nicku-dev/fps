@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="action_sales_md_pricelist" model="ir.actions.act_window">
+        <field name="name">Sale Pricelist</field>
+        <field name="res_model">sale.md.pricelist</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_sales_shipment_type" model="ir.actions.act_window">
+        <field name="name">Sale Shipment Type</field>
+        <field name="res_model">sale.shipment.type</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="sale_sales_shipment_type_tree" model="ir.ui.view">
+        <field name="name">sale.shipment.type.view.tree</field>
+        <field name="model">sale.shipment.type</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <menuitem id="menu_sales_md"
+        parent="sale.menu_sale_config" 
+        sequence="21"
+        name="Sales Master Data">
+
+        <menuitem id="sales_md_pricelist" 
+            name="Sale MD Pricelist" 
+            action="action_sales_md_pricelist" 
+            sequence="30"/>
+
+        <menuitem id="sale_shipment_type" 
+            name="Sale Shipment Type" 
+            action="action_sales_shipment_type" 
+            sequence="40"/>
+    </menuitem>
+
+</odoo>

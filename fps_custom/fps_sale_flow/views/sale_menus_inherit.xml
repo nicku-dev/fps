@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="action_sales_md_a1" model="ir.actions.act_window">
+        <field name="name">Sale Shipping Port</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.md.port</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_sales_md_pricelist" model="ir.actions.act_window">
+        <field name="name">Sale Pricelist</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.md.pricelist</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- sale.md.port tree view -->
+    <record id="sale_md_port_view_tree" model="ir.ui.view">
+        <field name="name">sale.md.port.view.tree</field>
+        <field name="model">sale.md.port</field>
+        <field name="arch" type="xml">
+        
+            <tree>
+                <field name="region"/>
+                <field name="port_name"/>
+                <field name="code"/>
+                <field name="state_id"/>
+                <field name="country_id"/>
+                <!-- <field name="sale_country_id"/> -->
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="sale_md_pricelist_view_tree" model="ir.ui.view">
+        <field name="name">sale.md.pricelist.view.tree</field>
+        <field name="model">sale.md.pricelist</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="create_date"/>
+                <field name="name"/>
+                <field name="price_region"/>
+                <field name="pol"/>
+                <field name="pod"/>
+                <field name="load"/>
+                <field name="unit_price"/>
+            </tree>
+        </field>
+    </record>
+
+    <menuitem id="menu_sales_md"
+    parent="sale.menu_sale_config" 
+    sequence="21"
+    name="Sales Master Data">
+
+        <menuitem id="sales_md_a1_menu_act" 
+            name="Sale Shipping Port" 
+            action="action_sales_md_a1" 
+            sequence="20"/>
+
+        <menuitem id="sales_md_pricelist" 
+            name="Sale MD Pricelist" 
+            action="action_sales_md_pricelist" 
+            sequence="30"/>
+
+    </menuitem>
+
+</odoo>

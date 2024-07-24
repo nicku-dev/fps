@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <menuitem id="menu_api_root" name="API Management" sequence="2" />
+        <menuitem id="menu_master_data" name="Master Data" parent="menu_api_root"/>
+            <menuitem id="menu_data_bank" name="Bank" parent="menu_master_data" sequence="4" action="action_api_get_bank"/>
+            <menuitem id="menu_data_mdg" name="MDG" parent="menu_master_data" sequence="4" action="action_api_mdg"/>
+            <menuitem id="api_get_contact" name="Contact" parent="menu_master_data" sequence="4" action="action_api_get_contact"/>
+        <menuitem id="menu_api_configuration" name="API Configuration"/>
+            <menuitem id="menu_api_configuration" name="API Setup" parent="menu_api_root" sequence="8" action="action_api_config"/>
+        
+</odoo>

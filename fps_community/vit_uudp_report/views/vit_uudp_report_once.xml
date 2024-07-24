@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="paperformat_pcr_once" model="report.paperformat">
+            <field name="name">A4 PCR Once Paper</field>
+            <field name="default" eval="True" />
+            <field name="format">A5</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">5</field>
+            <field name="margin_bottom">5</field>
+            <field name="margin_left">10</field>
+            <field name="margin_right">10</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">0</field>
+            <field name="dpi">96</field>
+        </record>
+
+        <report 
+                id="action_report_once"
+                model="report.vit_uudp_report.report_once"
+                string="Laporan Pencairan" 
+                report_type="qweb-pdf"
+                name="vit_uudp_report.report_once"
+                file="vit_uudp_report.report_once"
+                paperformat="paperformat_pcr_once"
+            />
+
+    </data>
+</odoo>

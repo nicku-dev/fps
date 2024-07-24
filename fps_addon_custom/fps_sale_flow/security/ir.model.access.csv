@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_fps_sale_order_user,access_fps_sale_order_user,fps_sale_flow.model_sale_order,base.group_user,1,1,1,1
+access_sale_md_pricelist_admin,access_sale_md_pricelist_admin,model_sale_md_pricelist,base.group_user,1,1,1,1
+fps_fms.access_freight_order_service,access_freight_order_service,fps_fms.model_freight_order_service,base.group_user,1,0,0,0
+fps_fms.access_freight_price,access_freight_price,fps_fms.model_freight_price,base.group_user,1,0,0,0
+access_sales_shipment_type_user,access_sales_shipment_type_user,model_sale_shipment_type,base.group_user,1,1,1,1
+,,,,,,,

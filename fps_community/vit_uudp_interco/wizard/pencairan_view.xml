@@ -1,0 +1,14 @@
+  <odoo>
+
+       <record id="wizard_pencairan_view_interco" model="ir.ui.view">
+           <field name="name">pencairan.wizard.view.interco</field>
+           <field name="model">pencairan.wizard</field>
+           <field name="inherit_id" ref="vit_uudp.wizard_pencairan_view"/>
+           <field name="arch" type="xml">
+              <xpath expr="//field[@name='company_id']" position="before">              
+                    <field name="journal_interco_id" options='{"no_create": 1}' domain="[('interco_journal','=',True),('type','=',('bank','cash','general')),('company_id','!=',company_id)]" invisible="1"/>
+              </xpath>
+           </field>
+       </record>
+
+</odoo>

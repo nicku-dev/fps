@@ -1,0 +1,55 @@
+<odoo>
+    <data>
+        
+        <record id="uudp_po_form_view" model="ir.ui.view">
+		    <field name="name">uudp.po.form</field>
+		    <field name="model">uudp</field>
+		    <field name="type">form</field>
+		    <field name="inherit_id" ref="vit_uudp.view_uudp_penyelesaian_form"/>
+		    <field name="arch" type="xml">
+		        
+		    	<field name="end_date" position="after">
+		    		<field name="is_po" attrs="{'readonly': ['|','&amp;',('state','=','confirm'),('is_user_pencairan','!=', True),('state','=','done')]}"/>
+		    	</field>
+
+                <xpath expr="/form/sheet/notebook/page[@name='detail']" position="after">
+                    <page name="detail_po" string="Detail PO" attrs="{'invisible': [('is_po','=',False)]}">
+                        <group>
+                            <group>
+                                <field name="advance_purchase_id" options="{'no_open': True, 'no_create': True}" domain="[('company_id','=',company_id),('reconcile','=',True)]" attrs="{'required': [('is_po','!=',False)], 'readonly': ['|','&amp;',('state','=','confirm'),('is_user_pencairan','!=', True),('state','=','done')]}"/>
+                            </group>
+                            <group></group>
+                        </group>
+                        <field name="is_intercompany" invisible="1"/>
+                        <field name="tot_alokasi" invisible="1"/>
+                        <field name="purchase_line" attrs="{'readonly': ['|','|','&amp;',('state','=','confirm'),('is_user_pencairan','!=', True),('state','=','done'),('is_intercompany','!=',False)]}">
+                            <tree editable="bottom">
+                                <field name="purchase_id" options="{'no_open': True, 'no_create': True}" domain="[('state','in',('purchase','done')),('invoice_status','!=','invoiced'),('penyelesaian_id','=',False),('company_id','=',parent.company_id)]"/>
+                                <field name="partner_id" readonly="True"/>
+                                <field name="company_id" readonly="True"/>
+                                <field name="state" readonly="True"/>
+                                <field name="amount_total" readonly="True"/>
+                                <field name="down_payment" sum="Total"/>
+                                <field name="payment_id" readonly="True"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Detail Vendor Bills" attrs="{'invisible': [('is_po','=',False)]}">
+                        <field name="invoice_line" attrs="{'readonly': ['|','&amp;',('state','!=','draft'),('is_user_pencairan','!=', True),('state','=','done')]}">
+                            <tree editable="bottom">
+                                <field name="invoice_id" options="{'no_open': True, 'no_create': True}" domain="[('type','=','in_invoice'),('state','in',('open','draft')),('company_id','=',parent.company_id)]"/>
+                                <field name="partner_id" readonly="True"/>
+                                <field name="company_id" readonly="True"/>
+                                <field name="state" readonly="True"/>
+                                <field name="amount_total" readonly="True" sum="Total"/>
+                                <field name="alokasi" sum="Total Alokasi"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+		    	
+		     </field>
+		</record>
+        
+    </data>
+</odoo>

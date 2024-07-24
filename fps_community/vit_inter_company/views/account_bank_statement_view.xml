@@ -1,0 +1,191 @@
+ <odoo>  
+
+
+        <record model="ir.actions.act_window" id="action_insert_counterpart_account">
+            <field name="name">Insert Account</field>
+            <field name="res_model">bank.statement.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+        
+        <record id="vit_view_bank_statement_tree" model="ir.ui.view">
+            <field name="name">account.bank.statement.tree.inherit</field>
+            <field name="model">account.bank.statement</field>
+            <field name="inherit_id" ref="account.view_bank_statement_tree"/>
+            <field name="arch" type="xml">
+                <field name="state" position="after">
+                    <field name="notes"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="vit_view_bank_statement_form" model="ir.ui.view">
+            <field name="name">account.bank.statement.inherit</field>
+            <field name="model">account.bank.statement</field>
+            <field name="inherit_id" ref="account.view_bank_statement_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='line_ids']" position="before">
+                    <group>
+                        <group>
+                        </group>
+                        <group><button name="%(vit_inter_company.action_insert_counterpart_account)d" states="open" string="&#8627; Set Counterpart and Analytic Account" type="action" class="oe_link oe_right" groups="account.group_account_manager" /></group>
+                    </group>
+                </xpath>
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="default_account_id" 
+                                    domain="[('company_id','=',company_id)]" 
+                                    options="{'no_open':True, 'no_create':True}"
+                                    invisible="1"
+                                    placeholder="Default Counterpart Account"
+                                    />
+                    <field name="default_account_analytic_id" 
+                            domain="[('company_id','=',company_id)]" 
+                            options="{'no_open':True, 'no_create':True}"
+                            invisible="1"
+                            placeholder="Default Analytic Account"
+                            />
+                </xpath>
+                                            
+                <xpath expr="//label[@for='balance_start']" position="before">
+                    <field name="notes" attrs="{'readonly' : [('state', '!=', 'open')]}"/>
+                </xpath>
+                <xpath expr="//field[@name='line_ids']/tree/field[@name='amount']" position="after">
+                    <field name="account_id" 
+                        options="{'no_create':True}" 
+                        domain="[('company_id','=',parent.company_id)]" 
+                        attrs="{'required':[('journal_interco_id','!=',False)],'readonly' : [('journal_entry_ids', '!=', [])]}"/>
+                     <field name="company_interco_id" 
+                        options="{'no_create':True}" 
+                        groups="vit_inter_company.group_inter_company_journal"
+                        invisible="1"/>
+                     <field name="journal_interco_id" 
+                        options="{'no_create':True}" 
+                        groups="vit_inter_company.group_inter_company_journal" 
+                        domain="[('interco_journal','=',True)]"
+                        attrs="{'readonly' : [('journal_entry_ids', '!=', [])]}" />
+                     <field name="account_interco_id" invisible="1"/>
+                     <field name="account_analytic_tag_id" options='{"no_create": 1, "no_create_edit": 1}'
+                        attrs="{'readonly' : [('journal_entry_ids', '!=', [])]}"/>
+                     <field name="account_analytic_id" options="{'no_create':True}" domain="[('company_id','=',parent.company_id)]" />  
+                     <field name="account_analytic_interco_id" options="{'no_create':True}" domain="[('company_id','!=',parent.company_id)]" />               
+                </xpath>
+                <xpath expr="//field[@name='line_ids']/tree/field[@name='partner_id']" position="attributes">
+                    <attribute name="options">{'no_create':True}</attribute>
+                </xpath>
+                <xpath expr="//sheet[1]" position="after">
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" />
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </xpath>
+                <xpath expr="//header[1]" position="replace">
+                    <header>
+                    <field name="all_lines_reconciled" invisible="1" />
+                    <button name="%(account.action_bank_reconcile_bank_statements)d" string="Reconcile" type="action" class="oe_highlight" groups="vit_inter_company.group_inter_company_reconcile" attrs="{'invisible':['|','|',('all_lines_reconciled','=',True),('line_ids','=',[]),('state', '!=', 'open')]}"/>
+                    <button name="check_confirm_bank" string="Validate" type="object" class="oe_highlight" attrs="{'invisible':['|','|',('all_lines_reconciled','=',False),('line_ids','=',[]),('state', '!=', 'open')]}" groups="vit_inter_company.group_inter_company_reconcile" />
+                     <button name="button_cancel_all_reconciliation" attrs="{'invisible':['|',('line_ids','=',[]),('state', '!=', 'open')]}" string="Cancel All Entries" type="object" groups="vit_inter_company.group_inter_company_reconcile" confirm="Anda yakin semua journal entries terkait statement ini akan dihapus ?"/>
+                    <button name="button_delete_number_reconciliation" attrs="{'invisible':['|',('line_ids','=',[]),('state', '!=', 'open')]}"  string="Delete Numbering Entries" type="object" groups="vit_inter_company.group_inter_company_reconcile" confirm="Anda yakin semua Penomoran journal entries terkait statement ini akan dihapus ?"/>
+                    <button name="button_cancel" states="confirm" string="Cancel Statement" type="object" groups="vit_inter_company.group_inter_company_reconcile" />
+                    <field name="state" widget="statusbar" statusbar_visible="open,confirm"/>
+                    </header>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="vit_view_bank_statement_line_form" model="ir.ui.view">
+            <field name="name">account.bank.statement.line.inherit</field>
+            <field name="model">account.bank.statement.line</field>
+            <field name="inherit_id" ref="account.view_bank_statement_line_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form[1]" position="replace">
+                    <form string="Statement Line" create="false" >
+                    <sheet>
+                        <group col="4">
+                            <field name="statement_id" readonly="1"/>
+                            <field name="date" readonly="1"/>
+                            <field name="name" readonly="1"/>
+                            <field name="ref" readonly="1"/>
+                            <field name="partner_id" readonly="1"/>
+                            <field name="amount" readonly="1"/>
+                            <field name="journal_currency_id" invisible="1"/>
+                            <field name="company_interco_id" readonly="1" groups="vit_inter_company.group_inter_company_journal"/>
+                            <field name="journal_interco_id" readonly="1" groups="vit_inter_company.group_inter_company_journal"/>
+                            <field name="account_interco_id" readonly="1" groups="vit_inter_company.group_inter_company_journal"/>
+                            <field name="account_analytic_tag_id" readonly="1" />
+                            <field name="sequence" readonly="1"/>
+                            <field name="account_analytic_id" readonly="1" />
+                            <field name="account_analytic_interco_id" readonly="1" />
+                            <field name="note"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" />
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                    </form>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="bank_statement_draft_form_inherit_interco" model="ir.ui.view">
+            <field name="name">bank.statement.draft.form.inherit.interco</field>
+            <field name="model">account.bank.statement</field>
+            <field name="inherit_id" ref="account_cancel.bank_statement_draft_form_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='button_draft']" position="attributes">
+                    <attribute name="groups">vit_inter_company.group_inter_company_reconcile</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="bank_statement_cancel_form_inherit_interco" model="ir.ui.view">
+            <field name="name">bank.statement.cancel.form.inherit.interco</field>
+            <field name="model">account.bank.statement</field>
+            <field name="inherit_id" ref="account_cancel.bank_statement_cancel_form_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='button_cancel_reconciliation']" position="attributes">
+                    <attribute name="groups">vit_inter_company.group_inter_company_reconcile</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_bank_statement_wizard" model="ir.ui.view">
+            <field name="name">bank.statement.wizard</field>
+            <field name="model">bank.statement.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Set Account">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="statement_id" invisible="1"/>
+                                <field name="company_id" invisible="1"/>
+                                <field name="default_account_id" 
+                                    domain="[('company_id','=',company_id)]" 
+                                    options="{'no_open':True, 'no_create':True}"
+                                    placeholder="Default Counterpart Account"
+                                    />
+                                <field name="partner_id" 
+                                    domain="[('name','!=',False)]" 
+                                    options="{'no_open':True, 'no_create':True}"
+                                    
+                                    />
+                            </group>
+                            <group>
+                                <field name="default_account_analytic_id" 
+                                    domain="[('company_id','=',company_id)]" 
+                                    options="{'no_open':True, 'no_create':True}"
+                                    placeholder="Default Analytic Account"
+                                    />
+                            </group>
+                        </group>  
+                    </sheet>
+                    <footer>
+                        <button name="action_insert_counterpart_account" string="Update Account" type="object" class="btn-primary"/>
+                        <button special="cancel" string="Cancel"/>
+                    </footer>
+               </form>
+            </field>
+        </record>
+
+</odoo>

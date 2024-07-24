@@ -1,0 +1,35 @@
+<odoo>
+	<data>
+		
+		<record id="ms_account_move_interco_form_view" model="ir.ui.view">
+		    <field name="name">ms.account.move.interco.form</field>
+		    <field name="model">account.move</field>
+		    <field name="type">form</field>
+		    <field name="inherit_id" ref="account.view_move_form"/>
+		    <field name="arch" type="xml">
+		        
+		    	<xpath expr="//field[@name='line_ids']/tree/field[@name='credit']" position="after">
+		    		<field name="company_id" invisible="1"/>
+		    		<field name="journal_interco_id" options="{'no_open':True, 'no_create':True}" domain="[('interco_journal','=',True),('company_id','!=',company_id)]"/>
+		    		<field name="move_interco_id" readonly="1"/>
+		    	</xpath>
+		    	
+		     </field>
+		</record>
+
+		<record id="ms_account_move_line_interco_form_view" model="ir.ui.view">
+		    <field name="name">ms.account.move.line.interco.form</field>
+		    <field name="model">account.move.line</field>
+		    <field name="type">form</field>
+		    <field name="inherit_id" ref="account.view_move_line_form"/>
+		    <field name="arch" type="xml">
+		        
+		    	<xpath expr="//field[@name='move_id']" position="after">
+		    		<field name="move_interco_id" readonly="1"/>
+		    	</xpath>
+		    	
+		     </field>
+		</record>
+        
+	</data>
+</odoo>

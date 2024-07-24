@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <!-- api_mdg action window -->
+    <record id="action_api_mdg" model="ir.actions.act_window">
+        <field name="name">API MDG</field>
+        <field name="res_model">api.mdg</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                <!-- <header>
+                    <button name="get_customer" string="SYNC get_customer"/>
+                    <button name="get_customer1" string="SYNC Resq"/>
+                </header> -->
+            </p>
+            
+            <p>
+            There's ODOO    <!-- More details about what a user can do with this object will be OK --> 
+            </p>
+        </field>
+    </record>
+
+    <!-- api.mdg form view -->
+    <record id="api_mdg_view_form" model="ir.ui.view">
+        <field name="name">api.mdg.view.form</field>
+        <field name="model">api.mdg</field>
+        <field name="arch" type="xml">
+            <form string="API MDG DATA">
+                <header>
+                    <button name="get_customer2" string="TEST get_customer2" type="object" class="oe_highlight"/> 
+                    <button name="get_customer1" string="TEST get_customer1" type="object" class="oe_highlight"/> 
+                </header>
+                <sheet>
+                    <group>
+                        <field name="mdg_id"/>
+                        <field name="mdg_email"/>
+                        <field name="mdg_first_name"/>
+                        <field name="mdg_last_name"/>
+                    </group>                    
+                    <group>
+                        <!-- Add your fields here -->
+                        <field name="mdg_avatar"/>
+                        <field name="phone"/>
+                        
+                    </group>                    
+                    <group>
+                        <!-- Add your fields here -->
+                        <field name="description"/>
+                        <field name="ec_id"/>
+                        <field name="ec_code"/>
+                        
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- api.mdg tree view -->
+    <record id="api_mdg_view_tree" model="ir.ui.view">
+        <field name="name">api.mdg.view.tree</field>
+        <field name="model">api.mdg</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="mdg_id"/>
+                <field name="mdg_email"/>
+                <field name="mdg_first_name"/>
+                <field name="mdg_last_name"/>
+                <field name="mdg_avatar"/>
+                
+            </tree>
+        </field>
+    </record>
+
+</odoo>

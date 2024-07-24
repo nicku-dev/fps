@@ -1,0 +1,55 @@
+<odoo>
+	<data>
+		
+	    <record id="vit_uudp_report_form_view" model="ir.ui.view">
+			<field name="name">vit.uudp.report.form</field>
+			<field name="model">vit.uudp.report</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+		        <form string="UUDP Reports">
+	                <group col="4" fill="0" attrs="{'invisible':[('state_x','!=','get')]}">
+	                    <separator colspan="4" string="UUDP Excel Report Generated. Click link below to download :)"/>
+                        <field name="name" invisible="1"/>
+                        <field name="state_x" invisible="1"/>
+                        <field name="data_x" nolabel="1" width="100" filename="name"/>
+	                </group>
+	                <newline/>
+	                <group attrs="{'invisible':[('state_x','=','get')]}">
+	                		<label for="start_date" string="Periode"/>
+			   				<div>
+			   					<field name="start_date" class="oe_inline" placeholder="Start Date" required="1"/> - <field name="end_date" class="oe_inline" placeholder="End Date" required="1"/>
+			   				</div>
+		          	</group>
+		          	<group attrs="{'invisible':[('state_x','=','get')]}">
+		   				<field name="company_ids" widget="many2many_tags" options="{'no_open':True, 'no_create':True}"/>
+		   				<field name="department_ids" widget="many2many_tags" options="{'no_open':True, 'no_create':True}"/>
+		   				<field name="responsible_ids" widget="many2many_tags" options="{'no_open':True, 'no_create':True}"/>
+		   				<field name="employee_ids" widget="many2many_tags" options="{'no_open':True, 'no_create':True}"/>
+
+		          	</group>
+	                <footer attrs="{'invisible':[('state_x','=','get')]}">
+	                    <button name="print_excel_report" string="Export Report" type="object" class="oe_highlight"/>
+	                    <label string=" or "/>
+	                    <button string="Cancel" class="oe_link" special="cancel" />
+	                </footer>
+		          	
+		        </form>
+	    	</field>
+	    </record>
+		
+	    <record id="vit_uudp_report_actions" model="ir.actions.act_window">
+			<field name="name">Tracking UUDP</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">vit.uudp.report</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="vit_uudp_report_form_view"/>
+			<field name="target">new</field>
+	    </record>
+		
+
+		<menuitem id="vit_menu_uudp_report" parent="vit_uudp.uudp_home" name="Reports" groups="vit_uudp.group_manager_uudp_pencairan" sequence="101"/>
+		<menuitem id="vit_menu_uudp_report_sub" parent="vit_menu_uudp_report" action="vit_uudp_report_actions" groups="vit_uudp.group_manager_uudp_pencairan" sequence="10"/>
+		
+	</data>
+</odoo>

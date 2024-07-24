@@ -1,0 +1,142 @@
+<odoo>
+
+        <record id="view_uudp_pencairan_form_interco" model="ir.ui.view">
+            <field name="name">uudp.pencairan.form.interco</field>
+            <field name="model">uudp.pencairan</field>
+            <field name="inherit_id" ref="vit_uudp.view_uudp_pencairan_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet/div[@class='oe_title']" position="before">
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" name="action_see_uudp_pencairan_entries" type="object" icon="fa-bars" attrs="{'invisible': [('state', '!=', 'done')]}" groups="account.group_account_manager">
+                            <div class="o_form_field o_stat_info">
+                                <span class="o_stat_text">Entries</span>
+                            </div>
+                        </button>
+                    </div>
+                </xpath>
+                <xpath expr="//sheet/notebook/page[2]" position="attributes">
+                     <attribute name="invisible">True</attribute>
+                </xpath>
+<!--                 <xpath expr="//field[@name='journal_entry_ids']" position="attributes">
+                     <attribute name="invisible">True</attribute>
+                </xpath> -->
+                <xpath expr="//field[@name='nominal_ajuan']" position="after">
+                     <field name="total_pencairan" attrs="{'invisible': [('type','!=','parsial')]}" readonly="1"/>
+                </xpath>
+                <!-- dihide dulu -->
+<!--                 <xpath expr="//field[@name='journal_id']" position="replace">                   
+                    <field name="journal_id" attrs="{'readonly': [('state','in',('done','cancel','refuse'))]}" options='{"no_create": 1, "no_create_edit": 1}' domain="[('company_id','=',company_id),('type','=',('bank','cash','general'))]" required="1" required="1"/>
+                </xpath>
+                <xpath expr="//field[@name='coa_kredit']" position="replace">
+                    <field name="coa_kredit" attrs="{'readonly': [('state','in',('done','cancel','refuse'))],'required': [('journal_id2','=',False)]}" options='{"no_create": 1, "no_create_edit": 1}' domain="[('company_id','=',company_id)]"/>
+                    <field name="journal_id2" attrs="{'readonly': [('state','in',('done','cancel','refuse'))]}" options='{"no_create": 1, "no_create_edit": 1}' domain="[('interco_journal','=',True),('type','=',('bank','cash')),('company_id','!=',company_id)]" />
+                    <field name="company_id2" invisible="1"/>
+                </xpath> -->
+            </field>
+        </record>
+
+
+        <record id="view_uudp_penyelesaian_form_interco" model="ir.ui.view">
+            <field name="name">uudp.pencairan.tree.interco</field>
+            <field name="model">uudp.pencairan</field>
+            <field name="inherit_id" ref="vit_uudp.view_uudp_pencairan_tree"/>
+            <field name="arch" type="xml">
+                <field name="state" position="before">
+                    <field name="journal_id" invisible="1"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_uudp_pencairan_search_interco" model="ir.ui.view">
+            <field name="name">uudp.pencairan.search.interco</field>
+            <field name="model">uudp.pencairan</field>
+            <field name="inherit_id" ref="vit_uudp.view_uudp_pencairan_search"/>
+            <field name="arch" type="xml">
+                <group expand="0" string="Group By...">
+                    <filter string="Journal" 
+                                domain="[]" 
+                                context="{'group_by':'journal_id'}"/>
+                    <filter string="Tgl Pencairan" 
+                                domain="[]" 
+                                context="{'group_by':'tgl_pencairan'}"/>
+                </group>
+            </field>
+        </record>
+
+
+         <record id="view_uudp_penyelesaian_form_interco" model="ir.ui.view">
+            <field name="name">uudp.form.interco</field>
+            <field name="model">uudp</field>
+            <field name="inherit_id" ref="vit_uudp.view_uudp_penyelesaian_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet/div[@class='oe_title']" position="before">
+                    <div class="oe_button_box" name="button_box" attrs="{'invisible':[('type','!=','penyelesaian')]}">
+                        <button class="oe_stat_button" name="action_see_uudp_entries" type="object" icon="fa-bars" attrs="{'invisible': [('state', '!=', 'done')]}" groups="account.group_account_manager">
+                            <div class="o_form_field o_stat_info">
+                                <span class="o_stat_text">Entries</span>
+                            </div>
+                        </button>
+                    </div>
+                </xpath>
+<!-- 
+                <xpath expr="//button[@name='button_confirm_finance']" position="replace">
+                     <button name="button_confirm_finance_interco" 
+                            attrs="{'invisible': ['|',('state','!=','confirm'),('type','!=','penyelesaian')]}"
+                            string="Confirm" 
+                            type="object" 
+                            class="oe_highlight"
+                            groups="account.group_account_manager"/>
+                    <button name="button_confirm_finance_interco" 
+                            attrs="{'invisible': ['|',('state','!=','confirm_department'),('type','!=','reimberse')]}"
+                            string="Confirm" 
+                            type="object" 
+                            class="oe_highlight"
+                            groups="account.group_account_manager"/>
+                </xpath> -->
+
+<!--                 <xpath expr="//field[@name='uudp_ids']/tree/field[@name='unit_price']" position="after">
+                    <field name="journal_id" attrs="{'readonly': [('state','in',('done','cancel','refuse'))]}" options='{"no_create": 1}' domain="[('interco_journal','=',True),('company_id','!=',parent.company_id),('type','=',('bank','cash','general'))]" groups="account.group_account_manager"/>
+                </xpath> -->
+
+                <xpath expr="//field[@name='journal_entry_id']" position="attributes">
+                     <attribute name="invisible">True</attribute>
+                </xpath>
+
+<!--                 <xpath expr="//field[@name='journal_id']" position="replace"/>
+
+                <xpath expr="//notebook/page[2]" position="replace">
+                    <page string="Other Info" groups="account.group_account_manager">
+                        <group>
+                            <group>
+                                <field name="journal_id" attrs="{'invisible':[('type','in',('reimberse','penyelesaian'))], 'readonly':[('state','=','done')]}" options='{"no_create": 1, "no_create_edit": 1}' domain="[('company_id','=',company_id)]"/>
+                            </group>
+                            <group>
+                                <field name="coa_kredit" attrs="{'invisible':[('type','in',('reimberse','penyelesaian'))], 'readonly':[('state','in',('confirm_accounting','done'))]}" options='{"no_create": 1, "no_create_edit": 1}' domain="[('company_id','=',company_id)]" />
+                            </group>
+                            <group string="Difference Amount" attrs="{'invisible':[('type','!=','penyelesaian')]}" invisible="1">
+                                <div>
+                                    Bypass Different Amount ?  <field name="by_pass_selisih" attrs="{'readonly': [('state','=','done')]}"  class="oe_inline"/>
+                                </div>
+                                <div >
+                                    Inter Company ?  <field name="diff_interco" attrs="{'readonly': [('state','=','done')]}"  class="oe_inline"/>
+                                </div>
+                            </group>
+                            <group>
+                            </group>
+                            <group>
+                                <field name="journal_difference_id" attrs="{'invisible':['|',('type','!=','penyelesaian'),('diff_interco','=',False)],'readonly': [('state','=','done')],'required': [('diff_interco','=',True)]}" options='{"no_create": 1}' domain="[('interco_journal','=',True),('company_id','!=',company_id),('type','=',('bank','cash','general'))]" invisible="1"/>
+                                <field name="difference" attrs="{'invisible':['|',('type','!=','penyelesaian'),('diff_interco','=',True)], 'readonly':[('state','=','done')]}" domain="[('company_id','=',company_id)]" options='{"no_create": 1, "no_create_edit": 1}' string="Account"/>
+                                <field name="difference_notes" attrs="{'invisible':[('type','!=','penyelesaian')], 'readonly':[('state','=','done')],'required':['|',('difference','!=',False),('diff_interco','=',True)]}"/>
+                            </group>
+                            <group>
+                            </group>
+                        </group>
+                    </page>
+                </xpath> -->
+
+
+            </field>
+        </record>       
+
+
+</odoo>

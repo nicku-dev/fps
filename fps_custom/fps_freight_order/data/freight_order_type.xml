@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data noupdate="1">
+        <record id="fo_type_normal" model="freight.order.type">
+            <field name="name">Normal</field>
+            <field name="code">normal</field>
+            <field name="active">True</field>
+        </record>
+
+        <record id="fo_type_time_based" model="freight.order.type">
+            <field name="name">Time-Based Charter</field>
+            <field name="code">TBCH</field>
+            <field name="active">True</field>
+        </record>        
+        
+        <record id="fo_type_heavy_equipment" model="freight.order.type">
+            <field name="name">Heavy Equipment Transport</field>
+            <field name="code">HET</field>
+            <field name="active">True</field>
+        </record>        
+        
+        <record id="fo_type_freight" model="freight.order.type">
+            <field name="name">Freight Charter</field>
+            <field name="code">FCH</field>
+            <field name="active">True</field>
+        </record>
+
+    </data>
+</odoo>

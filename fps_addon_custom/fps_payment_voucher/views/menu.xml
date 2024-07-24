@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+        <menuitem id="payment_voucher_root"
+                name="Payment Voucher"
+                sequence="5"
+                />
+
+        <menuitem id="payment_voucher_menu"
+                name="Cash Advance"
+                parent="payment_voucher_root"
+                sequence="1"
+                />
+
+        <menuitem id="payment_voucher_pengajuan"
+                name="Pengajuan"
+                parent="payment_voucher_menu"
+                action="payment_voucher_action"
+                sequence="1"
+                />
+</odoo>

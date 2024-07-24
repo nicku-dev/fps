@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_fps_sale_order_user,access_fps_sale_order_user,fps_sale_flow.model_sale_order,base.group_user,1,1,1,1
+access_sale_md_admin,sale.md.port.admin,model_sale_md_port,base.group_user,1,1,1,1
+access_sale_md_pricelist_admin,access_sale_md_pricelist_admin,model_sale_md_pricelist,base.group_user,1,1,1,1
+access_sale_md_admin,sale.md.port.admin,model_sale_md_port,base.group_user,1,1,1,1
+fps_sale_flow.access_sale_md_pricing,access_sale_md_pricing,fps_sale_flow.model_sale_md_pricing,base.group_user,1,0,0,0
+fps_sale_flow.access_sale_md_routes,access_sale_md_routes,fps_sale_flow.model_sale_md_routes,base.group_user,1,0,0,0

@@ -1,0 +1,13 @@
+<odoo noupdate="1">
+
+		<record model="res.groups" id="group_inter_company_journal">
+			<field name="name">Allow Inter Company</field>
+			<field name="category_id" ref="base.module_category_hidden"/>
+		</record>
+
+		<record model="res.groups" id="group_inter_company_reconcile">
+			<field name="name">Allow Bank Statement Reconcile</field>
+			<field name="category_id" ref="base.module_category_hidden"/>
+		</record>	
+
+</odoo>

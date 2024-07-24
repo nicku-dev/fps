@@ -1,0 +1,108 @@
+<odoo>
+
+        <record id="view_uudp_pencairan_form_pencairan2" model="ir.ui.view">
+            <field name="name">uudp.pencairan.form</field>
+            <field name="model">uudp.pencairan</field>
+            <field name="inherit_id" ref="vit_uudp.view_uudp_pencairan_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='ajuan_id']" position="before">                   
+                    <field name="pencairan_id" attrs="{'invisible': [('pencairan_id','=',False)]}" readonly="1"/>
+                </xpath>
+                <xpath expr="//field[@name='journal_entry_ids']" position="attributes">                   
+                    <attribute name="attrs">{'invisible': [('journal_entry_ids','=',[])]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='journal_entry_ids']" position="after">                   
+                    <field name="child_ids" attrs="{'invisible': [('child_ids','=',[])]}" readonly="1"/>
+                </xpath>
+                
+            </field>
+        </record>
+
+        <record id="view_uudp_penyelesaian_form_pencairan2" model="ir.ui.view">
+            <field name="name">uudp.pencairan.tree</field>
+            <field name="model">uudp.pencairan</field>
+            <field name="inherit_id" ref="vit_uudp.view_uudp_pencairan_tree"/>
+            <field name="arch" type="xml">
+                <field name="state" position="before">
+                    <field name="pencairan_id" invisible="1"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_uudp_pencairan_search_uudp_pencairan2" model="ir.ui.view">
+            <field name="name">uudp.pencairan.search.interco</field>
+            <field name="model">uudp.pencairan</field>
+            <field name="inherit_id" ref="vit_uudp.view_uudp_pencairan_search"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="pencairan_id"/>
+                </field>
+                <group expand="0" string="Group By...">
+                    <filter string="Parent" 
+                                domain="[]" 
+                                context="{'group_by':'pencairan_id'}"/>
+                </group>
+            </field>
+        </record>
+
+        <record id="view_uudp_form_pencairan2" model="ir.ui.view">
+            <field name="name">uudp.form.inherit</field>
+            <field name="model">uudp</field>
+            <field name="inherit_id" ref="vit_uudp.view_uudp_pengajuan_form"/>
+            <field name="arch" type="xml">
+                <button name="button_validate" position="after">
+                    <button name="calculate_total_pencairan" type="object"
+                            string="Recalculate Pencairan"
+                            attrs="{'invisible': ['|',('state','!=','done'),('type','!=','pengajuan')]}"/>
+                    <button name="button_clearing_link_pencairan" type="object"
+                            string="Remove link pencairan"
+                            attrs="{'invisible': ['|','|',('type','=','penyelesaian'),('state','not in',('confirm_accounting','confirm_finance')),('pencairan_id','=',False)]}"
+                            groups="account.group_account_manager"
+                            class="oe_link btn-link" icon="fa-cut"/>
+                </button>
+                <xpath expr="/form/sheet/notebook/page" position="after">   
+                    <page string="Ajuan/Reimberse Parsial" attrs="{'invisible': [('child_ids','=',[])]}">               
+                        <field name="child_ids"  readonly="1"/>
+                    </page>
+                </xpath>   
+                <xpath expr="//field[@name='department_id']" position="after">                   
+                    <field name="uudp_parent_id" attrs="{'invisible': [('uudp_parent_id','=',False)]}" readonly="1"/>
+                </xpath>           
+            </field>
+        </record>
+
+        <record id="view_uudp_penyelesaian_form_pencairan2" model="ir.ui.view">
+            <field name="name">uudp.form.inherit</field>
+            <field name="model">uudp</field>
+            <field name="inherit_id" ref="vit_uudp.view_uudp_penyelesaian_form"/>
+            <field name="arch" type="xml">
+                <button name="button_validate" position="after">
+                    <button name="button_clearing_link_pencairan" type="object"
+                            string="Remove link pencairan"
+                            attrs="{'invisible': ['|','|',('type','=','penyelesaian'),('state','not in',('confirm_accounting','confirm_finance')),('pencairan_id','=',False)]}"
+                            groups="account.group_account_manager"
+                            class="oe_link btn-link" icon="fa-cut"/>
+                </button>
+                <xpath expr="//field[@name='ajuan_id']" position="attributes">                   
+                    <attribute name="domain">[('company_id','=',company_id),('type','=','pengajuan'),('state','=','done'),('selesai','=',False),('uudp_parent_id','=',False),'|',('user_id','=',user_id),('responsible_id','=',user_id)]</attribute>
+                </xpath>               
+            </field>
+        </record>
+
+        <record id="view_uudp_pencairan2" model="ir.ui.view">
+            <field name="name">uudp.search</field>
+            <field name="model">uudp</field>
+            <field name="inherit_id" ref="vit_uudp.uudp_search"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="uudp_parent_id"/>
+                </field>
+                <group expand="0" string="Group By...">
+                    <filter string="Parent" 
+                                domain="[]" 
+                                context="{'group_by':'uudp_parent_id'}"/>
+                </group>
+            </field>
+        </record>
+
+</odoo>
