@@ -1,14 +1,14 @@
 
 {
-    'name': 'Pengajuan Dana dan Reimburse',
+    'name': 'FPS: Payment Requisition',
     'version': '16.0.1.0.0',
     'category': 'LKT/Freight',
-    'summary': 'Module ini berfungsi mengatur Uang yang di Pertanggung Jawabkan',
+    'summary': 'Module ini berfungsi untuk pengajuan Uang yang di Pertanggung Jawabkan',
     'description': """
-        Module for Managing All Payment Voucher Operations
+        Module for Managing All Payment Requisition Operations
             * Pengajuan dana
             * REIMBURSE
-            * Pencairan dana / reimberse
+            * Pencairan dana 
             * Penyelesaian / pertanggungjawaban dana
             * Tidak ada jurnal terkait bank / cash
     """,

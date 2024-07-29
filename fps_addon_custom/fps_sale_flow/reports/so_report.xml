@@ -26,7 +26,213 @@
         <field name="paperformat_id" ref="paperformat_fps_spal_potrait" />
     </record>
 
+    <record id="action_fps_so_spal_report_cpo" model="ir.actions.report">
+        <field name="name">SPAL - CPO</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">fps_sale_flow.sale_spal_print_cpo</field>
+        <field name="binding_model_id" ref="model_sale_order" />
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="paperformat_fps_spal_potrait" />
+    </record>
+
     <template id="sale_spal_print">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <center><b><h1>SURAT PERJANJIAN ANGKUTAN LAUT</h1></b></center>
+                        <center><b><h4>SPAL No. : <span t-field="doc.spal_number"/></h4></b></center>
+                    </div>
+
+                    <table class="table-bordered o_main_table">
+                        <tbody class="spal_body">
+                            <tr>
+                                <td>Pada hari ini <span t-field="doc.commitment_date"/>bertempat di Jakarta, telah disepakati bersama Perjanjian Angkutan Laut (untuk selanjutnya disebut sebagai “Perjanjian”) sebagaimana point-point berikut :
+                                </td>
+
+                                <td>Perjanjian ini mengikuti dan sesuai dengan The Baltic And International Maritime Conferences Uniform General Charter (as revised 1973, 1976 and 1994 Antwerp) Code Name “GENCON”.
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><b>01. OWNER KAPAL/PEMBERI JASA ANGKUTAN PERAIRAN (“PIHAK PERTAMA”) :</b>
+                                    <b><p><span t-field="doc.company_id"/></p></b>
+                                </td>
+
+                                <td><b>02. PEMILIK MUATAN (“PIHAK KEDUA”) :</b>
+                                    <b><p><span t-field="doc.consignee_id"/></p></b>
+                                </td>
+
+                            </tr>
+
+                            <tr>
+                                <td><b>03. NAMA TUG BOAT/BARGE :</b>
+                                    <b><p><span t-field="doc.jenis_kapal"/></p></b> or Substitute
+                                </td>
+                                <td><b>04. BENDERA :</b>
+                                    <b><p><span t-field="doc.bendera_spal"/></p></b>
+                                </td>
+                            </tr>
+                            
+                            <!-- BARIS 3 -->
+                            
+                            <tr>
+                                <td><b>05. JENIS DAN JUMLAH MUATAN/CARGO :</b>
+                                    <b><p><span t-field="doc.jumlah_muatan"/></p></b> (sesuai batas aman kapal dan konfirmasi master)
+                                </td>
+                                <td>
+                                    <b>06. KONDISI KONTRAK MUATAN/VOYAGE CONDITIONS :</b>
+                                    <b><p><span t-field="doc.kondisi_kontrak_muatan"/></p></b>
+                                </td>
+                            </tr>
+                            
+                            <!-- BARIS 4 -->
+                            <tr>
+                                <td><b>07. UANG TAMBANG / FREIGHT KAPAL :</b> <b><p><span t-field="doc.kondisi_kontrak_muatan"/></p></b>
+                                </td>
+
+                                <td><b>08. KESEDIAAN UNTUK MUAT / LAY CAN :
+                                <b><p><span t-field="doc.tanggal_kesediaan_muat"/></p></b>
+                                </b>
+                                </td>
+                            </tr>
+
+                            <!-- BARIS 5 -->
+                            <tr>
+                                <td><b>09. HARGA TERMASUK (diantaranya) :
+                                <b><p><span t-field="doc.harga_termasuk"/></p></b>
+                                </b></td>
+                                <td><b>10. HARGA TIDAK TERMASUK :
+                                <b><p><span t-field="doc.harga_tidak_termasuk"/></p></b>
+                                </b></td>
+                            </tr>
+                            
+                            <!-- BARIS 6 -->
+                            <tr>
+                                <td><b>11. CARA PEMBAYARAN :</b>
+                                <b><p><span t-field="doc.cara_pembayaran"/></p></b>
+                                </td>
+
+                                <td><b>12. REKENING PEMBAYARAN :</b>
+                                <b><p><span t-field="doc.account_bank_number"/></p></b>
+                                </td>
+                            </tr>
+
+                            <!-- BARIS 7 -->
+                            <tr>
+                                <td><b>13. PELABUHAN MUAT/POL : </b>
+                                <!-- <b><p><span t-field="doc.pod"/></p></b> -->
+                                </td>
+
+                                <td><b>14. PELABUHAN BONGKAR/POD : </b>
+                                </td>
+                            </tr>
+
+                            <!-- BARIS 8 -->
+                            <tr>
+                                <td><b>15. LAMA PEMUATAN CPO 3.000.000 Kg  TERMASUK TUNGGU:</b>
+                                </td>
+
+                                <td><b>16. LAMA PEMBONGKARAN CPO 3.000.000 Kg TERMASUK TUNGGU:</b>
+                                </td>
+                            </tr>
+
+                            <!-- BARIS 9 -->
+                            <tr>
+                                <td><b>17. PENGIRIMAN BARANG :</b></td>
+                                <td><b>18. PENERIMA BARANG :</b></td>
+                            </tr>
+
+                            <!-- BARIS 10 -->
+                            <tr>
+                                <td><b>19. ASURANSI KAPAL :</b></td>
+                                <td><b>20. ASURANSI MUATAN : </b></td>
+                            </tr>
+                            
+                            <!-- BARIS 11 -->
+                            <tr>
+                                <td><b>21. KEAGENAN KAPAL/POL &amp; POD AGENCY :</b></td>
+                                <td><b>22. DENDA KETERLAMBATAN MUAT &amp; BONGKAR (DEMURAGE) :</b></td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="2">
+
+                                <b>23. SYARAT – SYARAT TAMBAHAN YANG DISETUJUI BERSAMA :</b>
+                                    <p>
+                                        <ol>
+                                            <li>Tahapan Pembayaran wajib diselesaikan sesuai terms yang disetujui pada point No.11, dan apabila terjadi ketidaksesuaian terms pembayaran, maka Pihak Pertama berhak membatalkan Perjanjian secara sepihak dan atau menangguhkan pembongkaran Muatan serta biaya yang terjadi akibat ketidaksesuaian pembayaran tersebut akan menjadi beban pihak Pihak Kedua sesuai Time Sheet yang dikeluarkan oleh Pihak Pertama.</li>
+                                            <li>Apabila terjadi pemotongan sideboard, maka Pihak Kedua wajib mengembalikan Sideboard ke kondisi semula dan menjadi tanggungan Pihak Kedua.</li>
+                                            <li>Selain hal-hal yang berhubungan dengan Muat/Bongkar, Pihak Pertama akan mengatur dan bertanggung jawab atas lashing/unlashing, material lashing dan terpal.</li>
+                                            <li>Demurrage diberlakukan pada setiap penambahan Laytime diluar batas waktu muat dan bongkar dan termasuk saat menunggu Dokumen Muatan.</li>
+                                            <li>Toleransi susut: 0.5% untuk CPO/CPKO dan 1% untuk Kernel yang dihitung dari perbandingan hasil timbangan PIHAK PENGIRIM BARANG dengan hasil timbangan PIHAK PENERIMA BARANG dimana tercantum dalam Berita Acara Penerimaan Barang; 0% untuk pupuk, yang dihitung dari perbandingan jumlah muatan quantity sak/karung yang diterima di POL dengan jumlah muatan quantity sak/karung yang diserahkan di POD.</li>
+                                            <li>Toleransi susut: 0.5% untuk CPO/CPKO dan 1% untuk Kernel yang dihitung dari perbandingan hasil timbangan PIHAK PENGIRIM BARANG dengan hasil timbangan PIHAK PENERIMA BARANG dimana tercantum dalam Berita Acara Penerimaan Barang; 0% untuk pupuk, yang dihitung dari perbandingan jumlah muatan quantity sak/karung yang diterima di POL dengan jumlah muatan quantity sak/karung yang diserahkan di POD.</li>
+                                            <li>Syarat-syarat dan ketentuan-ketentuan tambahan lainnya Dimuat Dalam Ketentuan Umum Perjanjian Angkutan Laut terlampir dan merupakan satu kesatuan serta bagian yang tidak terpisahkan dengan Perjanjian ini.</li>
+                                        </ol>
+                                    </p>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="2">
+                                    <p><b>24. PERSELISIHAN : </b></p>
+                                        <br>Akan diselesaikan bersama secara musyawarah, namun apabila tidak terdapat persetujuan, maka kedua belah pihak setuju untuk diselesaikan di Pengadilan Negeri Jakarta Barat.</br>
+
+                                        <br>25. Pihak Pertama berhak untuk menahan dan atau menjual muatan, apabila pembayaran uang tambang dari Pihak Kedua tidak dilunasi sesuai dengan yang tercantum dalam kontrak untuk menutupi kerugian yang timbul akibat dari pelaksanaan pengangkutan muatan/cargo.</br>
+
+                                        <br>26. Demurrage dibayar sebelum membongkar muatan/cargo atau minimal harus ada jaminan pembayaran dan apabila terjadi keterlambatan pembayaran yang telah disepakati/menyimpang dari Point No.11 dalam Surat Perjanjian Angkutan Laut ini, Pihak Pertama berhak memperhitungkannya sebagai Demurrage serta dibayar sebelum dilakukan pembongkaran muatan/cargo tersebut.</br>
+
+                                        <br>27. Jumlah muatan final akan berdasarkan Bill of Lading (B/L) dan Cargo Manifest. Jumlah ini yang akan di tagihkan di invoice nantinya.</br>
+
+                                        <br>28. Ditempat tempat dangkal amp membahayakan ABK serta Kapal, Pihak Pertama berhak untuk menentukan tempat yang aman dan terdekat untuk pemuatan dan pembongkaran muatan demi keselamatan ABK dan Kapal.</br>
+
+                                        <br>29. Apabila sesuatu dan lain hal atau terjadi keterlambatan dengan atau menyangkut nautica/teknis, sehingga kapal yang akan mengangkut mengalami keterlambatan/hambatan, maka Pihak Pertama dibenarkan untuk menggantikan dengan kapal/armada lain yang sama ukurannya dengan tidak merubah dan menambah dari isi dan bunyi Surat Perjanjian Angkutan Laut yang telah disepakati ini.</br>
+                                        
+                                        <br>30. Pihak Pertama berhak dan dibenarkan untuk mengabrhkan tujuan ke tempat lain bila muatan/cargo selama 2 x 24 jam tidak ada/tidak siap untuk diangkut.</br>
+
+                                        <br>31. Force Majeure dalam perjanjian ini: badai, ombak besar, pasang surut, gempa bumi, sengatan petir, gempa bumi, huru-hara, pernyataan darurat dari Pemerintah serta hal yang sifatnya di luar kemampuan akal manusia (Act of God). Tetapi tidak termasuk pemogokan buruh yang disebabkan kesalahan Pihak Kedua.</br>
+
+                                        <br>32. Apabila terjadi General Average (kerugian umum yang terjadi akibat tindakan yang perlu dilakukan untuk menyelamatkan Kapal dan Awak Kapal oleh karena keadaan force majeure), maka akan mengikuti York Antwerp 1974/undang-undang yang berlaku di Indonesia dan uang tambang dan jasa forwarding tidak dapat di Collect dari General Average tersebut.</br>
+
+                                        <br>33. Hal-hal yang belum tercantum dalam perjanjian ini akan dibicarakan bersama dan ditambahkan setelah ada persetujuan sebagai Addendum.</br>
+
+                                        <br>34. Pihak Kedua menjamin sepenuhnya jumlah tonase/kubikasi muatannya dan bila diragukan, maka Pihak Pertama menunjuk Pihak Ketiga/Independent Surveyor untuk mengukur kembali muatan tersebut.  Biaya Independent Surveyor ditanggung Pihak Pertama dan Pihak Kedua wajib membayar Freight sesuai hasil pengukuran ulang Pihak Independent Surveyor.</br>
+
+                                        <br>35. Apabila kemudian hari terjadi terdapat perbedaan  pendapat  dalam  mengartikan  Perjanjian  ini  maka  kedua  belah  pihak akan bermusyawarah/mufakat terlebih dahulu, dan apabila ternyata tidak terdapat kata sepakat, maka kedua belah pihak menunjuk pada Pengadilan Negeri sesuai Point No.24.</br>
+
+                                        <br>36. Dengan ditanda tangani oleh kedua belah pihak maka isi Surat Perjanjian Angkutan Laut ini tidak dapat dibatalkan secara sepihak. Apabila pembatalan dilakukan sepihak oleh Pihak Kedua maupun Pihak Pertama, maka dikenakan Penalty kepada pihak yang membatalkan sebesar 25% dari Total Biaya yang telah disepakati."</br>
+
+                                        <br>37. Ketentuan Umum ini menjadi satu dan merupakan bagian yang tak terpisahkan dengan Surat Perjanjian Angkutan Laut No.061/FPS-BMI/III/2024</br>
+                                </td>
+                             </tr>
+                            <tr>
+                                <td colspan="2">
+                                    Demikian Perjanjian ini dibuat dalam keadaan sadar tanpa paksaan dan disetujui serta di tanda tangani bersama Para Pihak dalam rangkap 2 (dua), bermaterai cukup yang masing-masing mempunyai kekuatan hukum yang sama.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">
+                                    <p>OWNER KAPAL/PEMBERI JASA ANGKUTAN PERAIRAN :</p>
+                                    <p>PT. FANGIONOPERKASA SEJATI</p>
+                                    <p><b>SUBANDRI YANTO</b></p>
+                                    <p>Direktur</p>
+                                </td>
+                                <td class="text-center">
+                                    <p>PEMILIK MUATAN:</p>
+                                    <p>PT. BERUANG MARITIM INDONESIA</p>
+                                    <p><b>EVAN</b></p>
+                                    <p>Direktur</p>
+                                </td>
+                            </tr>                          
+                        </tbody>
+                    </table>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <template id="sale_spal_print_cpo">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="doc">
                 <t t-call="web.external_layout">

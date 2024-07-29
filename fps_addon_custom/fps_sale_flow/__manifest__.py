@@ -22,7 +22,7 @@
         # 'wizard/custom_revision.xml'
     ],
     'installable': True,
-    'application': False,
+    'application': True,
     'auto_install': False,
     'license': 'AGPL-3',
 }

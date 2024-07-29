@@ -80,6 +80,69 @@
                         </group>
                     </group>
                 </page>
+
+                <!-- SPAL FAME -->
+
+                <page string="SPAL - FAME">
+                    <group name="spal_data_info" string="SPAL Data Info">
+                        <group>
+                            <field name="spal_number"/>
+                            <field name="spal_date" string="SPAL Date"/>
+                            <field name="company_id"/>
+                            <field name="bendera_spal"/>
+                            <field name="jumlah_muatan"/>
+                            <field name="kondisi_kontrak_muatan"/>
+                            <field name="uang_tambang"/>
+                            <field name="tanggal_kesediaan_muat"/>
+                        </group>
+                        <group>
+                            <field name="harga_termasuk" />
+                            <field name="harga_tidak_termasuk" />
+                            <field name="cara_pembayaran" />
+                            <field name="account_bank_number_id"/>
+                            <field name="loading_duration"/>
+                            <field name="unloading_duration"/>
+                            <field name="pengiriman_barang"/>
+                            <field name="penerima_barang"/>
+                            <field name="asuransi_kapal" />
+                            <field name="asuransi_muatan" />
+                            <field name="currency_id" />
+                            <field name="demurage" />
+                        </group>
+                    </group>
+                </page>
+
+                <!-- SPAL TIME CHATTERED -->
+
+                <page string="SPAL - TBCH">
+                    <group name="spal_data_info" string="SPAL Data Info">
+                        <group>
+                            <field name="spal_number"/>
+                            <field name="spal_date" string="SPAL Date"/>
+                            <field name="company_id"/>
+                            <field name="bendera_spal"/>
+                            <field name="jumlah_muatan"/>
+                            <field name="kondisi_kontrak_muatan"/>
+                            <field name="uang_tambang"/>
+                            <field name="tanggal_kesediaan_muat"/>
+                        </group>
+                        <group>
+                            <field name="harga_termasuk" />
+                            <field name="harga_tidak_termasuk" />
+                            <field name="cara_pembayaran" />
+                            <field name="account_bank_number_id"/>
+                            <field name="loading_duration"/>
+                            <field name="unloading_duration"/>
+                            <field name="pengiriman_barang"/>
+                            <field name="penerima_barang"/>
+                            <field name="asuransi_kapal" />
+                            <field name="asuransi_muatan" />
+                            <field name="currency_id" />
+                            <field name="demurage" />
+                        </group>
+                    </group>
+                </page>
+
             </notebook>
         </field>
     </record>

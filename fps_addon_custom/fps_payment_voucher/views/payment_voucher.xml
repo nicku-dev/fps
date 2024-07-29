@@ -1,19 +1,21 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
-    <!-- FPS payment.voucher action window -->
-    <record id="payment_voucher_action" model="ir.actions.act_window">
+    <!-- FPS payment.requisition action window -->
+    <record id="payment_requisition_action" model="ir.actions.act_window">
         <field name="name">Pengajuan Cash Advance</field>
-        <field name="res_model">payment.voucher</field>
+        <field name="res_model">payment.requisition</field>
         <field name="view_mode">tree,form</field>
     </record>
 
-    <!-- payment.voucher form view -->
-    <record id="payment_voucher_view_form" model="ir.ui.view">
-        <field name="name">payment.voucher.view.form</field>
-        <field name="model">payment.voucher</field>
+    <!-- payment.requisition form view -->
+    <record id="payment_requisition_view_form" model="ir.ui.view">
+        <field name="name">payment.requisition.view.form</field>
+        <field name="model">payment.requisition</field>
         <field name="arch" type="xml">
-            <form string="Payment Voucher">
-        
+            <form string="Payment requisition">
+                <header>
+                     <field name="state" widget="statusbar" statusbar_visible="draft,done" statusbar_colors='{"draft":"red","confirm":"blue"}' readonly="1"/>
+                </header>
                 <sheet>
                     <div class="oe_title">
                         <label for="name" string="Code" />
@@ -33,23 +35,57 @@
                             <field name="penyelesaian_id"/>
                             <field name="tgl_penyelesaian"/>
                         </group>
-
+                        <group>
+                            <field name="type" attrs="{'readonly': [('state','!=','draft')]}" invisible="1"/>
+                            <field name="total_ajuan" invisible="1"/>
+                            <field name="type_pencairan" invisible="1"/>
+                            <field name="total_pencairan" attrs="{'invisible': [('total_pencairan','=',0.0)]}" readonly="1"/>
+                            <field name="cara_bayar" 
+                                attrs="{'readonly': [('state','in',('done','cancel','refuse'))]}" 
+                                required="1"
+                                />
+                            <field name="bank_id" attrs="{'readonly': [('state','in',('done','cancel','refuse'))], 'invisible': [('cara_bayar','!=','transfer')], 'required': [('cara_bayar','=','transfer')]}" options='{"no_create": 1, "no_open": 1}'/>
+                            <field name="no_rekening" attrs="{'readonly': [('state','in',('done','cancel','refuse'))], 'invisible': [('cara_bayar','!=','transfer')], 'required': [('cara_bayar','=','transfer')]}"/>
+                            <field name="atas_nama" attrs="{'readonly': [('state','in',('done','cancel','refuse'))], 'invisible': [('cara_bayar','!=','transfer')], 'required': [('cara_bayar','=','transfer'),('state','=','draft'),('type','!=','penyelesaian')]}"/>
+                            <field name="need_driver" attrs="{'readonly': [('state','!=','draft')],'invisible': [('type','!=','pengajuan')]}"/>
+                            <field name="company_id" attrs="{'readonly': [('state','!=','draft')]}" options='{"no_create": 1, "no_open": 1, "no_open": 1}'/>
+                            <field name="selesai" invisible="1"/>
+                            <!-- <field name="pencairan_id" readonly="1" attrs="{'invisible': [('pencairan_id','=',False)]}"/> -->
+                            <field name="tgl_pencairan" attrs="{'invisible': [('pencairan_id','=',False)],'readonly': [('state','in',('done','cancel','refuse'))]}" />
+                            
+                        </group>
                     </group>
                 </sheet>
             </form>
         </field>
     </record>
 
-    <record id="payment_voucher_view_tree" model="ir.ui.view">
-        <field name="name">payment voucher tree</field>
-        <field name="model">payment.voucher</field>
+    <record id="payment_requisition_view_tree" model="ir.ui.view">
+        <field name="name">payment requisition tree</field>
+        <field name="model">payment.requisition</field>
         <field name="arch" type="xml">
-            <tree string="Payment Voucher List">
+            <tree string="Payment requisition List">
                 <field name="name"/>
+                <field name="date"/>                     
+                <field name="end_date"/>                     
                 <field name="user_id"/>                     
-                <field name="department_id"/>                     
-                <field name="company_id"/>                     
-                <field name="type"/>
+                <field name="department_id"/>
+                <field name="responsible_id"/>
+                <field name="total_ajuan" sum="Total Amount"/>
+                <field name="total_pencairan" sum="Total Amount"/>
+                <field name="state"/>
+                <field name="ajuan_id"/>
+                <!-- <field name="pencairan_id"/> -->
+                <field name="tgl_pencairan"/>
+                <field name="tgl_penyelesaian"/>
+                <!-- <field name="selesai_id" invisible="1"/> -->
+                <field name="penyelesaian_id" invisible="0"/>
+                <field name="journal_id" invisible="0"/>
+                <field name="cara_bayar"/>
+                <field name="bank_id"/>
+                <field name="no_rekening"/>
+                <field name="notes"/>
+                <field name="company_id"/>
             </tree>
         </field>
     </record>        

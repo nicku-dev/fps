@@ -5,9 +5,9 @@ from odoo.exceptions import UserError, AccessError, ValidationError
 import logging
 _logger = logging.getLogger(__name__)
 
-class PaymentVoucher(models.Model):
-    _name = 'payment.voucher'
-    _description = "Payment Voucher"
+class PaymentRequisition(models.Model):
+    _name = 'payment.requisition'
+    _description = "Payment Requisition"
     _order = 'name desc'
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
@@ -29,10 +29,10 @@ class PaymentVoucher(models.Model):
                               ('done', 'Done'),
                               ('cancel', 'Cancelled'),
                               ('refuse','Refused')], default='draft', required=True, index=True, track_visibility='onchange',)
-    payment_voucher_ids = fields.One2many("payment.voucher.detail", inverse_name="payment_voucher_id", track_visibility='onchange',)
+    payment_requisition_ids = fields.One2many("payment.requisition.detail", inverse_name="payment_requisition_id", track_visibility='onchange',)
     coa_debit = fields.Many2one("account.account", string="Debit Account")
     coa_kredit = fields.Many2one("account.account", string="Credit Account")
-    ajuan_id = fields.Many2one('payment.voucher', string="Ajuan", domain="[('type','=','pengajuan')]")
+    ajuan_id = fields.Many2one('payment.requisition', string="Ajuan", domain="[('type','=','pengajuan')]")
     total_ajuan = fields.Float(string="Total Ajuan", track_visibility='onchange',)
     # total_ajuan_penyelesaian = fields.Float(string="Total Pencairan", related="ajuan_id.total_pencairan", readonly=True, track_visibility='onchange',)
     need_driver = fields.Boolean(string="Perjalanan Dinas?", track_visibility='onchange',)
@@ -55,21 +55,21 @@ class PaymentVoucher(models.Model):
     date = fields.Date(string="Required Date", required=True, default=fields.Datetime.now, track_visibility='onchange',)
     terbilang = fields.Char(string='Terbilang', translate=True, readonly=True, states={'draft': [('readonly', False)]})
     is_user_pencairan = fields.Boolean(compute="check_validity")
-    pencairan_id = fields.Many2one("payment.voucher.pencairan","Pencairan")
+    pencairan_id = fields.Many2one("payment.requisition.pencairan","Pencairan")
     tgl_pencairan = fields.Date("Tanggal Pencairan",)# related="pencairan_id.tgl_pencairan", store=True)
     sisa_penyelesaian = fields.Float("Sisa Penyelesaian", compute="_get_sisa_penyelesaian", store=True,track_visibility='onchange',)
     end_date = fields.Date(string="End Date",  track_visibility='onchange',)
     by_pass_selisih = fields.Boolean("By Pass Different Amount",  track_visibility='onchange')
-    selesai_id = fields.Many2one('payment.voucher','Selesai ID',compute="search_input_penyelesaian")
-    penyelesaian_id = fields.Many2one('payment.voucher','Penyelesaian')# store ke db
+    selesai_id = fields.Many2one('payment.requisition','Selesai ID',compute="search_input_penyelesaian")
+    penyelesaian_id = fields.Many2one('payment.requisition','Penyelesaian')# store ke db
     tgl_penyelesaian = fields.Date("Tgl Penyelesaian")
 
     @api.model
     def create(self, vals):
         """Create Sequence"""
-        sequence_code = 'payment.voucher.pengajuan'
+        sequence_code = 'payment.requisition.pengajuan'
         vals['name'] = self.env['ir.sequence'].next_by_code(sequence_code)
-        return super(PaymentVoucher, self).create(vals)
+        return super(PaymentRequisition, self).create(vals)
 
 
 class PaymentVoucherDetail(models.Model):

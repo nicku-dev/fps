@@ -32,38 +32,38 @@ class FreightOrder(models.Model):
         vals['name'] = self.env['ir.sequence'].next_by_code(sequence_code)
         return super(FreightOrder, self).create(vals)
 
-    def create_document_clearance(self):
-        """Create custom clearance"""
-        clearance = self.env['document.clearance'].create({
-            'name': 'DOC - ' + self.name,
-            'freight_id': self.id,
-            'date': self.order_date,
-            'loading_port_id': self.loading_port_id.id,
-            'discharging_port_id': self.discharging_port_id.id,
-            'agent_id': self.agent_id.id,
-        })
-        result = {
-            'name': 'action.name',
-            'type': 'ir.actions.act_window',
-            'views': [[False, 'form']],
-            'target': 'current',
-            'res_id': clearance.id,
-            'res_model': 'document.clearance',
-        }
-        self.clearance = True
-        return result
+    # def create_document_clearance(self):
+    #     """Create custom clearance"""
+    #     clearance = self.env['document.clearance'].create({
+    #         'name': 'DOC - ' + self.name,
+    #         'freight_id': self.id,
+    #         'date': self.order_date,
+    #         'loading_port_id': self.loading_port_id.id,
+    #         'discharging_port_id': self.discharging_port_id.id,
+    #         'agent_id': self.agent_id.id,
+    #     })
+    #     result = {
+    #         'name': 'action.name',
+    #         'type': 'ir.actions.act_window',
+    #         'views': [[False, 'form']],
+    #         'target': 'current',
+    #         'res_id': clearance.id,
+    #         'res_model': 'document.clearance',
+    #     }
+    #     self.clearance = True
+    #     return result
 
-    def get_document_clearance(self):
-        """Get custom clearance"""
-        self.ensure_one()
-        return {
-            'type': 'ir.actions.act_window',
-            'name': 'Custom Clearance',
-            'view_mode': 'tree,form',
-            'res_model': 'custom.clearance',
-            'domain': [('freight_id', '=', self.id)],
-            'context': "{'create': False}"
-        }
+    # def get_document_clearance(self):
+    #     """Get custom clearance"""
+    #     self.ensure_one()
+    #     return {
+    #         'type': 'ir.actions.act_window',
+    #         'name': 'Custom Clearance',
+    #         'view_mode': 'tree,form',
+    #         'res_model': 'custom.clearance',
+    #         'domain': [('freight_id', '=', self.id)],
+    #         'context': "{'create': False}"
+    #     }
 
     def track_order(self):
         """Track the order"""
@@ -219,54 +219,43 @@ class FreightOrder(models.Model):
     def action_confirm(self):
         """Confirm order"""
         for rec in self:
-            clearance = self.env['custom.clearance'].search([
-                ('freight_id', '=', self.id)])
-            if clearance:
-                if clearance.state == 'confirm':
-                    rec.state = 'confirm'
-                    base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
-                    Urls = urls.url_join(base_url, 'web#id=%(id)s&model=freight.order&view_type=form' % {'id': self.id})
-                    mail_content = _('Hi %s,<br> '
-                                     'The Freight Order %s is Confirmed '
-                                     '<div style = "text-align: center; '
-                                     'margin-top: 16px;"><a href = "%s"'
-                                     'style = "padding: 5px 10px; '
-                                     'font-size: 12px; line-height: 18px; '
-                                     'color: #FFFFFF; border-color:#875A7B; '
-                                     'text-decoration: none; '
-                                     'display: inline-block; '
-                                     'margin-bottom: 0px; font-weight: 400;'
-                                     'text-align: center; '
-                                     'vertical-align: middle; '
-                                     'cursor: pointer; white-space: nowrap; '
-                                     'background-image: none; '
-                                     'background-color: #875A7B; '
-                                     'border: 1px solid #875A7B; '
-                                     'border-radius:3px;">'
-                                     'View %s</a></div>'
-                                     ) % (rec.agent_id.name, rec.name,
+            rec.state = 'confirm'
+            base_url = self.env['ir.config_parameter'].sudo().get_param(
+                'web.base.url')
+            Urls = urls.url_join(base_url, 'web#id=%(id)s&model=freight.order&view_type=form' % {'id': self.id})
+            mail_content = _('Hi %s,<br> '
+                            'The Freight Order %s is Confirmed '
+                            '<div style = "text-align: center; '
+                            'margin-top: 16px;"><a href = "%s"'
+                            'style = "padding: 5px 10px; '
+                            'font-size: 12px; line-height: 18px; '
+                            'color: #FFFFFF; border-color:#875A7B; '
+                            'text-decoration: none; '
+                            'display: inline-block; '
+                            'margin-bottom: 0px; font-weight: 400;'
+                            'text-align: center; '
+                            'vertical-align: middle; '
+                            'cursor: pointer; white-space: nowrap; '
+                            'background-image: none; '
+                            'background-color: #875A7B; '
+                            'border: 1px solid #875A7B; '
+                            'border-radius:3px;">'
+                            'View %s</a></div>'
+                            ) % (rec.agent_id.name, rec.name,
                                           Urls, rec.name)
-                    email_to = self.env['res.partner'].search([
-                        ('id', 'in', (self.shipper_id.id,
-                                      self.consignee_id.id, self.agent_id.id))])
-                    for mail in email_to:
-                        main_content = {
-                            'subject': _('Freight Order %s is Confirmed') % self.name,
-                            'author_id': self.env.user.partner_id.id,
-                            'body_html': mail_content,
-                            'email_to': mail.email
-                        }
-                        mail_id = self.env['mail.mail'].create(main_content)
-                        mail_id.mail_message_id.body = mail_content
-                        mail_id.send()
-                elif clearance.state == 'draft':
-                    raise ValidationError("the custom clearance ' %s ' is "
-                                          "not confirmed" % clearance.name)
-            else:
-                raise ValidationError("Create a custom clearance for %s" % rec.name)
-
-            for line in rec.order_ids:
-                line.container_id.state = 'reserve'
+            email_to = self.env['res.partner'].search([
+                ('id', 'in', (self.shipper_id.id,
+                                self.consignee_id.id, self.agent_id.id))])
+            for mail in email_to:
+                main_content = {
+                    'subject': _('Freight Order %s is Confirmed') % self.name,
+                    'author_id': self.env.user.partner_id.id,
+                    'body_html': mail_content,
+                    'email_to': mail.email
+                }
+                mail_id = self.env['mail.mail'].create(main_content)
+                mail_id.mail_message_id.body = mail_content
+                mail_id.send()
 
     def action_done(self):
         """Mark order as done"""
