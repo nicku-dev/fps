@@ -28,8 +28,8 @@
         'static/description/icon.png',
         ],
     'data': [
-        "data/fps_payment_voucher_data.xml",
-        'views/payment_voucher.xml',
+        'data/payment_requisition_data.xml',
+        'views/payment_requisition_views.xml',
         'views/menu.xml',
         'security/ir.model.access.csv',
         ],

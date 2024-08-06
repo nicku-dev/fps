@@ -15,6 +15,7 @@
         ],
     'data': [
         'security/ir.model.access.csv',
+        'views/sale_order_pricelist_view.xml',
         'data/sale.shipment.type.csv',
         'views/sale_order_view.xml',
         'reports/spal_report.xml',

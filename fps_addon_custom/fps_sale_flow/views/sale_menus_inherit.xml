@@ -34,6 +34,11 @@
             action="action_sales_md_pricelist" 
             sequence="30"/>
 
+        <menuitem id="sales_md_pricelist_item" 
+            name="Sale MD Pricelist Iten" 
+            action="action_sales_md_pricelist_item" 
+            sequence="31"/>
+
         <menuitem id="sale_shipment_type" 
             name="Sale Shipment Type" 
             action="action_sales_shipment_type" 

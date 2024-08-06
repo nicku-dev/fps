@@ -15,6 +15,7 @@
             "--config=D:\\DEV\\FPS\\fps_dev_24\\other\\odoo_fps.conf",
             // "--dev=all",
             "--dev=xml",
+            "-u fps_payment_voucher",
         ],
         "cwd": "${workspaceRoot}",
         "env": {},

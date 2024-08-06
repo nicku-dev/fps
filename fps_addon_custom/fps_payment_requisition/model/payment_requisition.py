@@ -34,9 +34,9 @@ class PaymentRequisition(models.Model):
     coa_kredit = fields.Many2one("account.account", string="Credit Account")
     ajuan_id = fields.Many2one('payment.requisition', string="Ajuan", domain="[('type','=','pengajuan')]")
     total_ajuan = fields.Float(string="Total Ajuan", track_visibility='onchange',)
-    # total_ajuan_penyelesaian = fields.Float(string="Total Pencairan", related="ajuan_id.total_pencairan", readonly=True, track_visibility='onchange',)
+    total_ajuan_penyelesaian = fields.Float(string="Total Pencairan", related="ajuan_id.total_pencairan", readonly=True, track_visibility='onchange',)
     need_driver = fields.Boolean(string="Perjalanan Dinas?", track_visibility='onchange',)
-    # need_driver_penyelesaian = fields.Boolean(string="Penyelesaian Perjalanan Dinas?", related="ajuan_id.need_driver",store=True)
+    need_driver_penyelesaian = fields.Boolean(string="Penyelesaian Perjalanan Dinas?", related="ajuan_id.need_driver",store=True)
     selesai = fields.Boolean(string="Selesai")
     journal_id = fields.Many2one("account.journal", string="Journal", track_visibility='onchange')# default=_default_journal)
     journal_entry_id = fields.Many2one("account.move", string="Journal Entry")
@@ -72,11 +72,11 @@ class PaymentRequisition(models.Model):
         return super(PaymentRequisition, self).create(vals)
 
 
-class PaymentVoucherDetail(models.Model):
-    _name = "payment.voucher.detail"
+class PaymentRequisitionDetail(models.Model):
+    _name = "payment.requisition.detail"
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
-    payment_voucher_id = fields.Many2one("payment.voucher", string="Nomor Payment Voucher", track_visibility='onchange',)
+    payment_requisition_id = fields.Many2one("payment.requisition", string="Nomor Payment Requisition", track_visibility='onchange',)
     product_id = fields.Many2one("product.product", string="Product", track_visibility='onchange',)
     partner_id = fields.Many2one("res.partner", string="Partner", track_visibility='onchange')
     store_id = fields.Many2one("res.partner", string="Store", track_visibility='onchange')
