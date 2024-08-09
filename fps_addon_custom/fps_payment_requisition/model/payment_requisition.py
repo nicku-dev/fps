@@ -29,7 +29,7 @@ class PaymentRequisition(models.Model):
                               ('done', 'Done'),
                               ('cancel', 'Cancelled'),
                               ('refuse','Refused')], default='draft', required=True, index=True, track_visibility='onchange',)
-    payment_requisition_ids = fields.One2many("payment.requisition.detail", inverse_name="payment_requisition_id", track_visibility='onchange',)
+    payment_requisition_ids = fields.One2many("payment.requisition.detail", inverse_name="payment_requisition_id", track_visibility='onchange')
     coa_debit = fields.Many2one("account.account", string="Debit Account")
     coa_kredit = fields.Many2one("account.account", string="Credit Account")
     ajuan_id = fields.Many2one('payment.requisition', string="Ajuan", domain="[('type','=','pengajuan')]")
@@ -98,3 +98,19 @@ class PaymentRequisitionDetail(models.Model):
                               ('cancel', 'Cancelled'),
                               ('refuse','Refused')], default='draft', required=True, index=True, track_visibility='onchange',)
     coa_debit = fields.Many2one('account.account', string="Account", track_visibility='onchange')
+
+    @api.depends('qty','unit_price')
+    def _calc_sub_total(self):
+        for i in self:
+            qty = i.qty
+            price = i.unit_price
+            sub_total = qty * price
+            i.sub_total = sub_total
+            i.total = sub_total
+
+    @api.model
+    def create(self, vals):
+        #import pdb;pdb.set_trace()
+        if vals['qty'] == 0.0 or vals['unit_price'] == 0.0:
+            raise ValidationError(_("Unit price tidak boleh di isi 0 !"))
+        return super(PaymentRequisitionDetail, self).create(vals)

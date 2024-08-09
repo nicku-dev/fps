@@ -2,6 +2,9 @@
 	"folders": [
 		{
 			"path": ".."
+		},
+		{
+			"path": "C:/NICKU/odoo16e/odoo/addons"
 		}
 	],
 	"settings": {}
