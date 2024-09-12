@@ -10,6 +10,9 @@ class FreightOrder(models.Model):
     shippment_type = fields.Many2one(comodel_name='freight.order.type', string='Shippment Type')
     shipper_id = fields.Many2one('res.partner', 'Shipper', required=True,help="Shipper's Details")
     consignee_id = fields.Many2one('res.partner', 'Consignee',help="Details of consignee")
+    departure_time = fields.Datetime(string='Departure Time')
+    arrival_time = fields.Datetime(string='Arrival Time')
+    
     state = fields.Selection([('draft', 'Draft'), ('submit', 'Submitted'),
                               ('confirm', 'Confirmed'),
                               ('invoice', 'Invoiced'), ('done', 'Done'),
@@ -18,13 +21,19 @@ class FreightOrder(models.Model):
     invoice_count = fields.Integer(compute='compute_count')
     so_count = fields.Integer(compute='compute_count')
     order_ids = fields.One2many('freight.order.line', 'order_id')
-    route_ids = fields.One2many('freight.order.routes.line', 'route_id')
+    route_ids = fields.One2many('freight.routes', 'route_id')
     agent_id = fields.Many2one('res.partner', 'Agent', required=True,
                                help="Details of agent")
     expected_date = fields.Date('Expected Date')
     track_ids = fields.One2many('freight.track', 'track_id')
-    vehicle_id = fields.Many2one(comodel_name='fleet.vehicle', string='Fleet Number')
+    vehicle_id = fields.Many2one(comodel_name='fleet.vehicle', string='Nama Kapal')
+    koordinator_kapal_id = fields.Many2one('hr.employee', 'Name', required=True,
+                            help="Koordinator Kapal (employe)")
+    fo_region_id = fields.Many2one('freight.port', 'region',  help='Region')
+    # sol_ids = fields.One2many(comodel_name='sale.order.line', inverse_name='fo_number_2_id', string='fo_id')
+    
 
+    
     @api.model
     def create(self, vals):
         """Create Sequence"""
@@ -94,7 +103,7 @@ class FreightOrder(models.Model):
         if self.route_ids:
             for route in self.route_ids:
                 value = (0, 0, {
-                    'name': route.operation_id.name,
+                    'name': route.route_id.name,
                     'price_unit': route.sale,
                 })
                 lines.append(value)
@@ -163,11 +172,6 @@ class FreightOrder(models.Model):
     def compute_count(self):
         """Compute custom clearance and account move's count"""
         for rec in self:
-            # if rec.env['custom.clearance'].search([('freight_id', '=', rec.id)]):
-            #     rec.clearance_count = rec.env['custom.clearance'].search_count(
-            #         [('freight_id', '=', rec.id)])
-            # else:
-            #     rec.clearance_count = 0
             if rec.env['account.move'].search([('ref', '=', rec.name)]):
                 rec.invoice_count = rec.env['account.move'].search_count(
                     [('ref', '=', rec.name)])
@@ -178,6 +182,11 @@ class FreightOrder(models.Model):
                     [('fo_number', '=', rec.name)])
             else:
                 rec.so_count = 0
+            # if rec.env['sale.order.line'].search([('fo_number', '=', rec.name)]):
+            #     rec.so_count = rec.env['sale.order.line'].search_count(
+            #         [('fo_number', '=', rec.name)])
+            # else:
+            #     rec.so_line_count = 0
                 
     def action_submit(self):
         """Submitting order"""
@@ -358,13 +367,6 @@ class FreightOrderLine(models.Model):
                     rec.total_price = rec.volume * rec.price
 
 
-class FreightOrderRouteLine(models.Model):
-    _name = 'freight.order.routes.line'
-
-    route_id = fields.Many2one('freight.order')
-    operation_id = fields.Many2one('freight.routes', required=True)
-    source_loc = fields.Many2one('freight.port', 'Source Location')
-    destination_loc = fields.Many2one('freight.port', 'Destination Location')
 
 
 class FreightOrderServiceLine(models.Model):

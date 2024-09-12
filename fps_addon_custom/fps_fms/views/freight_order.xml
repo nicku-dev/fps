@@ -6,14 +6,30 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="name" string="FO Number"/>
-                <field name="shippment_type"/>
+                <field name="vehicle_id" string="Kapal"/>
+                <!-- <field name="shippment_type"/> -->
+                <field name="koordinator_kapal_id" string="Koordinator Kapal"/>
                 <field name="shipper_id"/>
-                <field name="vehicle_id"/>
-                <field name="create_date"/>
-                <!-- <field name="create_by"/> -->
+                <field name="departure_time"/>
+                <field name="arrival_time"/>
+                <field name="state" 
+                    decoration-success="state == 'done'"
+                    decoration-info="state == 'submit'"
+                    decoration-warning="state == 'cancel'"
+                    optional="show" readonly="1" widget="badge"/>
             </tree>
         </field>
     </record>
+
+    <!-- <record id="view_freight_order_filter" model="ir.ui.view">
+        <field name="name">freight.order.search</field>
+        <field name="model">freight.order</field>
+        <field name="arch" type="xml">
+            <search>
+                <filter string="Agent" name="Agent" domain="[('agent_id','=',False)]"/>
+            </search>
+            </field>
+    </record> -->
 
     <record id="freight_order_form_view" model="ir.ui.view">
         <field name="name">Freight Order</field>
@@ -39,10 +55,6 @@
                     </header>
                     <sheet>
                         <div class="oe_button_box" name="button_box">
-                            <!-- <button class="oe_stat_button" type="object" name="get_custom_clearance"
-                                icon="fa-id-card-o">
-                                <field string="Clearance" name="clearance_count" widget="statinfo"/>
-                            </button> -->
                             <button class="oe_stat_button" type="object" name="get_invoice"
                                 icon="fa-pencil-square-o">
                                 <field string="Invoice" name="invoice_count" widget="statinfo"/>
@@ -61,20 +73,31 @@
                             <group>
                                 <field name="shippment_type"/>
                                 <field name="shipper_id"/>
-                                <field name="order_date"/>
+                                <field name="vehicle_id"/>
+                                <field name="order_date" string="Order Kapal"/>
+                                <field name="departure_time"/>
+                                <field name="arrival_time"/>
+                                <field name="koordinator_kapal_id" string="Koordinator Kapal"/>
+                                <field name="fo_region_id" string="Region"/>
                             </group>
                             <group>
+                                <field name="create_date"/>
                                 <field name="agent_id"/>
                                 <field name="consignee_id"/>
                                 <field name="expected_date"/>
-                                <field name="vehicle_id"/>
                             </group>
                         </group>
                         <notebook>
+                            <!-- <page name="carriage_tab" string="Carriage Tab">
+                                <field name="sol_ids" mode="tree" readonly="1" domain="[('product_id', '=', product_id)]"/>
+                            </page> -->
+
                             <page string="Routes">
                                 <field name="route_ids">
                                     <tree string="Routes" editable="bottom">
-                                        <field name="operation_id"/>
+                                        <field name="route_code"/>
+                                        <field name="name"/>
+                                        <field name="region"/>
                                         <field name="source_loc"/>
                                         <field name="destination_loc"/>
                                     </tree>

@@ -1,0 +1,27 @@
+
+{
+    'name': "BR Invoice Multi Approval",
+    'version': '16.0.2.0.0',
+    'summary': """This module add the multiple approval option for invoice,
+    			  bill,refund and credit notes.""",
+    'description': """This module add the multiple approval option for invoice,
+    bill,refund and credit notes.""",
+    'category': 'Accounting',
+    'author': 'Banibro IT Solutions Pvt Ltd.',
+    'company': 'Banibro IT Solutions Pvt Ltd.',
+    'website': 'https://banibro.com',
+    'depends': ['account'],
+    'data': [
+        'data/data.xml',
+        'security/groups.xml',
+        'security/ir.model.access.csv',
+        'views/invoice_approval_view.xml',
+        'views/account_move_inherited.xml',
+    ],
+    'license': 'AGPL-3',
+    'email': "support@banibro.com",
+    'images': ['static/description/banner.png',
+                'static/description/icon.png',],
+    'installable': True,
+    'application': True,
+}

@@ -9,7 +9,7 @@
     'maintainer': 'Lentera Kreasi Teknologi',
     'company': 'Fangiono Perkasa Sejati',
     'website': 'https://www.lenterateknologi.com',
-    'depends': ['base', 'product', 'account', 'sale', 'fleet'],
+    'depends': ['base', 'product', 'account', 'sale', 'fleet', 'sale_blanket_order'],
     'images': [
         'static/description/icon.png',
         ],
@@ -17,6 +17,7 @@
         'data/freight.port.csv',
         'data/freight.load.csv',
         'views/freight_load.xml',
+        'views/freight_route.xml',
         'data/freight_order_type.xml',
         'data/freight.port.csv',
         'views/freight_order.xml',

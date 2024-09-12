@@ -1,0 +1,728 @@
+<odoo>
+    <record id="paperformat_fps_spal_potrait" model="report.paperformat">
+        <field name="name">SPAL A4 Potrait</field>
+        <field name="default" eval="False"/>
+        <field name="disable_shrinking" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">0</field>
+        <field name="margin_bottom">0</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <!-- <field name="header_line" eval="False" />
+        <field name="header_spacing">5</field> -->
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="action_fps_so_spal_report" model="ir.actions.report">
+        <field name="name">SPAL - FC</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">fps_sale_flow.sale_spal_print</field>
+        <field name="binding_model_id" ref="model_sale_order" />
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="paperformat_fps_spal_potrait" />
+    </record>
+
+    <template id="sale_spal_print">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.html_container">
+                                 
+					<style type="text/css">
+						.awlist10 {
+							list-style: none;
+							counter-reset: awlistcounter6_1
+						}
+
+						.awlist10>li:before {
+							content: '23.' counter(awlistcounter6_1);
+							counter-increment: awlistcounter6_1
+						}
+
+						.new-page {
+							page-break-before: always;
+						}
+						
+					</style>
+					<br/><br/><br/>
+					<p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:14pt">
+						<strong><u><span style="font-family:Arial; ">SURAT PERJANJIAN ANGKUTAN LAUT</span></u></strong>
+					</p>
+					<h1 style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:8pt">
+						<span style="font-family:Arial">No. : <span t-field="doc.spal_number"/></span>
+					</h1>
+					<br />
+					<table cellspacing="0" cellpadding="0" style="width:100%; border:0.75pt solid #000000; border-collapse:collapse">
+						<tr>
+							<td style="width:50.18%; border-right-style:solid; border-right-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding:1.4pt 2.48pt; vertical-align:top">
+								<p style="margin-top:0pt; margin-bottom:0pt; text-align:justify; font-size:8pt">
+									<span style="font-family:Arial">Pada hari ini <span t-field="doc.commitment_date"/> bertempat di Jakarta, telah
+										disepakati bersama Perjanjian Angkutan Laut (untuk selanjutnya disebut sebagai
+										"</span><strong><span style="font-family:Arial; ">Perjanjian</span></strong><span
+										style="font-family:Arial">") sebagaimana point-point berikut :</span>
+								</p>
+							</td>
+							<td style="width:49.82%; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding:1.4pt 2.48pt; vertical-align:top">
+								<p style="margin-top:0pt; margin-bottom:0pt; text-align:justify; font-size:8pt">
+									<span style="font-family:Arial">Perjanjian ini mengikuti dan sesuai dengan </span><strong><span
+											style="font-family:Arial; ">The Baltic And International Maritime Conferences Uniform General
+											Charter</span></strong><span style="font-family:Arial"> (as revised 1973, 1976 and 1994 Antwerp)
+										Code Name "</span><strong><span style="font-family:Arial; ">GENCON</span></strong><span
+										style="font-family:Arial">".</span>
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td style="width:50.18%; border-top-style:solid; border-top-width:0.75pt; border-right-style:solid; border-right-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding:1.4pt 2.48pt; vertical-align:top">								
+								<ol start="1" type="1" style="margin:0pt; padding-left:0pt">
+									<li
+										style="margin-left:16.12pt; text-align:justify; padding-left:6.58pt; font-family:Arial; font-size:8pt">
+										<strong>OWNER KAPAL/PEMBERI JASA ANGKUTAN PERAIRAN ("PIHAK PERTAMA") :</strong>
+									</li>
+								</ol>
+								<p style="margin-top:0pt; margin-left:22.7pt; margin-bottom:0pt; text-align:justify; font-size:8pt">
+									<strong><span style="font-family:Arial; "><span t-field="doc.company_id"/></span></strong>
+								</p>
+							</td>
+							<td style="width:49.82%; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding:1.4pt 2.48pt; vertical-align:top">
+								<ol start="2" type="1" style="margin:0pt; padding-left:0pt">
+									<li
+										style="margin-left:16.12pt; text-align:justify; padding-left:6.58pt; font-family:Arial; font-size:8pt">
+										<strong>PEMILIK MUATAN ("PIHAK KEDUA") :</strong>
+									</li>
+								</ol>
+								<p style="margin-top:0pt; margin-left:22.7pt; margin-bottom:0pt; text-align:justify; font-size:8pt">
+									<strong><span style="font-family:Arial; "><span t-field="doc.consignee_id"/></span></strong>
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td style="width:50.18%; border-top-style:solid; border-top-width:0.75pt; border-right-style:solid; border-right-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding:1.4pt 2.48pt; vertical-align:top">
+								<ol start="3" type="1" style="margin:0pt; padding-left:0pt">
+									<li
+										style="margin-left:16.12pt; text-align:justify; padding-left:6.58pt; font-family:Arial; font-size:8pt">
+										<strong>NAMA TUG BOAT/BARGE :</strong>
+									</li>
+								</ol>
+								<p style="margin-top:0pt; margin-left:22.7pt; margin-bottom:0pt; text-align:justify; font-size:8pt">
+									<span style="font-family:Arial"><span t-field="doc.nama_kapal"/></span>
+								</p>
+							</td>
+							<td style="width:49.82%; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding:1.4pt 2.48pt; vertical-align:top">
+								<ol start="4" type="1" style="margin:0pt; padding-left:0pt">
+									<li
+										style="margin-left:16.12pt; text-align:justify; padding-left:6.58pt; font-family:Arial; font-size:8pt">
+										<strong>BENDERA :</strong>
+									</li>
+								</ol>
+								<p style="margin-top:0pt; margin-left:22.7pt; margin-bottom:0pt; text-align:justify; font-size:8pt">
+									<span style="font-family:Arial">&#xa0;</span><span style="font-family:Arial"><span t-field="doc.bendera_spal"/></span>
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td style="width:50.18%; border-top-style:solid; border-top-width:0.75pt; border-right-style:solid; border-right-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding:1.4pt 2.48pt; vertical-align:top">
+								<ol start="5" type="1" style="margin:0pt; padding-left:0pt">
+									<li
+										style="margin-left:16.12pt; text-align:justify; padding-left:6.58pt; font-family:Arial; font-size:8pt">
+										<strong>JENIS DAN JUMLAH MUATAN/CARGO :</strong>
+									</li>
+								</ol>
+								<p style="margin-top:0pt; margin-left:22.7pt; margin-bottom:0pt; font-size:8pt">
+									<span style="font-family:Arial"><span t-field="doc.jumlah_muatan"/></span>
+								</p>
+								<p style="margin-top:0pt; margin-left:22.7pt; margin-bottom:0pt; font-size:8pt">
+									<span style="font-family:Arial">(sesuai batas aman kapal &amp; konfirmasi master)</span>
+								</p>
+							</td>
+							<td style="width:49.82%; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding:1.4pt 2.48pt; vertical-align:top">
+								<ol start="6" type="1" style="margin:0pt; padding-left:0pt">
+									<li
+										style="margin-left:16.12pt; text-align:justify; padding-left:6.58pt; font-family:Arial; font-size:8pt">
+										<strong>KONDISI KONTRAK MUATAN/VOYAGE CONDITIONS :</strong>
+									</li>
+								</ol>
+								<p style="margin-top:0pt; margin-left:22.7pt; margin-bottom:0pt; text-align:justify; font-size:8pt">
+									<span style="font-family:Arial"><span t-field="doc.kondisi_kontrak_muatan"/></span>
+								</p>
+							</td>
+						</tr>
+						<tr style="height:14.75pt">
+							<td style="width:50.18%; border-top-style:solid; border-top-width:0.75pt; border-right-style:solid; border-right-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding:1.4pt 2.48pt; vertical-align:top">
+								<ol start="7" type="1" style="margin:0pt; padding-left:0pt">
+									<li
+										style="margin-left:16.12pt; text-align:justify; padding-left:6.58pt; font-family:Arial; font-size:8pt">
+										<strong>UANG TAMBANG / FREIGHT KAPAL :</strong>
+									</li>
+								</ol>
+								<p style="margin-top:0pt; margin-left:22.7pt; margin-bottom:0pt; text-align:justify; font-size:8pt">
+									<span style="font-family:Arial"><span t-field="doc.uang_tambang"/></span>
+								</p>
+							</td>
+							<td style="width:49.82%; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding:1.4pt 2.48pt; vertical-align:top">
+								<ol start="8" type="1" style="margin:0pt; padding-left:0pt">
+									<li
+										style="margin-left:16.12pt; text-align:justify; padding-left:6.58pt; font-family:Arial; font-size:8pt">
+										<strong>KESEDIAAN UNTUK MUAT/LAY CAN :</strong>
+									</li>
+								</ol>
+								<p style="margin-top:0pt; margin-left:22.7pt; margin-bottom:0pt; text-align:justify; font-size:8pt">
+									<span style="font-family:Arial"><span t-field="doc.tanggal_kesediaan_muat"/></span>
+								</p>
+							</td>
+						</tr>				
+						<tr>
+							<td
+								style="width:50.18%; border-top-style:solid; border-top-width:0.75pt; border-right-style:solid; border-right-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding:1.4pt 2.48pt; vertical-align:top">
+								<ol start="11" type="1" style="margin:0pt; padding-left:0pt">
+									<li style="margin-left:16.12pt; text-align:justify; padding-left:6.58pt; font-family:Arial; font-size:8pt">
+										<strong>CARA PEMBAYARAN :</strong>
+									</li>
+								</ol>
+								<p style="margin-top:0pt; margin-left:22.7pt; margin-bottom:0pt; text-align:justify; font-size:8pt">
+									<span style="font-family:Arial"><span t-field="doc.cara_pembayaran"/></span>
+								</p>
+							</td>
+							<td
+								style="width:49.82%; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding:1.4pt 2.48pt; vertical-align:top">
+								<ol start="12" type="1" style="margin:0pt; padding-left:0pt">
+									<li
+										style="margin-left:16.12pt; text-align:justify; padding-left:6.58pt; font-family:Arial; font-size:8pt">
+										<strong>REKENING PEMBAYARAN :</strong>
+									</li>
+								</ol>
+								<p style="margin-top:0pt; margin-left:22.7pt; margin-bottom:0pt; text-align:justify; font-size:8pt">
+									<span style="font-family:Arial">
+										<span t-field="doc.account_bank_number_id"/>
+									</span>
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td
+								style="width:50.18%; border-top-style:solid; border-top-width:0.75pt; border-right-style:solid; border-right-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding:1.4pt 2.48pt; vertical-align:top">
+								<ol start="13" type="1" style="margin:0pt; padding-left:0pt">
+									<li style="margin-left:16.12pt; text-align:justify; padding-left:6.58pt; font-family:Arial; font-size:8pt">
+										<strong>PELABUHAN MUAT/POL :</strong>
+									</li>
+								</ol>
+								<p style="margin-top:0pt; margin-left:22.7pt; margin-bottom:0pt; font-size:8pt">
+									<span style="font-family:Arial">Sei Matan
+										<!-- <span t-field="doc.so_pod"/> -->
+									</span>
+								</p>
+							</td>
+							<td style="width:49.82%; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding:1.4pt 2.48pt; vertical-align:top">
+								<ol start="14" type="1" style="margin:0pt; padding-left:0pt">
+									<li
+										style="margin-left:16.12pt; text-align:justify; padding-left:6.58pt; font-family:Arial; font-size:8pt">
+										<strong>PELABUHAN BONGKAR/POD :</strong>
+									</li>
+								</ol>
+								<p style="margin-top:0pt; margin-left:22.7pt; margin-bottom:0pt; text-align:justify; font-size:8pt">
+									<span style="font-family:Arial">Dumai
+										<!-- <span t-field="doc.so_pol"/> -->
+									</span>
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td style="width:50.18%; border-top-style:solid; border-top-width:0.75pt; border-right-style:solid; border-right-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding:1.4pt 2.48pt; vertical-align:top">
+								<ol start="15" type="1" style="margin:0pt; padding-left:0pt">
+									<li
+										style="margin-left:16.12pt; text-align:justify; padding-left:6.58pt; font-family:Arial; font-size:8pt">
+										<strong>PRORATA MUAT &amp; BONGKAR :</strong>
+									</li>
+								</ol>
+								<p style="margin-top:0pt; margin-left:22.7pt; margin-bottom:0pt; font-size:8pt">
+									<span style="font-family:Arial">BLM TAHU NIH PAKE NAMA FIELD APA</span>
+								</p>
+							</td>
+							<td
+								style="width:49.82%; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding:1.4pt 2.48pt; vertical-align:top">
+								<ol start="16" type="1" style="margin:0pt; padding-left:0pt">
+									<li
+										style="margin-left:16.12pt; text-align:justify; padding-left:6.58pt; font-family:Arial; font-size:8pt">
+										<strong>TOLERANSI SUSUT :</strong>
+									</li>
+								</ol>
+								<p style="margin-top:0pt; margin-left:22.7pt; margin-bottom:0pt; font-size:8pt">
+									<span style="font-family:Arial"><span t-field="doc.toleransi_susut"/></span>
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td
+								style="width:50.18%; border-top-style:solid; border-top-width:0.75pt; border-right-style:solid; border-right-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding:1.4pt 2.48pt; vertical-align:top">
+								<ol start="17" type="1" style="margin:0pt; padding-left:0pt">
+									<li
+										style="margin-left:16.12pt; text-align:justify; padding-left:6.58pt; font-family:Arial; font-size:8pt">
+										<strong>PENGIRIMAN BARANG :</strong>
+									</li>
+								</ol>
+								<p style="margin-top:0pt; margin-left:22.7pt; margin-bottom:0pt; text-align:justify; font-size:8pt">
+									<span style="font-family:Arial"><span t-field="doc.pengiriman_barang"/></span>
+								</p>
+							</td>
+							<td
+								style="width:49.82%; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding:1.4pt 2.48pt; vertical-align:top">
+								<ol start="18" type="1" style="margin:0pt; padding-left:0pt">
+									<li
+										style="margin-left:16.12pt; text-align:justify; padding-left:6.58pt; font-family:Arial; font-size:8pt">
+										<strong>PENERIMA BARANG :</strong>
+									</li>
+								</ol>
+								<p style="margin-top:0pt; margin-left:22.7pt; margin-bottom:0pt; text-align:justify; font-size:8pt">
+									<span style="font-family:Arial"><span t-field="doc.penerima_barang"/></span>
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td
+								style="width:50.18%; border-top-style:solid; border-top-width:0.75pt; border-right-style:solid; border-right-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding:1.4pt 2.48pt; vertical-align:top">
+								<ol start="19" type="1" style="margin:0pt; padding-left:0pt">
+									<li
+										style="margin-left:16.12pt; text-align:justify; padding-left:6.58pt; font-family:Arial; font-size:8pt">
+										<strong>ASURANSI KAPAL :</strong>
+									</li>
+								</ol>
+								<p style="margin-top:0pt; margin-left:22.7pt; margin-bottom:0pt; text-align:justify; font-size:8pt">
+									<span style="font-family:Arial"><span t-field="doc.asuransi_kapal"/></span>
+								</p>
+							</td>
+							<td
+								style="width:49.82%; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding:1.4pt 2.48pt; vertical-align:top">
+								<ol start="20" type="1" style="margin:0pt; padding-left:0pt">
+									<li
+										style="margin-left:16.12pt; text-align:justify; padding-left:6.58pt; font-family:Arial; font-size:8pt">
+										<strong>ASURANSI MUATAN :</strong>
+									</li>
+								</ol>
+								<p style="margin-top:0pt; margin-left:22.7pt; margin-bottom:0pt; text-align:justify; font-size:8pt">
+									<span style="font-family:Arial"><span t-field="doc.asuransi_muatan"/></span>
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td
+								style="width:50.18%; border-top-style:solid; border-top-width:0.75pt; border-right-style:solid; border-right-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding:1.4pt 2.48pt; vertical-align:top">
+								<ol start="21" type="1" style="margin:0pt; padding-left:0pt">
+									<li
+										style="margin-left:16.12pt; text-align:justify; padding-left:6.58pt; font-family:Arial; font-size:8pt">
+										<strong>KEAGENAN KAPAL/POL &amp; POD AGENCY :</strong>
+									</li>
+								</ol>
+								<p style="margin-top:0pt; margin-left:22.7pt; margin-bottom:0pt; text-align:justify; font-size:8pt">
+									<span style="font-family:Arial"><span t-field="doc.agent_id"/></span>
+								</p>
+								<p style="margin-top:0pt; margin-left:22.7pt; margin-bottom:0pt; text-align:justify; font-size:8pt">
+									<span style="font-family:Arial">&#xa0;</span>
+								</p>
+							</td>
+							<td
+								style="width:49.82%; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding:1.4pt 2.48pt; vertical-align:top">
+								<ol start="22" type="1" style="margin:0pt; padding-left:0pt">
+									<li
+										style="margin-left:16.12pt; text-align:justify; padding-left:6.58pt; font-family:Arial; font-size:8pt">
+										<strong>DENDA KETERLAMBATAN MUAT &amp; BONGKAR
+										</strong>(<strong>DEMURRAGE</strong>)<strong>:</strong>
+									</li>
+								</ol>
+								<p style="margin-top:0pt; margin-left:22.7pt; margin-bottom:0pt; text-align:justify; font-size:8pt">
+									<span style="font-family:Arial"><span t-field="doc.demurage"/></span>
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2"
+								style="border-top-style:solid; border-top-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding:1.4pt 2.48pt; vertical-align:top">
+								<ol start="23" type="1" style="margin:0pt; padding-left:0pt">
+									<li style="margin-left:16.12pt; padding-left:6.58pt; font-family:Arial; font-size:8pt">
+										<strong>SYARAT - SYARAT TAMBAHAN YANG DISETUJUI BERSAMA :</strong>
+										<ol type="1" class="awlist10" style="margin-right:0pt; margin-left:0pt; padding-left:0pt">
+											<li style="margin-left:30.95pt; text-indent:-31.95pt; text-align:justify;">
+												<span
+													style="width:12.78pt; font:7pt 'Times New Roman'; display:inline-block">&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;
+												</span>23.1	Demurrage diberlakukan pada setiap penambahan Laytime diluar batas waktu muat dan bongkar dan termasuk saat menunggu Dokumen Muatan.
+											</li>
+											<li style="margin-left:30.95pt; text-indent:-31.95pt; text-align:justify">
+												<span
+													style="width:12.78pt; font:7pt 'Times New Roman'; display:inline-block">&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;
+												</span>23.2	Syarat-syarat dan ketentuan-ketentuan tambahan lainnya Dimuat Dalam Ketentuan Umum Perjanjian Angkutan Laut terlampir dan merupakan satu kesatuan serta bagian yang tidak terpisahkan dengan Perjanjian ini.
+											</li>											
+										</ol>
+									</li>
+								</ol>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2"
+								style="border-top-style:solid; border-top-width:0.75pt; padding:1.4pt 2.48pt; vertical-align:top">
+								<ol start="24" type="1" style="margin:0pt; padding-left:0pt">
+									<li style="margin-left:16.12pt; padding-left:6.58pt; font-family:Arial; font-size:8pt">
+										<strong>PERSELISIHAN :</strong>
+									</li>
+								</ol>
+								<p style="margin-top:0pt; margin-left:22.7pt; margin-bottom:0pt; text-align:justify; font-size:8pt">
+									<span style="font-family:Arial">Akan diselesaikan bersama secara musyawarah, namun apabila tidak
+										terdapat persetujuan, maka kedua belah pihak setuju untuk diselesaikan di Pengadilan Jakarta
+										Barat.</span>
+								</p>
+							</td>
+						</tr>
+					</table>
+					<br/><br/><br/><br/><br/><br/><br/>
+					<br/><br/><br/><br/><br/><br/><br/>
+					<table cellspacing="0" cellpadding="0" style="width:100%; border-collapse:collapse">
+						<tr style="height:10.4pt">
+							<td colspan="6"
+								style="width:73.55pt; border-style:double; border-width:1.5pt; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle">
+								<p style="margin-top:0pt; margin-bottom:0pt; text-align:center; widows:2; orphans:2; font-size:8pt">
+									Paraf
+								</p>
+								<p style="margin-top:0pt; margin-bottom:0pt; text-align:center; widows:2; orphans:2; font-size:8pt">
+									Pihak Pertama
+								</p>
+							</td>
+							<td rowspan="2"
+								style="width:350.35pt; border-top-style:double; border-top-width:1.5pt; border-right-style:double; border-right-width:1.5pt; border-left-style:double; border-left-width:1.5pt; border-bottom:4.5pt solid #ffffff; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle">
+								<p style="margin-top:0pt; margin-bottom:0pt; text-align:center; widows:2; orphans:2; font-size:11pt">
+									&#xa0;
+								</p>
+							</td>
+							<td colspan="6"
+								style="width:70.2pt; border-style:double; border-width:1.5pt; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle">
+								<p style="margin-top:0pt; margin-bottom:0pt; text-align:center; widows:2; orphans:2; font-size:8pt">
+									Paraf
+								</p>
+								<p style="margin-top:0pt; margin-bottom:0pt; text-align:center; widows:2; orphans:2; font-size:8pt">
+									Pihak Kedua
+								</p>
+							</td>
+						</tr>
+						<tr style="height:1pt">
+							<td
+								style="width:3.25pt; border-style:double; border-width:1.5pt; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle">
+								<p style="margin-top:0pt; margin-bottom:0pt; text-align:center; widows:2; orphans:2; font-size:8pt">
+									&#xa0;
+								</p>
+							</td>
+							<td
+								style="width:3.25pt; border-style:double; border-width:1.5pt; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle">
+								<p style="margin-top:0pt; margin-bottom:0pt; text-align:center; widows:2; orphans:2; font-size:8pt">
+									&#xa0;
+								</p>
+							</td>
+							<td
+								style="width:3.25pt; border-style:double; border-width:1.5pt; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle">
+								<p style="margin-top:0pt; margin-bottom:0pt; text-align:center; widows:2; orphans:2; font-size:8pt">
+									&#xa0;
+								</p>
+							</td>
+							<td
+								style="width:3.25pt; border-style:double; border-width:1.5pt; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle">
+								<p style="margin-top:0pt; margin-bottom:0pt; text-align:center; widows:2; orphans:2; font-size:8pt">
+									&#xa0;
+								</p>
+							</td>
+							<td
+								style="width:3.25pt; border-style:double; border-width:1.5pt; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle">
+								<p style="margin-top:0pt; margin-bottom:0pt; text-align:center; widows:2; orphans:2; font-size:8pt">
+									&#xa0;
+								</p>
+							</td>
+							<td
+								style="width:3.3pt; border-style:double; border-width:1.5pt; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle">
+								<p style="margin-top:0pt; margin-bottom:0pt; text-align:center; widows:2; orphans:2; font-size:8pt">
+									&#xa0;
+								</p>
+							</td>
+							<td
+								style="width:2.7pt; border-style:double; border-width:1.5pt; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle">
+								<p style="margin-top:0pt; margin-bottom:0pt; text-align:center; widows:2; orphans:2; font-size:8pt">
+									&#xa0;
+								</p>
+							</td>
+							<td
+								style="width:2.7pt; border-style:double; border-width:1.5pt; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle">
+								<p style="margin-top:0pt; margin-bottom:0pt; text-align:center; widows:2; orphans:2; font-size:8pt">
+									&#xa0;
+								</p>
+							</td>
+							<td
+								style="width:2.7pt; border-style:double; border-width:1.5pt; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle">
+								<p style="margin-top:0pt; margin-bottom:0pt; text-align:center; widows:2; orphans:2; font-size:8pt">
+									&#xa0;
+								</p>
+							</td>
+							<td
+								style="width:2.7pt; border-style:double; border-width:1.5pt; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle">
+								<p style="margin-top:0pt; margin-bottom:0pt; text-align:center; widows:2; orphans:2; font-size:8pt">
+									&#xa0;
+								</p>
+							</td>
+							<td
+								style="width:2.7pt; border-style:double; border-width:1.5pt; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle">
+								<p style="margin-top:0pt; margin-bottom:0pt; text-align:center; widows:2; orphans:2; font-size:8pt">
+									&#xa0;
+								</p>
+							</td>
+							<td
+								style="width:2.7pt; border-style:double; border-width:1.5pt; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle">
+								<p style="margin-top:0pt; margin-bottom:0pt; text-align:center; widows:2; orphans:2; font-size:8pt">
+									&#xa0;
+								</p>
+							</td>
+						</tr>
+					</table>
+					<div class="new-page"> </div>
+					<br/><br/><br/>
+					<p style="margin-top:0pt; margin-bottom:0pt; text-align:center; widows:2; orphans:2; font-size:14pt">			
+						<strong><u><span style="font-family:Arial; letter-spacing:-0.15pt">KETENTUAN UMUM PERJANJIAN ANGKUTAN LAUT</span></u></strong>
+					</p>
+					<h1 style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:8pt">
+						<span style="font-family:Arial">No. : <span t-field="doc.spal_number"/></span>
+					</h1>
+					<br/>
+					<table cellspacing="0" cellpadding="0" style="width:100%; border-collapse:collapse">
+						<tr>
+							<td colspan="2" style="border-style:solid; border-width:0.75pt; padding:1.4pt 2.48pt; vertical-align:top">
+								<p style="margin-top:0pt; margin-left:22.7pt; margin-bottom:0pt; text-align:justify; font-size:8pt">
+									<span style="font-family:Arial">&#xa0;</span>
+								</p>
+								<ol start="25" type="1" style="margin:0pt; padding-left:0pt">
+									<li
+										style="margin-left:16.12pt; text-align:justify; padding-left:5.18pt; font-family:Arial; font-size:8pt">
+										Pihak Pertama berhak untuk menahan dan atau menjual muatan, apabila pembayaran uang tambang dari
+										Pihak Kedua tidak dilunasi sesuai dengan yang tercantum dalam kontrak untuk menutupi kerugian yang
+										timbul akibat dari pelaksanaan pengangkutan muatan/cargo.
+									</li>
+								</ol>
+								<p style="margin-top:0pt; margin-bottom:0pt; font-size:8pt">
+									<span style="font-family:Arial">&#xa0;</span>
+								</p>
+								<ol start="26" type="1" style="margin:0pt; padding-left:0pt">
+									<li
+										style="margin-left:16.12pt; text-align:justify; padding-left:5.18pt; font-family:Arial; font-size:8pt">
+										Demurrage dibayar sebelum membongkar muatan/cargo atau minimal harus ada jaminan pembayaran dan
+										apabila terjadi keterlambatan pembayaran yang telah disepakati/menyimpang dari Point No.11 dalam
+										Surat Perjanjian Angkutan Laut ini, Pihak Pertama berhak memperhitungkannya sebagai Demurrage serta
+										dibayar sebelum dilakukan pembongkaran muatan/cargo tersebut.
+									</li>
+								</ol>
+								<p style="margin-top:0pt; margin-bottom:0pt; font-size:8pt">
+									<span style="font-family:Arial">&#xa0;</span>
+								</p>
+								<ol start="27" type="1" style="margin:0pt; padding-left:0pt">
+									<li
+										style="margin-left:16.12pt; text-align:justify; padding-left:6.58pt; font-family:Arial; font-size:8pt">
+										Pihak Pertama wajib mempunyai PSA yang berlaku dan wajib mengurus perpanjangannya sebelum masa berlaku habis.
+									</li>
+								</ol>
+								<p style="margin-top:0pt; margin-bottom:0pt; text-align:justify; font-size:8pt">
+									<span style="font-family:Arial">&#xa0;</span>
+								</p>
+								<ol start="28" type="1" style="margin:0pt; padding-left:0pt">
+									<li
+										style="margin-left:16.12pt; text-align:justify; padding-left:6.58pt; font-family:Arial; font-size:8pt">
+										Toleransi Susut <span t-field="doc.toleransi_susut"/>% (BL VS Penerima figure basis 15o C), jika hasil bongkar melebihi toleransi, maka pihak kedua akan menagihkan ke pihak pertama selisih susut di kalikan dengan Harga Indeks Pasar (HIP) BBN bulan yang ditentukan oleh Penyewa (Pihak Kedua).
+									</li>
+								</ol>
+								<p style="margin-top:0pt; margin-bottom:0pt; font-size:8pt">
+									<span style="font-family:Arial">&#xa0;</span>
+								</p>
+								<ol start="29" type="1" style="margin:0pt; padding-left:0pt">
+									<li
+										style="margin-left:16.12pt; text-align:justify; padding-left:6.58pt; font-family:Arial; font-size:8pt">
+										Jumlah muatan final akan berdasarkan Bill of Lading (B/L) dan Cargo Manifest. Jumlah ini yang akan di tagihkan di invoice nantinya. 
+									</li>
+								</ol>
+								<p style="margin-top:0pt; margin-bottom:0pt; font-size:8pt">
+									<span style="font-family:Arial">&#xa0;</span>
+								</p>
+								<ol start="30" type="1" style="margin:0pt; padding-left:0pt">
+									<li
+										style="margin-left:16.12pt; text-align:justify; padding-left:6.58pt; font-family:Arial; font-size:8pt">
+										Ditempat – tempat dangkal &amp; membahayakan ABK serta Kapal, Pihak Pertama berhak untuk menentukan tempat yang aman dan terdekat untuk pemuatan dan pembongkaran muatan demi keselamatan ABK dan Kapal.
+									</li>
+								</ol>
+								<p style="margin-top:0pt; margin-bottom:0pt; font-size:8pt">
+									<span style="font-family:Arial">&#xa0;</span>
+								</p>
+								<ol start="31" type="1" style="margin:0pt; padding-left:0pt">
+									<li
+										style="margin-left:16.12pt; text-align:justify; padding-left:6.58pt; font-family:Arial; font-size:8pt">
+										Apabila sesuatu dan lain hal atau terjadi keterlambatan dengan atau menyangkut nautica/teknis, sehingga kapal yang akan mengangkut mengalami keterlambatan/hambatan, maka Pihak Pertama dibenarkan untuk menggantikan dengan kapal/armada lain yang sama ukurannya dengan tidak merubah dan menambah dari isi dan bunyi Surat Perjanjian Angkutan Laut yang telah disepakati ini.
+									</li>
+								</ol>
+								<p style="margin-top:0pt; margin-bottom:0pt; font-size:8pt">
+									<span style="font-family:Arial">&#xa0;</span>
+								</p>
+								<ol start="32" type="1" style="margin:0pt; padding-left:0pt">
+									<li
+										style="margin-left:16.12pt; text-align:justify; padding-left:6.58pt; font-family:Arial; font-size:8pt">
+										Force Majeure dalam perjanjian ini: badai, ombak besar, pasang surut, gempa bumi, sengatan petir, gempa bumi, huru-hara, pernyataan darurat dari Pemerintah serta hal yang sifatnya di luar kemampuan akal manusia (Act of God). Tetapi tidak termasuk pemogokan buruh yang disebabkan kesalahan Pihak Kedua.
+									</li>
+								</ol>
+								<p style="margin-top:0pt; margin-bottom:0pt; font-size:8pt">
+									<span style="font-family:Arial">&#xa0;</span>
+								</p>
+								<ol start="33" type="1" style="margin:0pt; padding-left:0pt">
+									<li
+										style="margin-left:16.12pt; text-align:justify; padding-left:6.58pt; font-family:Arial; font-size:8pt">
+										Hal-hal yang belum tercantum dalam perjanjian ini akan dibicarakan bersama dan ditambahkan setelah
+										ada persetujuan sebagai Addendum.
+									</li>
+								</ol>
+								<p style="margin-top:0pt; margin-bottom:0pt; font-size:8pt">
+									<span style="font-family:Arial">&#xa0;</span>
+								</p>
+								<ol start="34" type="1" style="margin:0pt; padding-left:0pt">
+									<li
+										style="margin-left:16.12pt; text-align:justify; padding-left:6.58pt; font-family:Arial; font-size:8pt">
+										Pihak Kedua menjamin sepenuhnya jumlah tonase/kubikasi muatannya dan bila diragukan, maka Pihak
+										Pertama menunjuk Pihak Ketiga/Independent Surveyor untuk mengukur kembali muatan tersebut.&#xa0;
+										Biaya Independent Surveyor ditanggung Pihak Pertama dan Pihak Kedua wajib membayar Freight sesuai
+										hasil pengukuran ulang Pihak Independent Surveyor.
+									</li>
+								</ol>
+								<p style="margin-top:0pt; margin-bottom:0pt; font-size:8pt">
+									<span style="font-family:Arial">&#xa0;</span>
+								</p>
+								<ol start="35" type="1" style="margin:0pt; padding-left:0pt">
+									<li
+										style="margin-left:16.12pt; text-align:justify; padding-left:6.58pt; font-family:Arial; font-size:8pt">
+										Apabila kemudian hari terjadi terdapat perbedaan&#xa0; pendapat&#xa0; dalam&#xa0; mengartikan&#xa0;
+										Perjanjian&#xa0; ini&#xa0; maka&#xa0; kedua&#xa0; belah&#xa0; pihak akan bermusyawarah/mufakat
+										terlebih dahulu, dan apabila ternyata tidak terdapat kata sepakat, maka kedua belah pihak menunjuk
+										pada Pengadilan Negeri sesuai Point No.22.
+									</li>
+								</ol>
+								<p style="margin-top:0pt; margin-bottom:0pt; font-size:8pt">
+									<span style="font-family:Arial">&#xa0;</span>
+								</p>
+								<ol start="36" type="1" style="margin:0pt; padding-left:0pt">
+									<li
+										style="margin-left:16.12pt; text-align:justify; padding-left:6.58pt; font-family:Arial; font-size:8pt">
+										Dengan ditanda tangani oleh kedua belah pihak maka isi Surat Perjanjian Angkutan Laut ini tidak
+										dapat dibatalkan secara sepihak. Apabila pembatalan dilakukan sepihak oleh Pihak Kedua maupun Pihak
+										Pertama, maka dikenakan Penalty kepada pihak yang membatalkan sebesar 25% dari Total Biaya yang
+										telah disepakati.
+									</li>
+								</ol>
+								<p style="margin-top:0pt; margin-bottom:0pt; font-size:8pt">
+									<span style="font-family:Arial">&#xa0;</span>
+								</p>
+								<ol start="37" type="1" style="margin:0pt; padding-left:0pt">
+									<li
+										style="margin-left:16.12pt; text-align:justify; padding-left:6.58pt; font-family:Arial; font-size:8pt">
+										Ketentuan Umum ini menjadi satu dan merupakan bagian yang tak terpisahkan dengan Surat Perjanjian
+										Angkutan Laut No. : <span t-field="doc.spal_number"/>
+									</li>
+								</ol>
+								<p style="margin-top:0pt; margin-left:22.7pt; margin-bottom:0pt; text-align:justify; font-size:8pt">
+									<span style="font-family:Arial">&#xa0;</span>
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="border-style:solid; border-width:0.75pt; padding:1.4pt 2.48pt; vertical-align:top">
+								<p style="margin-top:0pt; margin-bottom:0pt; font-size:8pt">
+									<span style="font-family:Arial">Demikian Perjanjian ini dibuat dalam keadaan sadar tanpa paksaan dan
+										disetujui serta di tanda tangani bersama Para Pihak dalam rangkap 2 (dua), bermaterai cukup yang
+										masing-masing mempunyai kekuatan hukum yang sama.</span>
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td style="width:50.24%; border-style:solid; border-width:0.75pt; padding:1.4pt 2.48pt; vertical-align:top">
+								<p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:8pt">
+									<strong><span style="font-family:Arial; ">OWNER KAPAL/PEMBERI JASA ANGKUTAN PERAIRAN :</span></strong>
+								</p>
+								<p style="margin-top:0pt; margin-left:0pt; margin-bottom:0pt; text-align:center; font-size:8pt">
+									<strong><span style="font-family:Arial; ">
+										</span></strong><strong><span style="font-family:Arial; ">PT. FANGIONOPERKASA SEJATI</span></strong>
+								</p>
+								<p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:8pt">
+									<span style="font-family:Arial">&#xa0;</span>
+								</p>
+								<p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:8pt">
+									<span style="font-family:Arial">&#xa0;</span>
+								</p>
+								<p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:8pt">
+									<span style="font-family:Arial">&#xa0;</span>
+								</p>
+								<p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:8pt">
+									<span style="font-family:Arial">&#xa0;</span>
+								</p>
+								<p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:8pt">
+									<span style="font-family:Arial">&#xa0;</span>
+								</p>
+								<p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:8pt">
+									<span style="font-family:Arial">&#xa0;</span>
+								</p>
+								<p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:8pt">
+									<span style="font-family:Arial">&#xa0;</span>
+								</p>
+								<p style="margin-top:0pt; margin-bottom:0pt; font-size:8pt">
+									<span style="font-family:Arial">&#xa0;</span>
+								</p>
+								<p style="margin-top:0pt; margin-right:0.05pt; margin-bottom:0pt; text-align:center; font-size:8pt">
+									<strong><u><span style="font-family:Arial; ">SUBANDRI YANTO</span></u></strong>
+								</p>
+								<p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:8pt">
+									<span style="font-family:Arial">Direktur</span>
+								</p>
+							</td>
+							<td style="width:49.76%; border-style:solid; border-width:0.75pt; padding:1.4pt 2.48pt; vertical-align:top">
+								<p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:8pt">
+									<strong><span style="font-family:Arial; ">PEMILIK MUATAN:</span></strong>
+								</p>
+								<p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:8pt">
+									<strong><span style="font-family:Arial; ">&#xa0;</span></strong><strong><span
+											style="font-family:Arial; ">PT. BERUANG MARITIM INDONESIA</span></strong>
+								</p>
+								<p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:8pt">
+									<span style="font-family:Arial">&#xa0;</span>
+								</p>
+								<p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:8pt">
+									<span style="font-family:Arial">&#xa0;</span>
+								</p>
+								<p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:8pt">
+									<span style="font-family:Arial">&#xa0;</span>
+								</p>
+								<p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:8pt">
+									<span style="font-family:Arial">&#xa0;</span>
+								</p>
+								<p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:8pt">
+									<span style="font-family:Arial">&#xa0;</span>
+								</p>
+								<p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:8pt">
+									<span style="font-family:Arial">&#xa0;</span>
+								</p>
+								<p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:8pt">
+									<span style="font-family:Arial">&#xa0;</span>
+								</p>
+								<p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:8pt">
+									<span style="font-family:Arial">&#xa0;</span>
+								</p>
+								<p style="margin-top:0pt; margin-bottom:0pt; font-size:8pt">
+									<span style="font-family:Arial">&#xa0;</span>
+								</p>
+								<p style="margin-top:0pt; margin-right:0.05pt; margin-bottom:0pt; text-align:center; font-size:8pt">
+									<strong><u><span style="font-family:Arial; ">EVAN</span></u></strong>
+								</p>
+								<p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:8pt">
+									<span style="font-family:Arial">Direktur</span>
+								</p>
+							</td>
+						</tr>
+					</table>             
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

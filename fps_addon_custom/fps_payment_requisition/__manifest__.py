@@ -22,7 +22,9 @@
                 'hr',
                 'hr_expense',
                 'sale',
-                'fleet'
+                'fleet',
+                'fps_fms',
+                'analytic',
                 ],
     'images': [
         'static/description/icon.png',

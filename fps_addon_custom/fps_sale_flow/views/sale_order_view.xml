@@ -14,45 +14,62 @@
                 <field name="state" widget="statusbar" statusbar_visible="draft,sale"/>
             </xpath>
 
-            <xpath expr="//field[@name='show_update_pricelist']" position="before">
+            <!-- <xpath expr="//field[@name='show_update_pricelist']" position="before">
                 <label for="commitment_date" string="Delivery Date"/>
                 <div name="commitment_date_div" class="o_row">
                     <field name="commitment_date" required="1"/>
                     <span name="expected_date_span" class="text-muted">Expected: <field name="expected_date" class="oe_inline" widget="date"/></span>
                 </div>
-            </xpath>
+            </xpath> -->
 
             <xpath expr="//page[@name='other_information']//group[2]//group[@name='sale_shipping']//label[@for='commitment_date']" position="replace"/>
             <xpath expr="//page[@name='other_information']//group[2]//group[@name='sale_shipping']//div" position="replace"/>
 
+            <!-- <xpath expr="//field[@name='other_information']" position="after">
+                <div name="commitment_date_div" class="o_row">
+                    <field name="commitment_date" required="1"/>
+                    <span name="expected_date_span" class="text-muted">Expected: <field name="expected_date" class="oe_inline" widget="date"/></span>
+                </div>
+            </xpath> -->
             <xpath expr="//field[@name='partner_id']" position="before">
                 <!-- <field name="sales_type" attrs="{'readonly': [('state', '!=', 'draft')]}"/> -->
+                <field name="spal_format" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                 <field name="shippment_type_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                 <field name="fo_number" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
             </xpath>
 
             <xpath expr="//field[@name='partner_id']" position="after">
-                <field name="consignee_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
-                <field name="partner_invoice_id"/>
-                <field name="partner_shipping_id"/>
+                <field name="shipper_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                <field name="consignee_id"/>
+                <!-- <field name="partner_shipping_id"/> -->
             </xpath>
 
-            <xpath expr="//field[@name='validity_date']" position="before">
-                <field name="si_number" />
-                <field name="si_date" />            
+            
+            <xpath expr="//field[@name='date_order']" position="after">
+                <field name="contract_number"/>
+                <field name="purchase_date"/>
+                <field name="po_number"/>
             </xpath>
+
+            <xpath expr="//field[@name='payment_term_id']" position="after">
+                <field name="nama_kapal"/>
+            </xpath>
+
+            <!-- <xpath expr="//field[@name='commitment_date']" position="replace"> -->
             
             <xpath expr="//page[@name='order_lines']//field[@name='order_line']//tree//field[@name='qty_invoiced']" position="after">
-                <field name="qty_delivered" attrs="{'invisible': [('parent.state', 'not in', ['sale', 'done'])]}" optional="hide"/>
-                <!-- <field name="fulfill_perc" attrs="{'invisible': [('parent.state', 'not in', ['sale', 'done'])]}" optional="hide" widget="percentage"/> -->
-                <field name="region"/>
-                <field name="pod"/>
-                <field name="pol"/>
-                <field name="load"/>
+                <!-- <field name="qty_delivered" attrs="{'invisible': [('parent.state', 'not in', ['sale', 'done'])]}" optional="hide"/>
+                <field name="region" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                <field name="pod" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                <field name="load" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                <field name="pol" attrs="{'readonly': [('state', '!=', 'draft')]}"/> -->
+                <!-- <field name="company_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/> -->
+
             </xpath>
 
             <notebook>
-                <page string="SPAL">
+                <!-- SPAL FCH - Freight Charter -->
+                <page string="SPAL - FCH" name="spal_fch" attrs="{'invisible':[('spal_format','not in','fch')]}" >
                     <group name="spal_data_info" string="SPAL Data Info">
                         <group>
                             <field name="spal_number"/>
@@ -77,14 +94,50 @@
                             <field name="asuransi_muatan" />
                             <field name="currency_id" />
                             <field name="demurage" />
+                            <field name="so_pod" />
+                            <field name="so_pol" />
+                            <field name="toleransi_susut" />
+                        </group>
+                    </group>
+                </page>
+                <!-- SPAL Normal -->
+
+                <page string="SPAL" name="spal_tab" attrs="{'invisible':[('spal_format','not in','normal')]}" >
+                    <group name="spal_data_info" string="SPAL Data Info">
+                        <group>
+                            <field name="spal_number"/>
+                            <field name="spal_date" string="SPAL Date"/>
+                            <field name="company_id"/>
+                            <field name="bendera_spal"/>
+                            <field name="jumlah_muatan"/>
+                            <field name="kondisi_kontrak_muatan"/>
+                            <field name="uang_tambang"/>
+                            <field name="tanggal_kesediaan_muat"/>
+                        </group>
+                        <group>
+                            <field name="harga_termasuk" />
+                            <field name="harga_tidak_termasuk" />
+                            <field name="cara_pembayaran" />
+                            <field name="account_bank_number_id"/>
+                            <field name="loading_duration"/>
+                            <field name="unloading_duration"/>
+                            <field name="pengiriman_barang"/>
+                            <field name="penerima_barang"/>
+                            <field name="asuransi_kapal" />
+                            <field name="asuransi_muatan" />
+                            <field name="currency_id" />
+                            <field name="demurage" />
+                            <field name="so_pod" />
+                            <field name="so_pol" />
+                            <field name="toleransi_susut" />
                         </group>
                     </group>
                 </page>
 
                 <!-- SPAL FAME -->
 
-                <page string="SPAL - FAME">
-                    <group name="spal_data_info" string="SPAL Data Info">
+                <page string="SPAL - FAME" attrs="{'invisible':[('spal_format','not in','fame')]}">
+                    <group name="spal_data_info" string="SPAL Data Info" >
                         <group>
                             <field name="spal_number"/>
                             <field name="spal_date" string="SPAL Date"/>
@@ -108,13 +161,16 @@
                             <field name="asuransi_muatan" />
                             <field name="currency_id" />
                             <field name="demurage" />
+                            <field name="so_pod" />
+                            <field name="so_pol" />
+                            <field name="toleransi_susut" />
                         </group>
                     </group>
                 </page>
 
                 <!-- SPAL TIME CHATTERED -->
 
-                <page string="SPAL - TBCH">
+                <page string="SPAL - TBCH" attrs="{'invisible':[('spal_format','not in','time_based')]}">
                     <group name="spal_data_info" string="SPAL Data Info">
                         <group>
                             <field name="spal_number"/>
@@ -139,6 +195,9 @@
                             <field name="asuransi_muatan" />
                             <field name="currency_id" />
                             <field name="demurage" />
+                                                        <field name="so_pod" />
+                            <field name="so_pol" />
+                            <field name="toleransi_susut" />
                         </group>
                     </group>
                 </page>

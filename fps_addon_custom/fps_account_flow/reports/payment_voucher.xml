@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="payment_voucher_doc">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">                               
+                <div class="page">                    
+                    <div class="oe_structure"/>
+                    <div class="header">                   
+                        <div class="row">
+                            <table>
+                                <tr>
+                                    <td width="1">
+                                        <img src="/fps_account_flow/static/description/fps.png" height="50" width="50"/>
+                                    </td>
+                                    <td width="30">
+                                    </td>
+                                    <td valign="bottom">
+                                        <h3 style="color: #17365d;"><span t-field="o.company_id"/></h3>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <br/>
+                        <div style="border-bottom: 2px solid #333;"/>
+                    </div>
+                    <br/><br/>
+                    <div class="row"><br/></div>
+                    <h5><span t-esc='o.name'/></h5><br/>
+                    <table>
+                        <tr>
+                            <td class='col-3'>Telah diterima dari</td>
+                            <td class='col-1' align="center"> : </td>
+                            <td class='col-9'><span t-esc='o.partner_id.name'/></td>
+                        </tr>
+                        <tr>
+                            <td class='col-3'>Uang sebanyak</td>
+                            <td class='col-1' align="center"> : </td>
+                            <td class='col-9'><span t-esc='o.terbilang'/></td>
+                        </tr>
+                        <tr>
+                            <td class='col-3'>Untuk pembayaran</td>
+                            <td class='col-1' align="center"> : </td>
+                            <td class='col-9'><span t-field="o.ref"/></td>
+                        </tr>
+                        <tr>
+                            <td><br/><br/></td>
+                            <td> </td>
+                            <td> </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <table border="1">
+                                    <tr>
+                                        <td class='col-3'>JUMLAH</td>
+                                        <td class='col-1' align="center"> : </td>
+                                        <td class='col-9'><span style='padding-top:10px;padding-bottom:10px;' t-esc="round(o.amount)" 
+                                        t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                                    </tr>
+                                </table>
+                            </td>                            
+                        </tr>
+                    </table>    
+                    <br/>               
+                    <div class='row' style="float: right;">             
+                            <div>
+                                Jakarta, <span t-esc="datetime.datetime.now().strftime('%d %B %Y')"></span>
+                                <br/><br/><br/>
+                                <div> 
+                                    <span t-field="o.company_id"/>
+                                </div>                      
+                            </div>                      
+                    </div>              
+                </div>               
+            </t>
+        </t>
+    </template>
+
+    <record id="paperformat_payment_voucher" model="report.paperformat">
+        <field name="name">Payment Voucher</field>
+        <field name="default" eval="True"/>
+        <field name="disable_shrinking" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">250</field>
+        <field name="margin_bottom">250</field>
+        <field name="margin_left">250</field>
+        <field name="margin_right">250</field>
+        <field name="header_line" eval="True" />
+        <field name="header_spacing">5</field>
+        <field name="dpi">125</field>
+    </record>
+
+    <record id="action_report_payment_voucher" model="ir.actions.report">
+          <field name="name">Payment Voucher</field>
+          <field name="model">account.move</field>
+          <field name="report_type">qweb-html</field>
+          <field name="report_name">fps_account_flow.payment_voucher_doc</field>
+          <!-- <field name="report_file">account.report_payment_receipt_new</field> -->
+          <field name="binding_model_id" ref="account.model_account_move"/>
+          <field name="binding_type">report</field>
+          <field name="paperformat_id" ref="paperformat_payment_voucher" />
+    </record>   
+</odoo>

@@ -3,6 +3,8 @@
         <menuitem id="payment_requisition_root"
                 name="Payment requisition"
                 sequence="5"
+                web_icon="fps_payment_requisition,static/description/icon.png"
+
                 />
 
         <menuitem id="payment_requisition_menu"

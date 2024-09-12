@@ -9,15 +9,15 @@
     'maintainer': 'Lentera Kreasi Teknologi',
     'company': 'Fangiono Perkasa Sejati',
     'website': 'https://www.lenterateknologi.com',
-    'depends': ['base', 'contacts','account', 'sale', 'fleet', 'fps_fms'],
+    'depends': ['base', 'contacts', 'account', 'sale', 'fleet', 'fps_fms', 'sale_management','analytic',],
     'images': [
         'static/description/icon.png',
         ],
     'data': [
+        'views/sale_order_view.xml',
         'security/ir.model.access.csv',
         'views/sale_order_pricelist_view.xml',
         'data/sale.shipment.type.csv',
-        'views/sale_order_view.xml',
         'reports/spal_report.xml',
         'views/sale_menus_inherit.xml',
         # 'wizard/custom_revision.xml'

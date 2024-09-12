@@ -14,76 +14,81 @@
         <field name="arch" type="xml">
             <form string="Payment requisition">
                 <header>
+                    <button name="button_confirm" 
+                        states="draft" 
+                        string="Confirm" 
+                        type="object" 
+                        class="oe_highlight"/>
+                    
+                    <!-- <button name="waiting_for_approval" string="Approve" type="object" class="oe_highlight"
+                            data-hotkey="w" states="confirm"/> -->
+
+                    <button name="action_waiting_for_approval" string="Submit to Approval" type="object" class="oe_highlight"
+                            data-hotkey="w" states="waiting_for_approval"/>
+
+                    <button name="action_button_done" string="Done" type="object" class="oe_highlight"
+                            data-hotkey="w" states="approved"/>
+
                      <field name="state" widget="statusbar" statusbar_visible="draft,done" statusbar_colors='{"draft":"red","confirm":"blue"}' readonly="1"/>
+                
                 </header>
                 <sheet>
                     <div class="oe_title">
                         <label for="name" string="Code" />
                         <h1><field name="name"/></h1>
                     </div>
+                    <div class="oe_title">
+                        <label for="payreq_summary"/>
+                        <h1>
+                            <field name="payreq_summary" placeholder="e.g. Lunch with Customer" attrs="{'readonly': [('state', '=', ('done','cancel','refuse'))]}"/>
+                        </h1>
+                    </div>
                     <group>
-                        <group>
-                            <field name="user_id"/>                     
-                            <field name="date"/>                     
-                            <field name="end_date"/>                     
-                            <field name="responsible_id"/>                     
-                            <field name="department_id"/>                     
-                            <field name="company_id"/>                     
-                            <field name="type"/>
-                            <field name="journal_entry_id"/>
-                            <!-- <field name="selesai_id"/> -->
-                            <field name="penyelesaian_id"/>
-                            <field name="tgl_penyelesaian"/>
+                        <group name="detail_pengajuan" string="Detail Pengajuan">
+                            <field name="fo_number"/>
+                            <field name="employee_id"/>
+                            <field name="company_id"/>
+                            <field name="user_id"/>
+                            <field name="department_id"/>
+                            <field name="responsible_id"/>
                         </group>
-                        <group>
-                            <field name="type" attrs="{'readonly': [('state','!=','draft')]}" invisible="1"/>
-                            <field name="total_ajuan" invisible="1"/>
-                            <field name="type_pencairan" invisible="1"/>
-                            <field name="total_pencairan" attrs="{'invisible': [('total_pencairan','=',0.0)]}" readonly="1"/>
-                            <field name="cara_bayar" 
-                                attrs="{'readonly': [('state','in',('done','cancel','refuse'))]}" 
-                                required="1"
-                                />
-                            <field name="bank_id" attrs="{'readonly': [('state','in',('done','cancel','refuse'))], 'invisible': [('cara_bayar','!=','transfer')], 'required': [('cara_bayar','=','transfer')]}" options='{"no_create": 1, "no_open": 1}'/>
-                            <field name="no_rekening" attrs="{'readonly': [('state','in',('done','cancel','refuse'))], 'invisible': [('cara_bayar','!=','transfer')], 'required': [('cara_bayar','=','transfer')]}"/>
-                            <field name="atas_nama" attrs="{'readonly': [('state','in',('done','cancel','refuse'))], 'invisible': [('cara_bayar','!=','transfer')], 'required': [('cara_bayar','=','transfer'),('state','=','draft'),('type','!=','penyelesaian')]}"/>
-                            <field name="need_driver" attrs="{'readonly': [('state','!=','draft')],'invisible': [('type','!=','pengajuan')]}"/>
-                            <field name="company_id" attrs="{'readonly': [('state','!=','draft')]}" options='{"no_create": 1, "no_open": 1, "no_open": 1}'/>
-                            <field name="selesai" invisible="1"/>
-                            <field name="pencairan_id" readonly="1" attrs="{'invisible': [('pencairan_id','=',False)]}"/>
-                            <field name="tgl_pencairan" attrs="{'invisible': [('pencairan_id','=',False)],'readonly': [('state','in',('done','cancel','refuse'))]}" />
-                            
+                        <group name="group_name" string="">
+                            <field name="payment_requisition_type"/>
+                            <field name="request_date"/>
+                            <field name="expense_date"/>
+                            <field name="analytic_account_id"/>
+                            <field name="analytic_account_balance"/>
                         </group>
                     </group>
                 <!-- SHEET -->
                     <notebook>
                         <page string="Detail">
-                            <!-- <field name="payment_requisition_ids" mode="tree" required="1" attrs="{'readonly': [('state','in',('done','cancel','refuse'))]}"> -->
-                            <field name="payment_requisition_ids" mode="tree" required="1">
+                           <field name="payment_requisition_ids" mode="tree" required="1">
                                 <tree editable="bottom">
                                     <!-- <field name="product_id" required="1" options='{"no_create": 1, "no_open": 1}' domain="[('can_be_expensed','=',True),('name','=','UUDP')]"/> -->
                                     <field name="product_id" required="1" options='{"no_create": 1, "no_open": 1}' domain="[('can_be_expensed','=',True)]"/>
+                                    
                                     <field name="description" />
                                     <field name="qty" sum="Total Amount"/>
                                     <field name="uom" attrs="{'readonly': [('state','!=','draft')]}"/>
-                                    <field name="coa_debit" groups="account.group_account_manager" options='{"no_create": 1, "no_open": 1}' domain="[('company_id','=',parent.company_id)]" string="Account"/>
-                                    <field name="partner_id" options='{"no_create": 1, "no_open": 1}'/>
-                                    <!-- <field name="store_id" options='{"no_create": 1, "no_open": 1}' domain="[('account_analytic_tag_id','!=',False)]" required="1"/> -->
-                                    <field name="store_id" required="1"/>
                                     <field name="unit_price" />
                                     <field name="sub_total" sum="Total Amount"/>
-                                    <field name="total" invisible="1"/>
+                                    <!-- <field name="total" invisible="1"/> -->
                                     <field name="state" invisible="1"/>
                                 </tree>
                             </field>
                         </page>
                         <page string="Information"  groups="account.group_account_manager">
                             <group>
-                                <group>
-                                    <field name="coa_debit" domain="[('company_id','=',company_id)]" attrs="{'readonly':[('state','=','done')]}"  options='{"no_create": 1, "no_open": 1}'/>
-                                </group>
+                                <field name="notes" attrs="{'readonly':[('state','=','done')]}"  options='{"no_create": 1, "no_open": 1}'/>
                             </group>
-                        </page>                        
+                        </page>
+                        <page string="Attachment"  groups="account.group_account_manager">
+                            <group>
+                                <field name="attachment_ids" widget="many2many_binary" attrs="{'readonly':[('state','=','done')]}"  options='{"no_create": 1, "no_open": 1}'/>
+                            </group>
+                        </page>
+
                     </notebook>
                 </sheet>
                 <div class="oe_chatter">
@@ -100,27 +105,18 @@
         <field name="model">payment.requisition</field>
         <field name="arch" type="xml">
             <tree string="Payment requisition List">
-                <field name="name"/>
-                <field name="date"/>                     
-                <field name="end_date"/>                     
+                <field name="name"/>                     
                 <field name="user_id"/>                     
                 <field name="department_id"/>
                 <field name="responsible_id"/>
-                <field name="total_ajuan" sum="Total Amount"/>
-                <field name="total_pencairan" sum="Total Amount"/>
+                <!-- <field name="total_ajuan" sum="Total Amount"/> -->
+                <!-- <field name="total_pencairan" sum="Total Amount"/> -->
                 <field name="state"/>
-                <field name="ajuan_id"/>
-                <field name="pencairan_id"/>
-                <field name="tgl_pencairan"/>
-                <field name="tgl_penyelesaian"/>
-                <!-- <field name="selesai_id" invisible="1"/> -->
-                <field name="penyelesaian_id" invisible="0"/>
-                <field name="journal_id" invisible="0"/>
-                <field name="cara_bayar"/>
                 <field name="bank_id"/>
                 <field name="no_rekening"/>
                 <field name="notes"/>
-                <field name="company_id"/>
+                <!-- <field name="company_id"/> -->
+                <field name="analytic_account_id"/>
             </tree>
         </field>
     </record>        

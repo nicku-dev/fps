@@ -3,7 +3,7 @@
     'name': 'FPS: Base Custom',
     'category': 'LKT/Freight',
     'version': '16.0.1.0.0',
-    'summary': 'Freight Management Services untk PT FPS',
+    'summary': 'Extend Module untuk PT FPS',
     'description': 'Module for Extend and Managing FPS BASE Module',
     'author': 'Nicku F. Pasaribu',
     'maintainer': 'Lentera Kreasi Teknologi',
@@ -14,12 +14,9 @@
         'static/description/icon.png',
         ],
     'data': [
-        'security/ir.model.access.csv',
-        'data/sale.shipment.type.csv',
-        'views/sale_order_view.xml',
-        'reports/spal_report.xml',
-        'views/sale_menus_inherit.xml',
-        # 'wizard/custom_revision.xml'
+        "data/ir_config_parameter_data.xml",
+        "views/res_config_settings_views.xml",
+        "views/res_partner_inherit_view.xml"
     ],
     'installable': True,
     'application': False,

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <menuitem id="approval_main_menu" name="Approvals" parent="account.menu_finance_configuration" sequence="10"
+              groups="group_approve_manager"/>
+    <menuitem id="approval_sub_menu" name="Invoice Approval" parent="approval_main_menu"
+              action="approval_sub_menu_action" sequence="1" groups="group_approve_manager"/>
+</odoo>

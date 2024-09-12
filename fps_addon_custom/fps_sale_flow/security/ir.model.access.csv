@@ -5,4 +5,3 @@ access_sale_md_pricelist_item_admin,access_sale_md_pricelist_item_admin,model_sa
 fps_fms.access_freight_order_service,access_freight_order_service,fps_fms.model_freight_order_service,base.group_user,1,0,0,0
 fps_fms.access_freight_price,access_freight_price,fps_fms.model_freight_price,base.group_user,1,0,0,0
 access_sales_shipment_type_user,access_sales_shipment_type_user,model_sale_shipment_type,base.group_user,1,1,1,1
-,,,,,,,

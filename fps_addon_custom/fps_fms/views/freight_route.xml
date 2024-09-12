@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="freight_route_view_tree" model="ir.ui.view">
+        <field name="name">freight.route.view.tree</field>
+        <field name="model">freight.routes</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="route_code"/>
+                <field name="name"/>
+                <field name="region"/>
+                <field name="source_loc"/>
+                <field name="destination_loc"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="freight_route_view_form" model="ir.ui.view">
+        <field name="name">freight.route.view.form</field>
+        <field name="model">freight.routes</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <h1 class="mt0" >
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="route_code"/>
+                            <field name="region"/>
+                            <!-- <field name="region_id"/> -->
+                            <field name="source_loc" string="POL / Source Location"/>
+                            <field name="destination_loc" string="POL / Source Location"/>
+                        </group>
+                        <group>
+                            <field name="active" widget="checkbox"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_freight_order_routes_line" model="ir.actions.act_window">
+        <field name="name">Freight Routes</field>
+        <field name="res_model">freight.routes</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                    Routes
+            </p><p>
+            </p>
+        </field>
+    </record>
+</odoo>

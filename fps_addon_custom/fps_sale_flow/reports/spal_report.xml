@@ -17,7 +17,7 @@
     </record>
 
     <record id="action_fps_so_spal_report" model="ir.actions.report">
-        <field name="name">SPAL - FC</field>
+        <field name="name">SPAL - FC - 1</field>
         <field name="model">sale.order</field>
         <field name="report_type">qweb-html</field>
         <field name="report_name">fps_sale_flow.sale_spal_print</field>
@@ -90,7 +90,7 @@
 
                             <tr>
                                 <td><b>03. NAMA TUG BOAT/BARGE :</b>
-                                    <b><p><span t-field="doc.jenis_kapal"/></p></b> or Substitute
+                                    <b><p><span t-field="doc.nama_kapal"/></p></b> or Substitute
                                 </td>
                                 <td><b>04. BENDERA :</b>
                                     <b><p><span t-field="doc.bendera_spal"/></p></b>
@@ -286,7 +286,7 @@
 
                             <tr>
                                 <td><b>03. NAMA TUG BOAT/BARGE :</b>
-                                    <b><p><span t-field="doc.jenis_kapal"/></p></b> or Substitute
+                                    <b><p><span t-field="doc.nama_kapal"/></p></b> or Substitute
                                 </td>
                                 <td><b>04. BENDERA :</b>
                                     <b><p><span t-field="doc.bendera_spal"/></p></b>
@@ -483,7 +483,7 @@
 
                             <tr>
                                 <td><b>03. NAMA TUG BOAT/BARGE :</b>
-                                    <b><p><span t-field="doc.jenis_kapal"/></p></b> or Substitute
+                                    <b><p><span t-field="doc.nama_kapal"/></p></b> or Substitute
                                 </td>
                                 <td><b>04. BENDERA :</b>
                                     <b><p><span t-field="doc.bendera_spal"/></p></b>
@@ -681,7 +681,7 @@
 
                                     <tr>
                                         <td><b>03. NAMA TUG BOAT/BARGE :</b>
-                                            <b><p><span t-field="doc.jenis_kapal"/></p></b> or Substitute
+                                            <b><p><span t-field="doc.nama_kapal"/></p></b> or Substitute
                                         </td>
                                         <td><b>04. BENDERA :</b>
                                             <b><p><span t-field="doc.bendera_spal"/></p></b>

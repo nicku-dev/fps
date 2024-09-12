@@ -6,8 +6,6 @@ import locale
 from odoo.exceptions import UserError
 from lxml import etree
 
-
-
 class SaleShipmentType(models.Model):
     _name = 'sale.shipment.type'
     _description = 'Sale Shippment Type'

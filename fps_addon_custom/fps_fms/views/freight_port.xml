@@ -12,6 +12,7 @@
                 <field name="state_id"/>
                 <field name="active" widget="boolean_toggle"/>
                 <field name="is_pol" widget="boolean_toggle"/>
+                <field name="is_pod" widget="boolean_toggle"/>
             </tree>
         </field>
     </record>
@@ -32,6 +33,7 @@
                             <group>
                                 <field name="state_id"/>
                                 <field name="is_pol" widget="boolean_toggle"/>
+                                <field name="is_pod" widget="boolean_toggle"/>
                                 <field name="active" widget="boolean_toggle"/>
 
                             </group>
@@ -48,10 +50,9 @@
             <search>
                 <filter string="Inactive" name="inactive" domain="[('active','=',False)]"/>
             </search>
-            </field>
-        </record>
+        </field>
+    </record>
 
-    
     <record id="action_freight_port" model="ir.actions.act_window">
         <field name="name">Freight Port</field>
         <field name="type">ir.actions.act_window</field>

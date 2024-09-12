@@ -1,13 +1,14 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
         <!-- <data noupdate="1"> -->
-        <data>
-            <menuitem id="menu_freight_root" name="Freight Management" sequence="4" />
-            <menuitem id="menu_freight_order" name="Shipping" parent="menu_freight_root" sequence="2" action="action_freight_order"/>
-            <menuitem id="menu_configuration" name="Configuration" parent="menu_freight_root" sequence="4" />
-            <menuitem id="menu_freight_order_type" name="Freight Type" parent="menu_configuration" sequence="2" action="action_freight_order_type"/>
-            <menuitem id="menu_freight_port" name="Ports" parent="menu_configuration" sequence="2" action="action_freight_port"/>
-            <menuitem id="menu_freight_load" name="Load" parent="menu_configuration" sequence="2" action="action_freight_load"/>
+    <menuitem id="menu_freight_root" name="Freight Management" 
+        sequence="4" web_icon="fps_fms,static/description/icon.png"
+    />
 
-        </data>
+    <menuitem id="menu_freight_order" name="Shipping" parent="menu_freight_root" sequence="2" action="action_freight_order"/>
+    <menuitem id="menu_configuration" name="Configuration" parent="menu_freight_root" sequence="4" />
+    <menuitem id="menu_freight_order_type" name="Freight Type" parent="menu_configuration" sequence="2" action="action_freight_order_type"/>
+    <menuitem id="menu_freight_port" name="Ports" parent="menu_configuration" sequence="2" action="action_freight_port"/>
+    <menuitem id="menu_freight_load" name="Load" parent="menu_configuration" sequence="4" action="action_freight_load"/>
+    <menuitem id="menu_freight_route" name="Routed" parent="menu_configuration" sequence="6" action="action_freight_order_routes_line"/>   
 </odoo>
