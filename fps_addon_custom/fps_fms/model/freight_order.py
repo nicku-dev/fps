@@ -13,10 +13,16 @@ class FreightOrder(models.Model):
     departure_time = fields.Datetime(string='Departure Time')
     arrival_time = fields.Datetime(string='Arrival Time')
     
-    state = fields.Selection([('draft', 'Draft'), ('submit', 'Submitted'),
-                              ('confirm', 'Confirmed'),
-                              ('invoice', 'Invoiced'), ('done', 'Done'),
-                              ('cancel', 'Cancel')], default='draft')
+    state = fields.Selection([
+            ("draft", "Draft"),
+            ("submit", "LOAD"),
+            ("confirm", "IN TRANSIT"),
+            ("delivered", "DELIVERED"),
+            ("documenting ", "DOCUMENTING TRIP"),
+			('invoice', 'Invoiced'), 
+            ("done", "Done"),
+            ("cancel", "Cancel")]
+            ,default='draft')
     order_date = fields.Date(string='order_date')
     invoice_count = fields.Integer(compute='compute_count')
     so_count = fields.Integer(compute='compute_count')
@@ -31,8 +37,12 @@ class FreightOrder(models.Model):
                             help="Koordinator Kapal (employe)")
     fo_region_id = fields.Many2one('freight.port', 'region',  help='Region')
     # sol_ids = fields.One2many(comodel_name='sale.order.line', inverse_name='fo_number_2_id', string='fo_id')
+    timesheet_ids = fields.One2many(comodel_name='freight.timesheet', inverse_name='timesheet_id', string='Timesheet')
+    carriage_ids = fields.One2many(comodel_name='freight.carriage', inverse_name='carriage_id', string='CARRIAGE')
+    costing_ids = fields.One2many(comodel_name='freight.costing', inverse_name='costing_id', string='COSTING')
+    profitability_ids = fields.One2many(comodel_name='freight.profitability', inverse_name='profitability_id', string='profitability')
     
-
+    route_id = fields.Many2one(comodel_name='freight_route', string='Rute')
     
     @api.model
     def create(self, vals):
