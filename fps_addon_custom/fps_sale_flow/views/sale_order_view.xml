@@ -41,6 +41,7 @@
             <xpath expr="//field[@name='partner_id']" position="after">
                 <field name="shipper_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                 <field name="consignee_id"/>
+                <field name="toleransi_susut"/>
                 <!-- <field name="partner_shipping_id"/> -->
             </xpath>
 
@@ -53,6 +54,7 @@
 
             <xpath expr="//field[@name='payment_term_id']" position="after">
                 <field name="nama_kapal"/>
+                
             </xpath>
 
             <!-- <xpath expr="//field[@name='commitment_date']" position="replace"> -->
@@ -96,7 +98,6 @@
                             <field name="demurage" />
                             <field name="so_pod" />
                             <field name="so_pol" />
-                            <field name="toleransi_susut" />
                         </group>
                     </group>
                 </page>
@@ -129,7 +130,6 @@
                             <field name="demurage" />
                             <field name="so_pod" />
                             <field name="so_pol" />
-                            <field name="toleransi_susut" />
                         </group>
                     </group>
                 </page>
@@ -163,7 +163,6 @@
                             <field name="demurage" />
                             <field name="so_pod" />
                             <field name="so_pol" />
-                            <field name="toleransi_susut" />
                         </group>
                     </group>
                 </page>
@@ -195,9 +194,8 @@
                             <field name="asuransi_muatan" />
                             <field name="currency_id" />
                             <field name="demurage" />
-                                                        <field name="so_pod" />
+                            <field name="so_pod" />
                             <field name="so_pol" />
-                            <field name="toleransi_susut" />
                         </group>
                     </group>
                 </page>

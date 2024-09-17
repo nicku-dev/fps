@@ -54,8 +54,15 @@ class FreightOrder(models.Model):
     carriage_ids = fields.One2many(comodel_name='freight.carriage', inverse_name='carriage_id', string='CARRIAGE')
     costing_ids = fields.One2many(comodel_name='freight.costing', inverse_name='costing_id', string='COSTING')
     profitability_ids = fields.One2many(comodel_name='freight.profitability', inverse_name='profitability_id', string='profitability')
-    route_sol_ids = fields.One2many(comodel_name='sale.order.line', inverse_name='id', string='Freight Route')
-
+    sol_ids = fields.One2many(comodel_name='sale.order.line', inverse_name='id', copy=True, auto_join=True, string='Carriage Tab')
+    # Lines and line based computes
+    # order_line = fields.One2many(
+    #     comodel_name='sale.order.line',
+    #     inverse_name='order_id',
+    #     string="Order Lines",
+    #     states=LOCKED_FIELD_STATES,
+    #     copy=True, auto_join=True)
+    # route_sol_ids = fields.One2many(comodel_name='sale.order.line', inverse_name='id', string='Freight Route')
     # route_id = fields.Many2one(comodel_name='freight.route', string='Rute')
     
     @api.model
