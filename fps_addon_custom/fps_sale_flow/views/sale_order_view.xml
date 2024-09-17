@@ -59,7 +59,7 @@
 
             <!-- <xpath expr="//field[@name='commitment_date']" position="replace"> -->
             
-            <xpath expr="//page[@name='order_lines']//field[@name='order_line']//tree//field[@name='qty_invoiced']" position="after">
+            <!-- <xpath expr="//page[@name='order_lines']//field[@name='order_line']//tree//field[@name='qty_invoiced']" position="after"> -->
                 <!-- <field name="qty_delivered" attrs="{'invisible': [('parent.state', 'not in', ['sale', 'done'])]}" optional="hide"/>
                 <field name="region" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                 <field name="pod" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
@@ -67,7 +67,7 @@
                 <field name="pol" attrs="{'readonly': [('state', '!=', 'draft')]}"/> -->
                 <!-- <field name="company_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/> -->
 
-            </xpath>
+            <!-- </xpath> -->
 
             <notebook>
                 <!-- SPAL FCH - Freight Charter -->

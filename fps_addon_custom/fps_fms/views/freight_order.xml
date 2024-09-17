@@ -97,7 +97,7 @@
                         <notebook>
                             <page string="Carriage">
                                 <field name="sol_ids">
-                                <!-- editable="bottom" -->
+                                editable="bottom"
                                     <tree string="S.O.L">
                                         <field name="order_id"/>
                                         <field name="name"/>
