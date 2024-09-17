@@ -101,12 +101,12 @@ class BlanketOrderWizard(models.TransientModel):
 
 
     # custom NFP
-    shippment_type_id = fields.Many2one(comodel_name='sale.shipment.type', 
-                                    # default='normal', 
-                                    string='Shippment Type',
-                                    tracking=True,
-                                    required=True
-                                    )
+    # shippment_type_id = fields.Many2one(comodel_name='sale.shipment.type', 
+    #                                 default='normal', 
+    #                                 string='Shippment Type',
+    #                                 tracking=True,
+    #                                 required=True
+    #                                 )
 
     def _prepare_so_line_vals(self, line):
         return {
@@ -229,9 +229,9 @@ class BlanketOrderWizardLine(models.TransientModel):
         "res.partner", related="blanket_line_id.partner_id", string="Vendor"
     )
     taxes_id = fields.Many2many("account.tax", related="blanket_line_id.taxes_id")
-    shippment_type_id = fields.Many2one(comodel_name='sale.shipment.type', 
-                                        # default='normal', 
-                                        string='Shippment Type',
-                                        tracking=True,
-                                        required=True
-                                        )
+    # shippment_type_id = fields.Many2one(comodel_name='sale.shipment.type', 
+    #                                     # default='normal', 
+    #                                     string='Shippment Type',
+    #                                     tracking=True,
+    #                                     required=True
+    #                                     )

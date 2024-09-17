@@ -62,7 +62,13 @@
                             <button class="oe_stat_button" type="object" name="get_so_related"
                                 icon="fa-pencil-square-o">
                                 <field string="Sales Order" name="so_count" widget="statinfo"/>
-                            </button>                            
+                            </button>   
+
+                            <!-- attrs="{'invisible':[('line_count', '=', 0)]}" -->
+                            <button class="oe_stat_button" type="object" name="get_sol_related"
+                                icon="fa-list">
+                                <field name="line_count" widget="statinfo" string="Lines" />
+                            </button>                         
                         </div>
                         <div class="oe_title">
                             <h1 class="mt0" >
@@ -89,36 +95,21 @@
                             </group>
                         </group>
                         <notebook>
-                            <!-- <page name="carriage_tab" string="Carriage Tab">
-                                <field name="sol_ids" mode="tree" readonly="1" domain="[('product_id', '=', product_id)]"/>
-                            </page> -->
-
                             <page string="Routes">
-                                <field name="route_ids">
-                                    <tree string="Routes" editable="bottom">
+                                <field name="route_sol_ids">
+                                    <!-- <tree string="Routes" editable="bottom">
                                         <field name="route_code"/>
                                         <field name="name"/>
                                         <field name="region"/>
                                         <field name="source_loc"/>
                                         <field name="destination_loc"/>
-                                    </tree>
+                                    </tree> -->
                                 </field>
                             </page>
-
-                            <!-- <page string="Track">
-                                <field name="track_ids">
-                                    <tree string="Services" editable="bottom" create="0">
-                                        <field name="source_loc"/>
-                                        <field name="destination_loc"/>
-                                        <field name="date"/>
-                                    </tree>
-                                </field>
-                            </page> -->
 
                             <page name="freight_timesheet" string="Timesheet">
                                 <field name="timesheet_ids">
                                     <tree string="Timesheet">
-                                    <!-- editable="bottom" create="0"> -->
                                         <field name="date"/>
                                         <field name="timesheet_datetime"/>
                                         <field name="timesheet_activity"/>
@@ -130,7 +121,7 @@
                                 </field>
                             </page>
 
-                            <page name="freight_carriage" string="Carriage">
+                            <!-- <page name="freight_carriage" string="Carriage">
                                 <field name="carriage_ids">
                                     <tree string="Carriage">
                                         <field name="carriage_so"/>
@@ -144,8 +135,8 @@
                                         <field name="claim_susut"/>
                                     </tree>
                                 </field>
-                            </page>
-
+                            </page> -->
+<!-- 
                             <page name="freight_costing" string="Costing">
                                 <field name="costing_ids">
                                     <tree>
@@ -160,9 +151,9 @@
                                         <field name="total"/>
                                     </tree>
                                 </field>
-                            </page>
+                            </page> -->
 
-                            <page name="freight_costing" string="Profitability">
+                            <!-- <page name="freight_costing" string="Profitability">
                                 <field name="profitability_ids">
                                     <tree>
                                         <field name="invoice"/>
@@ -175,7 +166,7 @@
                                         <field name="total"/>
                                     </tree>
                                 </field>
-                            </page>
+                            </page> -->
 
                             <!-- TEST BILL DI ASSET-->
                             <!-- <page string="Bills" name="related_items">

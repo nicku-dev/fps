@@ -1,10 +1,10 @@
 {
 	"folders": [
 		{
-			"path": "C:/NICKU/odoo16e/odoo/addons"
+			"path": ".."
 		},
 		{
-			"path": ".."
+			"path": "../../../lentera/odoo"
 		}
 	],
 	"settings": {}

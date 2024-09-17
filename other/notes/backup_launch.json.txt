@@ -1,0 +1,29 @@
+{
+    // A Configuration Code For Vs-Code
+    "version": "1.0.0",
+    "configurations": [
+        {
+        "name": "Python: Odoo16 FPS",
+        "type": "debugpy",
+        "request": "launch",
+        "stopOnEntry": false,
+        // "python": "D:\\DEV\\FPS\\fps_dev_24\\venv16fr\\Scripts\\python.exe",
+        // "python": "C:\\Program Files\\Odoo16e\\python\\python.exe",
+        "python": "C:\\nicku-dev\\fps\\venv16fr\\Scripts\\python.exe",
+        "console": "integratedTerminal",
+        // "program": "C:\\NICKU\\odoo16e\\odoo-bin",
+        "program": "C:\\lentera\\odoo\\odoo-bin"
+        "args": [
+            "--config=C:\\nicku-dev\\fps\\other\\odoo5oca.conf",
+            // "--config=D:\\DEV\\FPS\\fps_dev_24\\other\\odoo_fps.conf",
+            // "--dev=all",
+            "--dev=xml",
+            // "-d NFP_FPS_9",
+            // "-u fps_payment_voucher",
+        ],
+        "cwd": "${workspaceRoot}",
+        "env": {},
+        "envFile": "${workspaceRoot}/.env",
+    }
+        ]
+    }

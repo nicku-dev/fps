@@ -16,13 +16,6 @@ class FreightPort(models.Model):
     is_pol = fields.Boolean('Is POL', default=True)
     is_pod = fields.Boolean('Is POD', default=True)
     
-class FreightPricing(models.Model):
-    _name = 'freight.price'
-
-    name = fields.Char('Name', required=True)
-    volume = fields.Float('Volume Price', required=True)
-    weight = fields.Float('Weight Price', required=True)
-
 class FreightLoad(models.Model):
     _name = 'freight.load'
 

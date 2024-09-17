@@ -17,10 +17,6 @@ class Freightcarriage(models.Model):
     claim_susut = fields.Integer(string='Claim Susut')
     uom = fields.Many2one(comodel_name='uom.uom', string='UoM')
     
-
-
-
-
 class FreightCosting(models.Model):
     _name = 'freight.costing'
     _description = 'Freight Costing'
@@ -35,10 +31,6 @@ class FreightCosting(models.Model):
     price_unit = fields.Float(string='Price Unit')
     taxes = fields.Float(string='Taxes')
     total = fields.Float(string='Total')
-
-
-
-
 
 class FreightProfitability(models.Model):
     _name = 'freight.profitability'

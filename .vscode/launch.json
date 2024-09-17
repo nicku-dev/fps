@@ -3,24 +3,23 @@
     "version": "1.0.0",
     "configurations": [
         {
-        "name": "Python: Odoo16 FPS",
-        "type": "debugpy",
-        "request": "launch",
-        "stopOnEntry": false,
-        // "python": "D:\\DEV\\FPS\\fps_dev_24\\venv16fr\\Scripts\\python.exe",
-        "python": "C:\\Program Files\\Odoo16e\\python\\python.exe",
-        "console": "integratedTerminal",
-        "program": "C:\\NICKU\\odoo16e\\odoo-bin",
-        "args": [
-            "--config=D:\\DEV\\FPS\\fps_dev_24\\other\\odoo_fps.conf",
-            // "--dev=all",
-            "--dev=xml",
-            "-d NFP_FPS_9",
-            // "-u fps_payment_voucher",
-        ],
-        "cwd": "${workspaceRoot}",
-        "env": {},
-        "envFile": "${workspaceRoot}/.env",
-    }
-        ]
-    }
+            "name": "Python: Odoo16 FPS",
+            "type": "debugpy",
+            "request": "launch",
+            "stopOnEntry": false,
+            // "python": "C:\\nicku-dev\\fps\\venv16fr\\Scripts\\python.exe",
+            "python": "C:\\lentera\\venv16\\Scripts\\python.exe",
+            "console": "integratedTerminal",
+            "program": "C:\\lentera\\odoo\\odoo-bin",
+            "args": [
+                "--config=C:\\nicku-dev\\fps\\other\\odoo5oca.conf",
+                "--addons-path=C:\\nfp\\addon__exercise,  C:\\lentera\\odoo\\addons, C:\\lentera\\odoo\\odoo\\addons, C:\\nfp\\docker\\django\\odoo-16-docker-compose\\etc\\addons\\addons-enterprise, C:\\nicku-dev\\fps\\fps_community, C:\\nicku-dev\\fps\\oca_community\\fps_community_purchase, C:\\nicku-dev\\fps\\oca_community\\oca_sale_flow,C:\\nicku-dev\\fps\\fps_addon_custom, C:\\nicku-dev\\fps\\oca_community_selected",
+                "--dev=all",
+                "-u fps_fms, fps_sale_flow",
+            ],
+            "cwd": "${workspaceRoot}",
+            "env": {},
+            "envFile": "${workspaceRoot}/.env",
+        }
+    ]
+}

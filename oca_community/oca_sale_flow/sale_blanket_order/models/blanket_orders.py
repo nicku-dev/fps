@@ -172,7 +172,7 @@ class BlanketOrder(models.Model):
 
 
     # Custom NFP - 
-    shippment_type_id = fields.Many2one(comodel_name='sale.shipment.type', string='SHippment')
+    # shippment_type_id = fields.Many2one(comodel_name='sale.shipment.type', string='SHippment')
     
 
     def _get_sale_orders(self):

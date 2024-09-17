@@ -35,7 +35,7 @@ class SaleOrder(models.Model):
     
     ### SO DATA 
     shippment_type_id = fields.Many2one(comodel_name='sale.shipment.type', 
-                                        default='normal', 
+                                        # default='normal', 
                                         string='Shippment Type',
                                         tracking=True,
                                         # required=True
@@ -82,6 +82,19 @@ class SaleOrder(models.Model):
     po_number = fields.Char(string='PO Number', help='Referensi PO Number data dari E-Cataloc')
     contract_number = fields.Char(string='Contract Number', help='Referensi Nomor Kontrak Perjanjian dengan Customer. data dari E-Cataloc')
     
+    freight_routes_id = fields.Many2one("freight.routes", string="Freight Order ID4", required=True)
+
+
+
+    # 
+    # Relational
+    # partner_id = fields.Many2one("res.partner", string="Partner", required=True)
+    # property_id = fields.Many2one("estate.property", string="Property", required=True)
+    # For stat button:
+    # property_type_id = fields.Many2one(
+    #     "estate.property.type", related="property_id.property_type_id", string="Property Type", store=True
+    # )
+
     
     # analytic_plan_id = fields.Many2one('account_analytic_plan','id')
     # analytic_plan_id = fields.Many2one('account.analytic.plan', 'name')
@@ -144,6 +157,8 @@ class SaleOrder(models.Model):
     so_pod = fields.Many2one(comodel_name='freight.port', string='POD')
     so_pol = fields.Many2one(comodel_name='freight.port', string='POL')
     toleransi_susut = fields.Float(string='Toleransi Susut')
+    fo_order_lines = fields.One2many('sale.order.line', compute='_compute_fo_order_lines', string='FO Order Lines')
+
 
     @api.onchange('spal_format')
     def _compute_hide(self):
@@ -151,3 +166,10 @@ class SaleOrder(models.Model):
            self.is_hide = True
        else:
            self.is_hide = False
+
+    def _compute_fo_order_lines(self):
+        for order in self:
+            if order.fo_number:
+                order.fo_order_lines = self.env['sale.order.line'].search([
+                    ('order_id.fo_number', '=', order.fo_number)
+                ]) 
