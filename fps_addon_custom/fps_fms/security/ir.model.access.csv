@@ -5,7 +5,6 @@ access_freight_order_type,freight.order.type,model_freight_order_type,base.group
 access_freight_port,freight.port,model_freight_port,base.group_user,1,1,1,1
 access_freight_load,freight.load,model_freight_load,base.group_user,1,1,1,1
 access_freight_routes,freight.routes,model_freight_routes,base.group_user,1,1,1,1
-access_freight_track,freight.track,model_freight_track,base.group_user,1,1,1,1
 access_freight_timesheet,freight.timesheet,model_freight_timesheet,base.group_user,1,1,1,1
 access_freight_carriage,freight.carriage,model_freight_carriage,base.group_user,1,1,1,1
 access_freight_costing,freight.costing,model_freight_costing,base.group_user,1,1,1,1

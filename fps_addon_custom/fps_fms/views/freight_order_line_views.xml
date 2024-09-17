@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!-- VIEWS -->
+
+    <record id="sale_blanket_order_line_search" model="ir.ui.view">
+        <field name="name">freight.order.line.search</field>
+        <field name="model">freight.order.line</field>
+        <field name="arch" type="xml">
+            <search string="Search Freight Order Line">
+                <field name="order_id" />
+                <field name="product_id" />
+                <field name="date_schedule" />
+            </search>
+        </field>
+    </record>
+    <!-- ACTIONS (SERVER) -->
+
+    <record id="act_open_freight_order_lines_view_tree" model="ir.actions.act_window">
+        <field name="name">Freight Order Lines</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.order.line</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" 
+        />
+    </record>
+
+        <!-- ref="freight_order_line_search"  -->
+    <!-- MENU'S -->
+
+    <menuitem
+        action="act_open_freight_order_lines_view_tree"
+        id="menu_freight_order_line"
+        sequence="21"
+        parent="sale.menu_sale_config"
+    />
+
+</odoo>

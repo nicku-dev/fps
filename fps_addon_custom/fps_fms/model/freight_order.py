@@ -1,18 +1,30 @@
 from werkzeug import urls
-from odoo import api, fields, models, _
+from odoo import SUPERUSER_ID, _, api, fields, models
+from odoo.tools.misc import format_date
 from odoo.exceptions import ValidationError
+
+from odoo.addons.sale.models.sale_order import READONLY_FIELD_STATES
+
 
 class FreightOrder(models.Model):
     _name = 'freight.order'
     _description = 'Freight Order'
 
-    name = fields.Char('Name', default='New', readonly=True)
+    name = fields.Char('Name', readonly=True)
     shippment_type = fields.Many2one(comodel_name='freight.order.type', string='Shippment Type')
     shipper_id = fields.Many2one('res.partner', 'Shipper', required=True,help="Shipper's Details")
     consignee_id = fields.Many2one('res.partner', 'Consignee',help="Details of consignee")
     departure_time = fields.Datetime(string='Departure Time')
     arrival_time = fields.Datetime(string='Arrival Time')
-    
+    line_ids = fields.One2many(
+        "freight.order.line", "order_id", string="Order lines", copy=True
+    )
+    line_count = fields.Integer(
+        string="Order Line count",
+        compute="_compute_line_count",
+        readonly=True,
+    )
+
     state = fields.Selection([
             ("draft", "Draft"),
             ("submit", "LOAD"),
@@ -26,23 +38,25 @@ class FreightOrder(models.Model):
     order_date = fields.Date(string='order_date')
     invoice_count = fields.Integer(compute='compute_count')
     so_count = fields.Integer(compute='compute_count')
-    order_ids = fields.One2many('freight.order.line', 'order_id')
+    # order_ids = fields.One2many('freight.order.line', 'order_id')
     route_ids = fields.One2many('freight.routes', 'route_id')
     agent_id = fields.Many2one('res.partner', 'Agent', required=True,
                                help="Details of agent")
     expected_date = fields.Date('Expected Date')
-    track_ids = fields.One2many('freight.track', 'track_id')
+    # track_ids = fields.One2many('freight.track', 'track_id')
     vehicle_id = fields.Many2one(comodel_name='fleet.vehicle', string='Nama Kapal')
-    koordinator_kapal_id = fields.Many2one('hr.employee', 'Name', required=True,
-                            help="Koordinator Kapal (employe)")
+    koordinator_kapal_id = fields.Many2one('hr.employee', 'Name', 
+                                        #    required=True,
+                                            help="Koordinator Kapal (employe)")
     fo_region_id = fields.Many2one('freight.port', 'region',  help='Region')
     # sol_ids = fields.One2many(comodel_name='sale.order.line', inverse_name='fo_number_2_id', string='fo_id')
     timesheet_ids = fields.One2many(comodel_name='freight.timesheet', inverse_name='timesheet_id', string='Timesheet')
     carriage_ids = fields.One2many(comodel_name='freight.carriage', inverse_name='carriage_id', string='CARRIAGE')
     costing_ids = fields.One2many(comodel_name='freight.costing', inverse_name='costing_id', string='COSTING')
     profitability_ids = fields.One2many(comodel_name='freight.profitability', inverse_name='profitability_id', string='profitability')
-    
-    route_id = fields.Many2one(comodel_name='freight_route', string='Rute')
+    route_sol_ids = fields.One2many(comodel_name='sale.order.line', inverse_name='id', string='Freight Route')
+
+    # route_id = fields.Many2one(comodel_name='freight.route', string='Rute')
     
     @api.model
     def create(self, vals):
@@ -50,102 +64,37 @@ class FreightOrder(models.Model):
         sequence_code = 'freight.order.sequence'
         vals['name'] = self.env['ir.sequence'].next_by_code(sequence_code)
         return super(FreightOrder, self).create(vals)
+    
 
-    # def create_document_clearance(self):
-    #     """Create custom clearance"""
-    #     clearance = self.env['document.clearance'].create({
-    #         'name': 'DOC - ' + self.name,
-    #         'freight_id': self.id,
-    #         'date': self.order_date,
-    #         'loading_port_id': self.loading_port_id.id,
-    #         'discharging_port_id': self.discharging_port_id.id,
-    #         'agent_id': self.agent_id.id,
-    #     })
-    #     result = {
-    #         'name': 'action.name',
-    #         'type': 'ir.actions.act_window',
-    #         'views': [[False, 'form']],
-    #         'target': 'current',
-    #         'res_id': clearance.id,
-    #         'res_model': 'document.clearance',
-    #     }
-    #     self.clearance = True
-    #     return result
+    def name_get(self):
+        result = []
+        if self.env.context.get("from_sale_order"):
+            for record in self:
+                res = "[%s]" % record.order_id.name
+                if record.date_schedule:
+                    formatted_date = format_date(record.env, record.date_schedule)
+                    res += " - {}: {}".format(_("Date Scheduled"), formatted_date)
+                res += " ({}: {} {})".format(
+                    _("remaining"),
+                    record.remaining_uom_qty,
+                    record.product_uom.name,
+                )
+                result.append((record.id, res))
+            return result
+        return super().name_get()
+    
+    @api.depends("line_ids")
+    def _compute_line_count(self):
+        self.line_count = len(self.mapped("line_ids"))
 
-    # def get_document_clearance(self):
-    #     """Get custom clearance"""
-    #     self.ensure_one()
-    #     return {
-    #         'type': 'ir.actions.act_window',
-    #         'name': 'Custom Clearance',
-    #         'view_mode': 'tree,form',
-    #         'res_model': 'custom.clearance',
-    #         'domain': [('freight_id', '=', self.id)],
-    #         'context': "{'create': False}"
-    #     }
-
-    def track_order(self):
-        """Track the order"""
-        self.ensure_one()
-        return {
-            'type': 'ir.actions.act_window',
-            'name': 'Received/Delivered',
-            'view_mode': 'form',
-            'target': 'new',
-            'res_model': 'freight.order.track',
-            'context': {
-                'default_freight_id': self.id
-            }
-        }
-
-    def create_invoice(self):
-        """Create invoice"""
-        lines = []
-        if self.order_ids:
-            for order in self.order_ids:
-                value = (0, 0, {
-                    'name': order.product_id.name,
-                    'price_unit': order.price,
-                    'quantity': order.volume + order.weight,
-                })
-                lines.append(value)
-
-        if self.route_ids:
-            for route in self.route_ids:
-                value = (0, 0, {
-                    'name': route.route_id.name,
-                    'price_unit': route.sale,
-                })
-                lines.append(value)
-
-        if self.service_ids:
-            for service in self.service_ids:
-                value = (0, 0, {
-                    'name': service.service_id.name,
-                    'price_unit': service.sale,
-                    'quantity': service.qty
-                })
-                lines.append(value)
-
-        invoice_line = {
-            'move_type': 'out_invoice',
-            'partner_id': self.shipper_id.id,
-            'invoice_user_id': self.env.user.id,
-            'invoice_origin': self.name,
-            'ref': self.name,
-            'invoice_line_ids': lines,
-        }
-        inv = self.env['account.move'].create(invoice_line)
-        result = {
-            'name': 'action.name',
-            'type': 'ir.actions.act_window',
-            'views': [[False, 'form']],
-            'target': 'current',
-            'res_id': inv.id,
-            'res_model': 'account.move',
-        }
-        self.state = 'invoice'
-        return result
+    def action_view_sale_blanket_order_line(self):
+        action = self.env["ir.actions.act_window"]._for_xml_id(
+            "freight_order.act_open_freight_order_lines_view_tree"
+        )
+        lines = self.mapped("line_ids")
+        if len(lines) > 0:
+            action["domain"] = [("id", "in", lines.ids)]
+        return action
 
     def action_cancel(self):
         """Cancel the record"""
@@ -177,6 +126,20 @@ class FreightOrder(models.Model):
             'domain': [('fo_number', '=', self.name)],
             'context': "{'create': False}"
         }
+    
+    def get_sol_related(self):
+        """View the invoice"""
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Sale Order Line',
+            'view_mode': 'tree,form',
+            'res_model': 'sale.order.line',
+            # 'domain': [('order_id', '=', self.name)],
+            'domain': [('order_id.name', '=', self.name)],
+            'context': "{'create': False}"
+        }
+        print("-------------------",self)
 
     @api.depends('name')
     def compute_count(self):
@@ -189,7 +152,7 @@ class FreightOrder(models.Model):
                 rec.invoice_count = 0
             if rec.env['sale.order'].search([('fo_number', '=', rec.name)]):
                 rec.so_count = rec.env['sale.order'].search_count(
-                    [('fo_number', '=', rec.name)])
+                    [('fo_number.name', '=', rec.name)])
             else:
                 rec.so_count = 0
             # if rec.env['sale.order.line'].search([('fo_number', '=', rec.name)]):
@@ -318,110 +281,25 @@ class FreightOrder(models.Model):
                 line.container_id.state = 'available'
 
 
+
+
 class FreightOrderLine(models.Model):
     _name = 'freight.order.line'
+    _description = 'Freight Order Line'
 
-    order_id = fields.Many2one('freight.order')
-    container_id = fields.Many2one('freight.container', string='Container',
-                                   domain="[('state', '=', 'available')]")
-    product_id = fields.Many2one('product.product', string='Goods')
-    billing_type = fields.Selection([('weight', 'Weight'),
-                                     ('volume', 'Volume')], string="Billing On")
-    pricing_id = fields.Many2one('freight.price', string='Pricing')
-    price = fields.Float('Unit Price')
-    total_price = fields.Float('Total Price')
-    volume = fields.Float('Volume')
-    weight = fields.Float('Weight')
-
-    @api.constrains('weight')
-    def _check_weight(self):
-        """Checking the weight of containers"""
-        for rec in self:
-            if rec.container_id and rec.billing_type:
-                if rec.billing_type == 'weight':
-                    if rec.container_id.weight < rec.weight:
-                        raise ValidationError(
-                            'The weight is must be less '
-                            'than or equal to %s' % (rec.container_id.weight))
-
-    @api.constrains('volume')
-    def _check_volume(self):
-        """Checking the volume of containers"""
-        for rec in self:
-            if rec.container_id and rec.billing_type:
-                if rec.billing_type == 'volume':
-                    if rec.container_id.volume < rec.volume:
-                        raise ValidationError(
-                            'The volume is must be less '
-                            'than or equal to %s' % (rec.container_id.volume))
-
-    @api.onchange('pricing_id', 'billing_type')
-    def onchange_price(self):
-        """Calculate the weight and volume of container"""
-        for rec in self:
-            if rec.billing_type == 'weight':
-                rec.volume = 0.00
-                rec.price = rec.pricing_id.weight
-            elif rec.billing_type == 'volume':
-                rec.weight = 0.00
-                rec.price = rec.pricing_id.volume
-
-    @api.onchange('pricing_id', 'billing_type', 'volume', 'weight')
-    def onchange_total_price(self):
-        """Calculate sub total price"""
-        for rec in self:
-            if rec.billing_type and rec.pricing_id:
-                if rec.billing_type == 'weight':
-                    rec.total_price = rec.weight * rec.price
-                elif rec.billing_type == 'volume':
-                    rec.total_price = rec.volume * rec.price
-
-
-
-
-class FreightOrderServiceLine(models.Model):
-    _name = 'freight.order.service'
-
-    line_id = fields.Many2one('freight.order')
-    service_id = fields.Many2one('freight.service', required=True)
-    partner_id = fields.Many2one('res.partner', string="Vendor")
-    qty = fields.Float('Quantity')
-    cost = fields.Float('Cost')
-    sale = fields.Float('Sale')
-    total_sale = fields.Float('Total Sale')
-
-    @api.onchange('service_id', 'partner_id')
-    def _onchange_partner_id(self):
-        """Calculate the price of services"""
-        for rec in self:
-            if rec.service_id:
-                if rec.partner_id:
-                    if rec.service_id.line_ids:
-                        for service in rec.service_id.line_ids:
-                            if rec.partner_id == service.partner_id:
-                                rec.sale = service.sale
-                            else:
-                                rec.sale = rec.service_id.sale_price
-                    else:
-                        rec.sale = rec.service_id.sale_price
-                else:
-                    rec.sale = rec.service_id.sale_price
-
-    @api.onchange('qty', 'sale')
-    def _onchange_qty(self):
-        """Calculate the subtotal of route operation"""
-        for rec in self:
-            rec.total_sale = rec.qty * rec.sale
-
-
-class Tracking(models.Model):
-    _name = 'freight.track'
-
-    source_loc = fields.Many2one('freight.port', 'Source Location')
-    destination_loc = fields.Many2one('freight.port', 'Destination Location')
-    transport_type = fields.Selection([('land', 'Land'), ('air', 'Air'),
-                                       ('water', 'Water')], "Transport")
-    track_id = fields.Many2one('freight.order')
-    date = fields.Date('Date')
-    type = fields.Selection([('received', 'Received'),
-                             ('delivered', 'Delivered')], 'Received/Delivered')
+    name = fields.Char("Description", tracking=True)
+    sequence = fields.Integer()
+    order_id = fields.Many2one("freight.order", required=True, ondelete="cascade")
+    product_id = fields.Many2one(
+        "product.product",
+        string="Product",
+        domain=[("sale_ok", "=", True)],
+    )
+    product_uom = fields.Many2one("uom.uom", string="Unit of Measure")
+    price_unit = fields.Float(string="Price", digits="Product Price")
+    taxes_id = fields.Many2many(
+        "account.tax",
+        string="Taxes",
+        domain=["|", ("active", "=", False), ("active", "=", True)],
+    )
+    date_schedule = fields.Date(string="Scheduled Date")
