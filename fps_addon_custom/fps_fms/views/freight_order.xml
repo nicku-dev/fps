@@ -65,9 +65,17 @@
                             </button>   
 
                             <!-- attrs="{'invisible':[('line_count', '=', 0)]}" -->
-                            <button class="oe_stat_button" type="object" name="get_sol_related"
-                                icon="fa-list">
-                                <field name="line_count" widget="statinfo" string="Lines" />
+                            
+                            <button 
+                                class="oe_stat_button" 
+                                type="object" 
+                                name="get_sol_related"
+                                attrs="{'invisible':[('line_count', '=', 0)]}"
+                                icon="fa-list"
+                                >
+                                <field name="line_count" 
+                                widget="statinfo" 
+                                string="Lines" />
                             </button>                         
                         </div>
                         <div class="oe_title">
@@ -91,21 +99,32 @@
                                 <field name="agent_id"/>
                                 <field name="consignee_id"/>
                                 <field name="expected_date"/>
-                                <!-- <field name="route_id"/> -->
+                                <field name="company_id"/>
                             </group>
                         </group>
                         <notebook>
-                            <page string="Routes">
-                                <field name="route_sol_ids">
-                                    <!-- <tree string="Routes" editable="bottom">
-                                        <field name="route_code"/>
+                            <page string="LINES">
+                                <field name="line_ids">
+                                    <tree string="Order Line" editable="bottom">
+                                        <field name="sequence" widget="handle"/>
                                         <field name="name"/>
-                                        <field name="region"/>
-                                        <field name="source_loc"/>
-                                        <field name="destination_loc"/>
-                                    </tree> -->
+                                        <field name="order_id"/>
+                                        <field name="product_id" context="{'partner_id':parent.partner_id, 'quantity':original_uom_qty, 'company_id': company_id}"
+                                        />
+                                        <field name="product_uom" invisible="1" />
+                                        <field name="price_unit" />
+                                        <!-- <field name="date_schedule" /> -->
+                                        <field name="original_uom_qty" string="Original Qty" context="{'partner_id':parent.partner_id, 'quantity':original_uom_qty, 'company_id': company_id}"
+                                        />
+                                        <field name="ordered_uom_qty" />
+                                        <field name="invoiced_uom_qty" />
+                                        <field name="delivered_uom_qty" />
+                                        <field name="remaining_uom_qty" />
+                                        <field name="company_id" invisible="1" />
+                                    </tree>
                                 </field>
                             </page>
+
 
                             <page name="freight_timesheet" string="Timesheet">
                                 <field name="timesheet_ids">
@@ -121,68 +140,6 @@
                                 </field>
                             </page>
 
-                            <!-- <page name="freight_carriage" string="Carriage">
-                                <field name="carriage_ids">
-                                    <tree string="Carriage">
-                                        <field name="carriage_so"/>
-                                        <field name="load"/>
-                                        <field name="qty_so"/>
-                                        <field name="qty_bl"/>
-                                        <field name="qty_final"/>
-                                        <field name="qty_difference"/>
-                                        <field name="uom"/>
-                                        <field name="toleransi_claim"/>
-                                        <field name="claim_susut"/>
-                                    </tree>
-                                </field>
-                            </page> -->
-<!-- 
-                            <page name="freight_costing" string="Costing">
-                                <field name="costing_ids">
-                                    <tree>
-                                        <field name="fo_vendor_bill"/>
-                                        <field name="vendor"/>
-                                        <field name="product"/>
-                                        <field name="keterangan"/>
-                                        <field name="qty_user"/>
-                                        <field name="uom"/>
-                                        <field name="price_unit"/>
-                                        <field name="taxes"/>
-                                        <field name="total"/>
-                                    </tree>
-                                </field>
-                            </page> -->
-
-                            <!-- <page name="freight_costing" string="Profitability">
-                                <field name="profitability_ids">
-                                    <tree>
-                                        <field name="invoice"/>
-                                        <field name="customer_fo"/>
-                                        <field name="product_fo"/>
-                                        <field name="keterangan"/>
-                                        <field name="uom"/>
-                                        <field name="price_unit"/>
-                                        <field name="taxes"/>
-                                        <field name="total"/>
-                                    </tree>
-                                </field>
-                            </page> -->
-
-                            <!-- TEST BILL DI ASSET-->
-                            <!-- <page string="Bills" name="related_items">
-                                <field name="original_move_line_ids" domain="[('parent_state', '=', 'posted'), ('company_id', '=', company_id), ('account_id.account_type', 'in', ('asset_fixed', 'asset_non_current', 'asset_current')), ('move_id.move_type', 'in', ('in_invoice', 'in_refund', 'in_receipt', 'entry')), ('move_id.asset_id', '=', False),]" class="original_move_line_ids_field" context="{'disable_preview': 1, 'tree_view_ref': 'account_asset.view_move_line_tree_asset'}" on_change="1" modifiers="{&quot;readonly&quot;: [[&quot;state&quot;, &quot;=&quot;, &quot;posted&quot;]]}" can_create="true" can_write="true">
-                                    <tree create="0" no_open="1">
-                                        <field name="date" modifiers="{&quot;readonly&quot;: true}"/>
-                                        <field name="move_name" string="Journal Entry" widget="open_move_widget" modifiers="{&quot;readonly&quot;: true}"/>
-                                        <field name="account_id" on_change="1"/>
-                                        <field name="vehicle_id" optional="hidden"/>
-                                        <field name="name" on_change="1"/>
-                                        <field name="debit" widget="monetary" on_change="1"/>
-                                        <field name="credit" widget="monetary" on_change="1"/>
-                                        <field name="company_currency_id" modifiers="{&quot;readonly&quot;: true, &quot;column_invisible&quot;: true}"/>
-                                    </tree>
-                                </field>
-                            </page> -->
                         </notebook>
                     </sheet>
                 </form>

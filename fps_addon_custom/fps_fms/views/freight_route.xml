@@ -39,8 +39,8 @@
                         </group>
                     </group>
                     <notebook>
-                        <page string="Routes">
-                            <field name="sol_routes_ids">
+                        <!-- <page string="Routes"> -->
+                            <!-- <field name="sol_routes_ids"> -->
                                 <!-- <tree string="Routes" editable="bottom">
                                     <field name="route_code"/>
                                     <field name="name"/>
@@ -48,8 +48,8 @@
                                     <field name="source_loc"/>
                                     <field name="destination_loc"/>
                                 </tree> -->
-                            </field>
-                        </page>
+                            <!-- </field>
+                        </page> -->
                     </notebook>
                 </sheet>
             </form>
