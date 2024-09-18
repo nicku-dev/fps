@@ -21,5 +21,5 @@ class SaleOrderLine(models.Model):
     load = fields.Many2one(comodel_name='freight.load', string='Load')
     company_id = fields.Many2one('res.company','Company', default=lambda self:self.env.user.company_id)
     # company_id = fields.Many2one(comodel_name='res.company', string='COmpany')
-    fo_id = fields.Char(related='freight_order_id.name', string='FO_ID', tracking=True)
+    fo_id = fields.Char(related='order_id.name', string='FO_ID', tracking=True)
 

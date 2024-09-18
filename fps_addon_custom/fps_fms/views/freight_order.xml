@@ -95,10 +95,9 @@
                             </group>
                         </group>
                         <notebook>
-<<<<<<< HEAD
                             <page string="Carriage">
                                 <field name="sol_ids">
-                                editable="bottom"
+                                <!-- editable="bottom" -->
                                     <tree string="S.O.L">
                                         <field name="order_id"/>
                                         <field name="name"/>
@@ -109,17 +108,6 @@
                                         <field name="qty_delivered"/>
                                         <field name="price_unit"/>
                                     </tree>
-=======
-                            <page string="Routes">
-                                <field name="route_sol_ids">
-                                    <!-- <tree string="Routes" editable="bottom">
-                                        <field name="route_code"/>
-                                        <field name="name"/>
-                                        <field name="region"/>
-                                        <field name="source_loc"/>
-                                        <field name="destination_loc"/>
-                                    </tree> -->
->>>>>>> parent of 7ac744f ([Fixing]Dev Fixin so Flow and FO)
                                 </field>
                             </page>
 
@@ -152,6 +140,28 @@
                                     </tree>
                                 </field>
                             </page> -->
+
+                        </notebook>
+                    </sheet>
+                </form>
+        </field>
+    </record>
+
+    <record id="action_freight_order" model="ir.actions.act_window">
+        <field name="name">Freight Order</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">freight.order</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+            Define a new freight order
+            </p>
+        </field>
+
+    </record>
+</odoo>
+
+
 <!-- 
                             <page name="freight_costing" string="Costing">
                                 <field name="costing_ids">
@@ -199,22 +209,3 @@
                                     </tree>
                                 </field>
                             </page> -->
-                        </notebook>
-                    </sheet>
-                </form>
-        </field>
-    </record>
-
-    <record id="action_freight_order" model="ir.actions.act_window">
-        <field name="name">Freight Order</field>
-        <field name="type">ir.actions.act_window</field>
-        <field name="res_model">freight.order</field>
-        <field name="view_mode">tree,form</field>
-        <field name="help" type="html">
-            <p class="o_view_nocontent_smiling_face">
-            Define a new freight order
-            </p>
-        </field>
-
-    </record>
-</odoo>

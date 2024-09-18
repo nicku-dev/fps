@@ -54,7 +54,7 @@ class FreightOrder(models.Model):
     carriage_ids = fields.One2many(comodel_name='freight.carriage', inverse_name='carriage_id', string='CARRIAGE')
     costing_ids = fields.One2many(comodel_name='freight.costing', inverse_name='costing_id', string='COSTING')
     profitability_ids = fields.One2many(comodel_name='freight.profitability', inverse_name='profitability_id', string='profitability')
-    route_sol_ids = fields.One2many(comodel_name='sale.order.line', inverse_name='id', string='Freight Route')
+    sol_ids = fields.One2many(comodel_name='sale.order.line', inverse_name='id', string='Freight Route')
 
     # route_id = fields.Many2one(comodel_name='freight.route', string='Rute')
     
@@ -135,8 +135,8 @@ class FreightOrder(models.Model):
             'name': 'Sale Order Line',
             'view_mode': 'tree,form',
             'res_model': 'sale.order.line',
-            # 'domain': [('order_id', '=', self.name)],
-            'domain': [('order_id.name', '=', self.name)],
+            'domain': [('fo_id', '=', self.name)],
+            # 'domain': [('order_id.name', '=', self.name)],
             'context': "{'create': False}"
         }
         print("-------------------",self)
