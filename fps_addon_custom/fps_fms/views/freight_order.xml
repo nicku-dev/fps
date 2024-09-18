@@ -95,6 +95,7 @@
                             </group>
                         </group>
                         <notebook>
+<<<<<<< HEAD
                             <page string="Carriage">
                                 <field name="sol_ids">
                                 editable="bottom"
@@ -108,6 +109,17 @@
                                         <field name="qty_delivered"/>
                                         <field name="price_unit"/>
                                     </tree>
+=======
+                            <page string="Routes">
+                                <field name="route_sol_ids">
+                                    <!-- <tree string="Routes" editable="bottom">
+                                        <field name="route_code"/>
+                                        <field name="name"/>
+                                        <field name="region"/>
+                                        <field name="source_loc"/>
+                                        <field name="destination_loc"/>
+                                    </tree> -->
+>>>>>>> parent of 7ac744f ([Fixing]Dev Fixin so Flow and FO)
                                 </field>
                             </page>
 
