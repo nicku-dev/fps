@@ -141,7 +141,7 @@ class FreightOrder(models.Model):
     )
 
     ### SBO
-    line_ids = fields.One2many("sale.order.line", "id", string="Order lines", copy=True)
+    # line_ids = fields.One2many("sale.order.line", "id", string="Order lines", copy=True)
     # line_ids = fields.One2many("freight.order.line", "order_id", string="Order lines", copy=True)
 
     # route_id = fields.Many2one(comodel_name='freight.route', string='Rute')
@@ -224,13 +224,14 @@ class FreightOrder(models.Model):
             'name': 'Sale Order Line',
             'view_mode': 'tree,form',
             'res_model': 'sale.order.line',
-            'domain': [('id', 'in', self.line_ids.ids)],
+            # 'domain': [('id', 'in', self.line_ids.ids)],
+            'domain': [('fo_id', '=', self.name)],
             # 'domain': [('fo_number', '=', self.name)],
             # 'domain': [('order_id', '=', self.name)],
             # 'domain': [('order_id.name', '=', self.name)],
             'context': "{'create': False}"
         }
-        print("-------------------",self)
+        # print("-------------------",self)
 
     @api.depends('name')
     def compute_count(self):
@@ -465,9 +466,9 @@ class FreightOrderLine(models.Model):
         readonly=True,
         copy=False,
     )
-    # company_id = fields.Many2one(
-    #     related="order_id.company_id", store=True, index=True, precompute=True
-    # )
+    company_id = fields.Many2one(
+        related="order_id.company_id", store=True, index=True, precompute=True
+    )
 
     currency_id = fields.Many2one("res.currency", related="order_id.currency_id")
     partner_id = fields.Many2one(related="order_id.partner_id", string="Customer")

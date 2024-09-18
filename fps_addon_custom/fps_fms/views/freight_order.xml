@@ -64,13 +64,15 @@
                                 <field string="Sales Order" name="so_count" widget="statinfo"/>
                             </button>   
 
-                            <!-- attrs="{'invisible':[('line_count', '=', 0)]}" -->
+                            <!-- attrs="{'invisible':[('line_count', '=', 0)]}"
+                                attrs="{'invisible':[('line_count', '=', 0)]}"
+                            
+                             -->
                             
                             <button 
                                 class="oe_stat_button" 
                                 type="object" 
                                 name="get_sol_related"
-                                attrs="{'invisible':[('line_count', '=', 0)]}"
                                 icon="fa-list"
                                 >
                                 <field name="line_count" 
@@ -100,6 +102,7 @@
                                 <field name="consignee_id"/>
                                 <field name="expected_date"/>
                                 <field name="company_id"/>
+                                <field name="partner_id"/>
                             </group>
                         </group>
                         <notebook>
