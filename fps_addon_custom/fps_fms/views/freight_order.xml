@@ -63,12 +63,7 @@
                                 icon="fa-pencil-square-o">
                                 <field string="Sales Order" name="so_count" widget="statinfo"/>
                             </button>   
-
-                            <!-- attrs="{'invisible':[('line_count', '=', 0)]}"
-                                attrs="{'invisible':[('line_count', '=', 0)]}"
-                            
-                             -->
-                            
+                 
                             <button 
                                 class="oe_stat_button" 
                                 type="object" 
@@ -106,28 +101,25 @@
                             </group>
                         </group>
                         <notebook>
-                            <page string="LINES">
-                                <field name="line_ids">
+                            <page name="sol_related_fo_field_ids" string="CARRIAGE">
+                                <field name="sol_related_fo_field_ids">
                                     <tree string="Order Line" editable="bottom">
+                                        <field name="order_id" readonly="1"/>
+                                        <field name="name" readonly="1"/>
                                         <field name="sequence" widget="handle"/>
-                                        <field name="name"/>
-                                        <field name="order_id"/>
-                                        <field name="product_id" context="{'partner_id':parent.partner_id, 'quantity':original_uom_qty, 'company_id': company_id}"
-                                        />
-                                        <field name="product_uom" invisible="1" />
-                                        <field name="price_unit" />
-                                        <!-- <field name="date_schedule" /> -->
-                                        <field name="original_uom_qty" string="Original Qty" context="{'partner_id':parent.partner_id, 'quantity':original_uom_qty, 'company_id': company_id}"
-                                        />
-                                        <field name="ordered_uom_qty" />
-                                        <field name="invoiced_uom_qty" />
-                                        <field name="delivered_uom_qty" />
-                                        <field name="remaining_uom_qty" />
-                                        <field name="company_id" invisible="1" />
+                                        <!-- <field name="product_id" context="{'partner_id':parent.partner_id, 'quantity':original_uom_qty, 'company_id': company_id}"/> -->
+                                        <field name="product_uom" invisible="1" readonly="1"/>
+                                        <field name="price_unit" readonly="1" />
+                                        <!-- <field name="original_uom_qty" readonly="1" /> -->
+                                        <!-- <field name="original_uom_qty" string="Original Qty" context="{'partner_id':parent.partner_id, 'quantity':original_uom_qty, 'company_id': company_id}"/> -->
+                                        <!-- <field name="ordered_uom_qty" /> -->
+                                        <!-- <field name="invoiced_uom_qty" /> -->
+                                        <!-- <field name="delivered_uom_qty" /> -->
+                                        <!-- <field name="remaining_uom_qty" /> -->
+                                        <field name="company_id" invisible="0" />
                                     </tree>
                                 </field>
                             </page>
-
 
                             <page name="freight_timesheet" string="Timesheet">
                                 <field name="timesheet_ids">
@@ -162,3 +154,30 @@
 
     </record>
 </odoo>
+
+<!-- 
+
+                            <page string="LINES">
+                                <field name="line_ids">
+                                    <tree string="Order Line" editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="name"/>
+                                        <field name="order_id"/>
+                                        <field name="product_id" context="{'partner_id':parent.partner_id, 'quantity':original_uom_qty, 'company_id': company_id}"
+                                        />
+                                        <field name="product_uom" invisible="1" />
+                                        <field name="price_unit" />
+                                        <field name="date_schedule" />
+                                        <field name="original_uom_qty" string="Original Qty" context="{'partner_id':parent.partner_id, 'quantity':original_uom_qty, 'company_id': company_id}"
+                                        />
+                                        <field name="ordered_uom_qty" />
+                                        <field name="invoiced_uom_qty" />
+                                        <field name="delivered_uom_qty" />
+                                        <field name="remaining_uom_qty" />
+                                        <field name="company_id" invisible="1" />
+                                    </tree>
+                                </field>
+                            </page>
+
+
+ -->
