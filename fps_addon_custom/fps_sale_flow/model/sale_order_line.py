@@ -9,9 +9,9 @@ class SaleOrderLine(models.Model):
 
     fo_order_id = fields.Many2one(comodel_name='freight.order', string='FO Number')
     qty_delivered = fields.Integer(string='Qty Delivered')
-    pod = fields.Many2one(comodel_name='freight.port', string='POD')
-    pol = fields.Many2one(comodel_name='freight.port', string='POL')
-    load = fields.Many2one(comodel_name='freight.load', string='Load')
+    pod_id = fields.Many2one(comodel_name='freight.port', string='POD')
+    pol_id = fields.Many2one(comodel_name='freight.port', string='POL')
+    load_id = fields.Many2one(comodel_name='freight.load', string='Load')
     company_id = fields.Many2one('res.company','Company', default=lambda self:self.env.user.company_id)
     fo_id = fields.Many2one(related='order_id.fo_number', string='FO Number', store = True, tracking=True)
     # original_uom_qty = fields.Float(string="Original quantity", default=0.0)

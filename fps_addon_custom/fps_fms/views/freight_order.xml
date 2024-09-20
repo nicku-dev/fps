@@ -105,6 +105,8 @@
                                 <field name="sol_related_fo_field_ids">
                                     <tree string="Order Line" editable="bottom">
                                         <field name="order_id" readonly="1"/>
+                                        <field name="product_id"/>
+                                        <!-- <field name="load"/> -->
                                         <field name="name" readonly="1"/>
                                         <field name="sequence" widget="handle"/>
                                         <!-- <field name="product_id" context="{'partner_id':parent.partner_id, 'quantity':original_uom_qty, 'company_id': company_id}"/> -->

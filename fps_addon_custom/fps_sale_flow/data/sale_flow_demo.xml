@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!--Department-->
+        <record id="dep_management" model="hr.department">
+            <field name="name">Management</field>
+            <field name="color" eval="5"/>
+        </record>
+
+        <!-- Employees -->
+        <record id="work_contact_al" model="res.partner">
+            <field name="name">Ronnie Hart</field>
+            <field name="email">ronnie.hart87@example.com</field>
+            <field name="image_1920" type="base64" file="hr/static/img/employee_al-image.jpg"/>
+        </record>
+
+
+    </data>
+</odoo>

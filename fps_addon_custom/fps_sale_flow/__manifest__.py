@@ -13,7 +13,10 @@
     'images': [
         'static/description/icon.png',
         ],
-    'data': [
+    'demo': [
+        'data/sale_flow_demo.xml'
+    ]
+,    'data': [
         'views/sale_order_view.xml',
         'security/ir.model.access.csv',
         'views/sale_order_pricelist_view.xml',

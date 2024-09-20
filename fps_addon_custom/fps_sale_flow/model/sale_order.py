@@ -81,7 +81,7 @@ class SaleOrder(models.Model):
     purchase_date = fields.Date(string='PO Date')
     po_number = fields.Char(string='PO Number', help='Referensi PO Number data dari E-Cataloc')
     contract_number = fields.Char(string='Contract Number', help='Referensi Nomor Kontrak Perjanjian dengan Customer. data dari E-Cataloc')
-    freight_routes_id = fields.Many2one("freight.routes", string="Freight Order ID4", required=True)
+    # freight_routes_id = fields.Many2one("freight.routes", string="Freight Order ID4", required=True)
 
 
 
