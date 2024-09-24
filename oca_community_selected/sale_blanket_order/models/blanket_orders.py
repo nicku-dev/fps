@@ -170,9 +170,6 @@ class BlanketOrder(models.Model):
         default=0.0,
     )
 
-    shippment_type_id = fields.Many2one(comodel_name='sale.order', string='Shippment')
-    
-
     def _get_sale_orders(self):
         return self.mapped("line_ids.sale_lines.order_id")
 

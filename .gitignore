@@ -164,3 +164,8 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
+.vscode/
+other/
+other/odoo_ideapad_lkt.conf
+.vscode/FPS_DEV_5 SALE OCA.code-workspace
+.vscode/FPS_DEV_5 SALE OCA.code-workspace

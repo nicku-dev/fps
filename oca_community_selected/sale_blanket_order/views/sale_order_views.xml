@@ -7,7 +7,6 @@
         <field name="arch" type="xml">
             <field name="currency_id" position="after">
                 <field name="blanket_order_id" invisible="1" />
-                <field name="blanket_order_id" invisible="1" />
             </field>
             <xpath
                 expr="//field[@name='order_line']//tree/field[@name='product_id']"

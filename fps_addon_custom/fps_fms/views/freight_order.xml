@@ -7,11 +7,12 @@
             <tree>
                 <field name="name" string="FO Number"/>
                 <field name="vehicle_id" string="Kapal"/>
-                <!-- <field name="shippment_type"/> -->
+                <field name="shippment_type"/>
                 <field name="koordinator_kapal_id" string="Koordinator Kapal"/>
                 <field name="shipper_id"/>
                 <field name="departure_time"/>
                 <field name="arrival_time"/>
+                <!-- <field name="line_count"/> -->
                 <field name="state" 
                     decoration-success="state == 'done'"
                     decoration-info="state == 'submit'"
@@ -98,6 +99,9 @@
                                 <field name="expected_date"/>
                                 <field name="company_id"/>
                                 <field name="partner_id"/>
+                                <field name="analytic_plan_id" invisible="0" />
+                                <field name="analytic_account_id" invisible="0" />
+
                             </group>
                         </group>
                         <notebook>

@@ -20,7 +20,6 @@
                             <field name="remaining_uom_qty" />
                             <field name="product_uom" groups="uom.group_uom" />
                             <field name="qty" />
-                            <!-- <field name="shippment_type_id" /> -->
                         </tree>
                     </field>
                 </group>

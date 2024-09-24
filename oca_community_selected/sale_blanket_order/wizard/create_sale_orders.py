@@ -119,7 +119,6 @@ class BlanketOrderWizard(models.TransientModel):
         pricelist_id,
         payment_term_id,
         order_lines_by_customer,
-        # shippment_type_id,
     ):
         return {
             "partner_id": customer,
@@ -130,7 +129,6 @@ class BlanketOrderWizard(models.TransientModel):
             "payment_term_id": payment_term_id,
             "order_line": order_lines_by_customer[customer],
             "analytic_account_id": self.blanket_order_id.analytic_account_id.id,
-            # "shippment_type_id": shippment_type_id,
         }
 
     def create_sale_order(self):
@@ -139,7 +137,6 @@ class BlanketOrderWizard(models.TransientModel):
         pricelist_id = 0
         user_id = 0
         payment_term_id = 0
-        # shippment_type_id = 0
         for line in self.line_ids.filtered(lambda l: l.qty != 0.0):
             if line.qty > line.remaining_uom_qty:
                 raise UserError(_("You can't order more than the remaining quantities"))
@@ -186,7 +183,6 @@ class BlanketOrderWizard(models.TransientModel):
                 pricelist_id,
                 payment_term_id,
                 order_lines_by_customer,
-                # shippment_type_id,z
             )
             sale_order = self.env["sale.order"].create(order_vals)
             res.append(sale_order.id)
@@ -199,7 +195,7 @@ class BlanketOrderWizard(models.TransientModel):
             "context": {"from_sale_order": True},
             "type": "ir.actions.act_window",
         }
-        print("create_sale_order")
+
 
 class BlanketOrderWizardLine(models.TransientModel):
     _name = "sale.blanket.order.wizard.line"

@@ -84,6 +84,15 @@ class FreightOrder(models.Model):
         states=READONLY_FIELD_STATES,
         domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]",
     )
+
+    analytic_plan_id = fields.Many2one(
+        comodel_name="account.analytic.plan",
+        string="Analytic Plan",
+        copy=False,
+        check_company=True,
+        states=READONLY_FIELD_STATES,
+        domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]",
+    )
     payment_term_id = fields.Many2one(
         "account.payment.term",
         string="Payment Terms",
