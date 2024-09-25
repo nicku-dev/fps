@@ -66,26 +66,55 @@ class SaleOrder(models.Model):
         domain="[('type', '!=', 'private'), ('company_id', 'in', (False, company_id))]")
   
     ### SPAL DATA
-
+    # Header
     spal_number = fields.Char(string='SPAL Number')
     spal_date = fields.Char(string='SPAL DATE')
-    company_id = fields.Many2one('res.company','Company', default=lambda self:self.env.user.company_id)
+    spal_tempat = fields.Char(string='Tempat', default='Jakarta')
+    
+    company_id = fields.Many2one('res.company','Owner Kapal/Pemberi Jasa Angkutan Perairan ("Pihak Pertama")', default=lambda self:self.env.user.company_id)
     bendera_spal = fields.Char(string='Bendera', default='Indonesia')
-    jumlah_muatan = fields.Float(string='Jumlah Muatan/Kargo')
-    kondisi_kontrak_muatan = fields.Selection(string='Kondisi Kontrak Muatan / Voyage Condition', selection=[('F.I.O.S.T', 'F.I.O.S.T'), ('other', 'other'),])
+    jumlah_muatan = fields.Char(string='Jumlah Muatan/Kargo')
+    kondisi_kontrak_muatan = fields.Selection(string='Kondisi Kontrak Muatan / Voyage Condition', default='F.I.O.S.T', selection=[('F.I.O.S.T', 'F.I.O.S.T'), ('other', 'other'),])
     uang_tambang = fields.Char(string='Uang Tambang / Freight Kapal')
-    tanggal_kesediaan_muat = fields.Date(string='Kesediaan Untuk Muat / Lay Can')
+    tanggal_kesediaan_muat = fields.Char(string='Kesediaan Untuk Muat / Lay Can')
+    harga_termasuk = fields.Char(string='Harga Termasuk')
+    harga_tidak_termasuk = fields.Char(string='Harga Tidak Termasuk')
     cara_pembayaran = fields.Char(string='Cara Pembayaran', default='100% Pada Saat Kapal Sandar di Pelabuhan Tujuan Dan Setelah Bongkar')
+    account_bank_number_id = fields.Many2one('res.partner.bank', 'Account Number', help="Nomor Rekening Customer yang akan keluar di SPAL")
+    
+    so_pod = fields.Many2one(comodel_name='freight.port', string='POD')
+    so_pol = fields.Many2one(comodel_name='freight.port', string='POL')
+    loading_duration = fields.Char(string='Lama Pemuatan Termasuk Tunggu')
+    unloading_duration = fields.Char(string='Lama Pembongkaran Termasuk Tunggu')
+    
     pengiriman_barang = fields.Char(string='Pengiriman Barang', default='As Order di Shipping Instruction')
     penerima_barang = fields.Char(string='Penerima Barang', default='As Order di Shipping Instruction')
+
+    asuransi_kapal = fields.Char(string='Asuransi Kapal', default='Diatur Oleh Pihak Pertama')
+    asuransi_muatan = fields.Char(string='Asuransi Muatan', default='Diatur Oleh Pihak Kedua')
+
+    spal_demurrage = fields.Char(string="Denda Keterlambatan Muat & Bongkar (Demurrage)", default='Rp. 25.000.000,-/Hari (Dua Puluh Lima Juta Rupiah Per Hari)')
+
     purchase_date = fields.Date(string='PO Date')
     po_number = fields.Char(string='PO Number', help='Referensi PO Number data dari E-Cataloc')
     contract_number = fields.Char(string='Contract Number', help='Referensi Nomor Kontrak Perjanjian dengan Customer. data dari E-Cataloc')
-    # freight_routes_id = fields.Many2one("freight.routes", string="Freight Order ID4", required=True)
+    
+    agent_id = fields.Many2one('res.partner', 'Agent', required=False,
+                               help="Keagenan Kapal / POL & POD Agency")
+    
+    demurage = fields.Monetary(currency_field='currency_id')
+    
+    toleransi_susut = fields.Char(string='Toleransi Susut', default="0,5 %")
+    
+    
+    
+    
+    
 
 
 
     # 
+    # freight_routes_id = fields.Many2one("freight.routes", string="Freight Order ID4", required=True)
     # Relational
     # partner_id = fields.Many2one("res.partner", string="Partner", required=True)
     # property_id = fields.Many2one("estate.property", string="Property", required=True)
@@ -130,32 +159,19 @@ class SaleOrder(models.Model):
     #                                ('heavy_equipment_transport', 'Heavy Equipment Transport'),
     #                                ('normal', 'Normal')], default='normal', string='Sales Type', required=True)
 
-  
-    loading_duration = fields.Float(string='Lama Loading (hari)')
-    unloading_duration = fields.Float(string='Lama Unloading (hari)')
-    harga_termasuk = fields.Char(string='Harga Termasuk')
-    harga_tidak_termasuk = fields.Char(string='Harga Tidak Termasuk')
-    agent_id = fields.Many2one('res.partner', 'Agent', required=False,
-                               help="Keagenan Kapal / POL & POD Agency")
+
     nama_kapal = fields.Many2one('fleet.vehicle', 'Fleet', required=True, help="Keagenan Kapal / POL & POD Agency")
-    account_bank_number_id = fields.Many2one('res.partner.bank', 'Account Number', help="Nomor Rekening Customer yang akan keluar di SPAL")
     si_number = fields.Char(string='Shipping Instruction Number')
     si_date = fields.Date(string='Shipping Instruction Date')
     voyage_condition = fields.Selection(string='Kondisi Kontrak Muatan/ Voyage Condition', selection=[('FIOST', 'F.I.O.S.T'), ('', ''),])
-    asuransi_kapal = fields.Char(string='Asuransi Kapal', default='Diatur Oleh Pihak Pertama')
-    asuransi_muatan = fields.Char(string='Asuransi Muatan', default='Diatur Oleh Pihak Kedua')
     currency_id = fields.Many2one(
         comodel_name='res.currency',
         string='Currency',
         compute='_compute_currency_id', store=True, readonly=False, precompute=True,
         help="The payment's currency.")
-    demurage = fields.Monetary(currency_field='currency_id')
     fo_number = fields.Many2one(comodel_name='freight.order', string='FO Number')
     spal_format = fields.Selection(string='SPAL FORMAT', selection=[('normal','Normal'), ('fch', 'Freight Charter'), ('time_based', 'Time Based Charter'),('fame', 'F.A.M.E'),])
     is_hide = fields.Boolean(string='HIDE', compute="_compute_hide")
-    so_pod = fields.Many2one(comodel_name='freight.port', string='POD')
-    so_pol = fields.Many2one(comodel_name='freight.port', string='POL')
-    toleransi_susut = fields.Float(string='Toleransi Susut')
     fo_order_lines = fields.One2many('sale.order.line', compute='_compute_fo_order_lines', string='FO Order Lines')
 
 

@@ -1,7 +1,7 @@
 from odoo import models, fields, api, _
 
-class SaleOrder(models.Model):
-    _inherit = 'sale.order'
+class FreightOrder(models.Model):
+    _inherit = 'freight.order'
 
     analytic_account_id = fields.Many2one('account.analytic.account', string="Analytic Account")
     analytic_plan_id = fields.Many2one('account.analytic.plan', string="Analytic Plan")
@@ -33,6 +33,6 @@ class SaleOrder(models.Model):
         """
         Override the create method to trigger the automatic creation of the analytic account.
         """
-        order = super(SaleOrder, self).create(vals)
+        order = super(FreightOrder, self).create(vals)
         order._create_analytic_account()
         return order

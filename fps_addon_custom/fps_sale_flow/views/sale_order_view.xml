@@ -79,24 +79,27 @@
                             <field name="jumlah_muatan"/>
                             <field name="kondisi_kontrak_muatan"/>
                             <field name="uang_tambang"/>
-                            <field name="tanggal_kesediaan_muat"/>
+                            <field name="harga_termasuk" />
+                            <field name="cara_pembayaran" />
+                            <field name="so_pol" />
+                            <field name="loading_duration"/>
+                            <field name="asuransi_kapal" />
                         </group>
                         <group>
-                            <field name="harga_termasuk" />
                             <field name="harga_tidak_termasuk" />
-                            <field name="cara_pembayaran" />
                             <field name="account_bank_number_id"/>
-                            <field name="loading_duration"/>
                             <field name="unloading_duration"/>
+                            <field name="tanggal_kesediaan_muat"/>
                             <field name="pengiriman_barang"/>
                             <field name="penerima_barang"/>
-                            <field name="asuransi_kapal" />
                             <field name="asuransi_muatan" />
                             <field name="currency_id" />
-                            <field name="demurage" />
+                            <!-- <field name="demurage" /> -->
+                            <field name="spal_demurrage" />
                             <field name="so_pod" />
-                            <field name="so_pol" />
+
                             <field name="toleransi_susut" />
+                            <field name="spal_demurrage" />
                         </group>
                     </group>
                 </page>
@@ -126,7 +129,9 @@
                             <field name="asuransi_kapal" />
                             <field name="asuransi_muatan" />
                             <field name="currency_id" />
-                            <field name="demurage" />
+                            <!-- <field name="demurage" /> -->
+                            <field name="spal_demurrage" />
+
                             <field name="so_pod" />
                             <field name="so_pol" />
                             <field name="toleransi_susut" />
@@ -160,7 +165,9 @@
                             <field name="asuransi_kapal" />
                             <field name="asuransi_muatan" />
                             <field name="currency_id" />
-                            <field name="demurage" />
+                            <!-- <field name="demurage" /> -->
+                            <field name="spal_demurrage" />
+
                             <field name="so_pod" />
                             <field name="so_pol" />
                             <field name="toleransi_susut" />
@@ -194,8 +201,9 @@
                             <field name="asuransi_kapal" />
                             <field name="asuransi_muatan" />
                             <field name="currency_id" />
-                            <field name="demurage" />
-                                                        <field name="so_pod" />
+                            <!-- <field name="demurage" /> -->
+                            <field name="spal_demurrage" />
+                            <field name="so_pod" />
                             <field name="so_pol" />
                             <field name="toleransi_susut" />
                         </group>

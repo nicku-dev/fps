@@ -19,7 +19,7 @@
     <record id="action_fps_so_spal_report" model="ir.actions.report">
         <field name="name">SPAL - Freight Charter</field>
         <field name="model">sale.order</field>
-        <field name="report_type">qweb-pdf</field>
+        <field name="report_type">qweb-html</field>
         <field name="report_name">fps_sale_flow.sale_spal_print</field>
         <field name="binding_model_id" ref="model_sale_order" />
         <field name="binding_type">report</field>
@@ -404,7 +404,7 @@
 									</li>
 								</ol>
 								<p style="margin-top:0pt; margin-left:22.7pt; margin-bottom:0pt; text-align:justify; font-size:8pt">
-									<span style="font-family:Arial"><span t-field="doc.demurage"/></span>
+									<span style="font-family:Arial"><span t-field="doc.spal_demurrage"/></span>
 								</p>
 							</td>
 						</tr>
@@ -1166,7 +1166,7 @@
 									</li>
 								</ol>
 								<p style="margin-top:0pt; margin-left:22.7pt; margin-bottom:0pt; text-align:justify; font-size:8pt">
-									<span style="font-family:Arial"><span t-field="doc.demurage"/></span>
+									<span style="font-family:Arial"><span t-field="doc.spal_demurrage"/></span>
 								</p>
 							</td>
 						</tr>
@@ -1897,7 +1897,7 @@
 									</li>
 								</ol>
 								<p style="margin-top:0pt; margin-left:22.7pt; margin-bottom:0pt; text-align:justify; font-size:8pt">
-									<span style="font-family:Arial"><span t-field="doc.demurage"/></span>
+									<span style="font-family:Arial"><span t-field="doc.spal_demurrage"/></span>
 								</p>
 							</td>
 						</tr>
@@ -2629,7 +2629,7 @@
 									</li>
 								</ol>
 								<p style="margin-top:0pt; margin-left:22.7pt; margin-bottom:0pt; text-align:justify; font-size:8pt">
-									<span style="font-family:Arial"><span t-field="doc.demurage"/></span>
+									<span style="font-family:Arial"><span t-field="doc.spal_demurrage"/></span>
 								</p>
 							</td>
 						</tr>
@@ -3390,7 +3390,7 @@
 									</li>
 								</ol>
 								<p style="margin-top:0pt; margin-left:22.7pt; margin-bottom:0pt; text-align:justify; font-size:8pt">
-									<span style="font-family:Arial"><span t-field="doc.demurage"/></span>
+									<span style="font-family:Arial"><span t-field="doc.spal_demurrage"/></span>
 								</p>
 							</td>
 						</tr>

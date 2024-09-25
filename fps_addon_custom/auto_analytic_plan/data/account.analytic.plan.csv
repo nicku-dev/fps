@@ -1,0 +1,4 @@
+color,name,description,is_default
+2,Voyage,Nomor FO (TRIP),True
+3,Kapal,Nomor Kapal (vehicle),False
+4,Region,Wilayah Region,False

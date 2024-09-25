@@ -6,10 +6,10 @@
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='order_line']" position="after">
-                <group>
+                <!-- <group>
                     <field name="analytic_account_id"/>
                     <field name="analytic_plan_id"/>
-                </group>
+                </group> -->
             </xpath>
         </field>
     </record>
