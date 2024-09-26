@@ -10,5 +10,11 @@ class ResPartner(models.Model):
     file_spkp = fields.Binary(string='File SPKP')
     file_siupal = fields.Binary(string='File SIUPAL')
 
+class SaleOrder(models.Model):
+    _inherit = 'sale.order'
+
+    file_spal = fields.Binary(string='File SPAL')
+    file_po = fields.Binary(string='File SIUPAL')
+
 
 

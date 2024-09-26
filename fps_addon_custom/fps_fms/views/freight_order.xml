@@ -90,10 +90,10 @@
                                 <field name="departure_time"/>
                                 <field name="arrival_time"/>
                                 <field name="koordinator_kapal_id" string="Koordinator Kapal"/>
-                                <field name="fo_region_id" string="Region"/>
                             </group>
                             <group>
-                                <field name="create_date"/>
+                                <field name="create_date" string='Created Date FO'/>
+                                <field name="fo_region_id" string="Region"/>
                                 <field name="agent_id"/>
                                 <field name="consignee_id"/>
                                 <field name="expected_date"/>

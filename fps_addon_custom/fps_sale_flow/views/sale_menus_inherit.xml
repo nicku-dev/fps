@@ -29,7 +29,7 @@
         sequence="21"
         name="Sales Master Data">
 
-        <menuitem id="sales_md_pricelist" 
+        <!-- <menuitem id="sales_md_pricelist" 
             name="Sale MD Pricelist" 
             action="action_sales_md_pricelist" 
             sequence="30"/>
@@ -37,7 +37,7 @@
         <menuitem id="sales_md_pricelist_item" 
             name="Sale MD Pricelist Iten" 
             action="action_sales_md_pricelist_item" 
-            sequence="31"/>
+            sequence="31"/> -->
 
         <menuitem id="sale_shipment_type" 
             name="Sale Shipment Type" 

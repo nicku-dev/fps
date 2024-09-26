@@ -9,14 +9,15 @@
     'maintainer': 'Lentera Kreasi Teknologi',
     'company': 'Fangiono Perkasa Sejati',
     'website': 'https://www.lenterateknologi.com',
-    'depends': ['base','contacts'],
+    'depends': ['base','contacts','sale'],
     'images': [
         'static/description/icon.png',
         ],
     'data': [
         "data/ir_config_parameter_data.xml",
         "views/res_config_settings_views.xml",
-        "views/res_partner_inherit_view.xml"
+        "views/res_partner_inherit_view.xml",
+        "views/sale_order.xml",
     ],
     'installable': True,
     'application': False,

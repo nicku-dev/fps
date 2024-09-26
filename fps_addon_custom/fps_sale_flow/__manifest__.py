@@ -19,7 +19,7 @@
 ,    'data': [
         'views/sale_order_view.xml',
         'security/ir.model.access.csv',
-        'views/sale_order_pricelist_view.xml',
+        # 'views/sale_order_pricelist_view.xml',
         'data/sale.shipment.type.csv',
         'reports/spal_report.xml',
         'views/sale_menus_inherit.xml',

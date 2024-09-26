@@ -22,7 +22,7 @@
                 </div>
             </xpath> -->
 
-            <xpath expr="//page[@name='other_information']//group[2]//group[@name='sale_shipping']//label[@for='commitment_date']" position="replace"/>
+            <!-- <xpath expr="//page[@name='other_information']//group[2]//group[@name='sale_shipping']//label[@for='commitment_date']" position="replace"/> -->
             <xpath expr="//page[@name='other_information']//group[2]//group[@name='sale_shipping']//div" position="replace"/>
 
             <!-- <xpath expr="//field[@name='other_information']" position="after">
@@ -44,8 +44,9 @@
                 <!-- <field name="partner_shipping_id"/> -->
             </xpath>
 
-            
             <xpath expr="//field[@name='date_order']" position="after">
+                <field name="order_date"/>
+                <field name="commitment_date" invisible="1"/>
                 <field name="contract_number"/>
                 <field name="purchase_date"/>
                 <field name="po_number"/>
@@ -56,13 +57,26 @@
             </xpath>
 
             <!-- <xpath expr="//field[@name='commitment_date']" position="replace"> -->
+            <!-- <xpath expr="//field[@name='validity_date']" position="replace"> -->
+            <!-- <xpath expr="//field[@name='date_order']" position="attributes"> 
+                <attribute name="invisible">True</attribute>
+            </xpath> -->
+           
+            <xpath expr="//field[@name='validity_date']" position="attributes"> 
+                <attribute name="invisible">True</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='validity_date']" position="attributes"> 
+                <attribute name="invisible">True</attribute>
+            </xpath>
             
             <xpath expr="//page[@name='order_lines']//field[@name='order_line']//tree//field[@name='qty_invoiced']" position="after">
-                <!-- <field name="load" attrs="{'readonly': [('state', '!=', 'draft')]}"/> -->
-                <!-- <field name="qty_delivered" attrs="{'invisible': [('parent.state', 'not in', ['sale', 'done'])]}" optional="hide"/>
-                <field name="region" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
-                <field name="pod" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
-                <field name="pol" attrs="{'readonly': [('state', '!=', 'draft')]}"/> -->
+                <field name="load_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                <field name="qty_delivered" attrs="{'invisible': [('parent.state', 'not in', ['sale', 'done'])]}" optional="hide"/>
+                <!-- <field name="region_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/> -->
+                <field name="pod_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                <field name="pol_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                <field name="product_uom" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                 <!-- <field name="company_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/> -->
 
             </xpath>
@@ -75,28 +89,31 @@
                             <field name="spal_number"/>
                             <field name="spal_date" string="SPAL Date"/>
                             <field name="company_id"/>
-                            <field name="bendera_spal"/>
+                            <field name="nama_kapal"/>
                             <field name="jumlah_muatan"/>
-                            <field name="kondisi_kontrak_muatan"/>
                             <field name="uang_tambang"/>
                             <field name="harga_termasuk" />
                             <field name="cara_pembayaran" />
                             <field name="so_pol" />
+                            <field name="pengiriman_barang"/>
                             <field name="loading_duration"/>
+
+                            <field name="bendera_spal"/>
+                            <field name="kondisi_kontrak_muatan"/>
                             <field name="asuransi_kapal" />
                         </group>
                         <group>
                             <field name="harga_tidak_termasuk" />
                             <field name="account_bank_number_id"/>
+                            <field name="consignee_id" string='PEMILIK MUATAN("PIHAK KEDUA") :'/>
                             <field name="unloading_duration"/>
                             <field name="tanggal_kesediaan_muat"/>
-                            <field name="pengiriman_barang"/>
                             <field name="penerima_barang"/>
                             <field name="asuransi_muatan" />
                             <field name="currency_id" />
+                            <field name="so_pod" />
                             <!-- <field name="demurage" /> -->
                             <field name="spal_demurrage" />
-                            <field name="so_pod" />
 
                             <field name="toleransi_susut" />
                             <field name="spal_demurrage" />
@@ -120,6 +137,7 @@
                         <group>
                             <field name="harga_termasuk" />
                             <field name="harga_tidak_termasuk" />
+                            <field name="consignee_id" string='PEMILIKMUATAN("PIHAKKEDUA") :'/>
                             <field name="cara_pembayaran" />
                             <field name="account_bank_number_id"/>
                             <field name="loading_duration"/>

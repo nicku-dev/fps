@@ -9,6 +9,7 @@ class SaleOrderLine(models.Model):
 
     fo_order_id = fields.Many2one(comodel_name='freight.order', string='FO Number')
     qty_delivered = fields.Integer(string='Qty Delivered')
+    region_id = fields.Many2one(comodel_name='freight.port', string='POD')
     pod_id = fields.Many2one(comodel_name='freight.port', string='POD')
     pol_id = fields.Many2one(comodel_name='freight.port', string='POL')
     load_id = fields.Many2one(comodel_name='freight.load', string='Load')

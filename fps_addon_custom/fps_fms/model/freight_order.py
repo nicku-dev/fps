@@ -105,7 +105,9 @@ class FreightOrder(models.Model):
     order_date = fields.Date(string='order_date')
     invoice_count = fields.Integer(compute='compute_count')
     so_count = fields.Integer(compute='compute_count')
+    po_count = fields.Integer(compute='compute_count')
     # order_ids = fields.One2many('freight.order.line', 'order_id')
+
     agent_id = fields.Many2one('res.partner', 'Agent', required=True,
                                help="Details of agent")
     expected_date = fields.Date('Expected Date')
@@ -168,6 +170,9 @@ class FreightOrder(models.Model):
     # line_ids = fields.One2many("freight.order.line", "order_id", string="Order lines", copy=True)
 
     route_id = fields.Many2one(comodel_name='freight.route', string='Rute')
+    
+
+
     
     @api.model
     def create(self, vals):
@@ -281,6 +286,11 @@ class FreightOrder(models.Model):
             if rec.env['sale.order.line'].search([('fo_id', '=', rec.name)]):
                 rec.line_count = rec.env['sale.order.line'].search_count(
                     [('fo_id', 'in', rec.name)])
+            else:
+                rec.line_count = 0
+            if rec.env['purchase.order'].search([('fo_number', '=', rec.name)]):
+                rec.po_count = rec.env['purchase.order'].search_count(
+                    [('po_count', 'in', rec.name)])
             else:
                 rec.line_count = 0
                 

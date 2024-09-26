@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- <odoo>
+    <record id="partner_extended_vendor_type_form_view" model="ir.ui.view">
+        <field name="name">sale.order.type.form.view</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='order_lines']//field[@name='order_line']" position="after">
+              <page name="dokumen_so" string="Dokumen">
+                  <form>
+                    <group name="group_name">
+                      <field name="file_spal" string="File SPAL"/>
+                      <field name="file_po"  string="File PO"/>
+                    </group>
+                  </form>
+              </page>
+            </xpath>
+        </field>
+    </record>
+</odoo> -->
+
+
+
+<odoo>
+    <record id="partner_extended_vendor_type_form_view" model="ir.ui.view">
+        <field name="name">sale.order.type.form.view</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <notebook>
+              <page name="dokumen_so" string="Dokumen">
+                  <form>
+                    <group name="group_name">
+                      <field name="file_spal" string="File SPAL"/>
+                      <field name="file_po"  string="File PO"/>
+                    </group>
+                  </form>
+              </page>
+            </notebook>
+        </field>
+    </record>
+</odoo>

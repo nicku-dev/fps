@@ -127,6 +127,11 @@ class SaleOrder(models.Model):
     # analytic_plan_id = fields.Many2one('account_analytic_plan','id')
     # analytic_plan_id = fields.Many2one('account.analytic.plan', 'name')
     
+    order_date = fields.Datetime(
+        string="Order Date", copy=False,
+        states=LOCKED_FIELD_STATES,
+        tracking=True,
+        help="This is the Ordered date by customer.")
 
     commitment_date = fields.Datetime(
         string="Delivery Date", copy=False,

@@ -14,5 +14,6 @@ class FreightRoutes(models.Model):
     # Relational (for inline view)
     # route_ids = fields.One2many(comodel_name='sale.order', inverse_name='freight_routes_id', string='Freight Route')
     # route_sol_ids = fields.One2many(comodel_name='sale.order.line', inverse_name='order_id', string='Freight Route')
-    route_id = fields.Many2one(comodel_name='freight.order', string='Route')
+    routes_id = fields.Many2one(comodel_name='freight.order', string='Route')
+    route_id = fields.Many2one(comodel_name='freight.order', string='Route1')
     # sol_routes_id = fields.Many2one(comodel_name='sale.order.line', string='Route')
