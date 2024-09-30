@@ -422,8 +422,8 @@ class FreightOrder(models.Model):
                 mail_id.send()
             self.state = 'done'
 
-            for line in rec.order_ids:
-                line.container_id.state = 'available'
+            # for line in rec.order_ids:
+            #     line.container_id.state = 'available'
 
     @api.depends("line_ids")
     def _compute_line_count(self):
