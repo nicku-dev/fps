@@ -106,14 +106,6 @@ class SaleOrder(models.Model):
     
     toleransi_susut = fields.Char(string='Toleransi Susut', default="0,5 %")
     
-    
-    
-    
-    
-
-
-
-    # 
     # freight_routes_id = fields.Many2one("freight.routes", string="Freight Order ID4", required=True)
     # Relational
     # partner_id = fields.Many2one("res.partner", string="Partner", required=True)

@@ -9,7 +9,9 @@
     'maintainer': 'Lentera Kreasi Teknologi',
     'company': 'Fangiono Perkasa Sejati',
     'website': 'https://www.lenterateknologi.com',
-    'depends': ['base', 'product', 'account', 'sale', 'fleet', 'hr', 'sale_blanket_order'],
+    'depends': ['base', 'product', 'account', 'sale', 'fleet', 'hr', 'contacts',
+                # 'auto_analytic_plan',
+                ],
     'images': [
         'static/description/icon.png',
         ],

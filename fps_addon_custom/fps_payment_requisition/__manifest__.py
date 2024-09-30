@@ -21,10 +21,7 @@
                 'account', 
                 'hr',
                 'hr_expense',
-                'sale',
                 'fleet',
-                'fps_fms',
-                'analytic',
                 ],
     'images': [
         'static/description/icon.png',

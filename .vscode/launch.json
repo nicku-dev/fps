@@ -20,7 +20,7 @@
             "args": [
                 "--config=D:\\DEV\\FPS\\fps_dev_24\\other\\odoo_ideapad_lkt.conf",
                 "--dev=xml",
-                "-u fps_base",
+                // "-u fps_base",
 
                 // "--config=C:\\nicku-dev\\fps\\other\\odoo5oca.conf",
                 // "--addons-path=C:\\nfp\\addon__exercise,  C:\\lentera\\odoo\\addons, C:\\lentera\\odoo\\odoo\\addons, C:\\nfp\\docker\\django\\odoo-16-docker-compose\\etc\\addons\\addons-enterprise, C:\\nicku-dev\\fps\\fps_community, C:\\nicku-dev\\fps\\oca_community\\fps_community_purchase, C:\\nicku-dev\\fps\\oca_community\\oca_sale_flow,C:\\nicku-dev\\fps\\fps_addon_custom, C:\\nicku-dev\\fps\\oca_community_selected",

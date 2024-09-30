@@ -21,7 +21,7 @@ class FreightOrder(models.Model):
 
     name = fields.Char('Name', default='New', readonly=True)
     shippment_type = fields.Many2one(comodel_name='freight.order.type', string='Shippment Type')
-    shipper_id = fields.Many2one('res.partner', 'Shipper', required=True,help="Shipper's Details")
+    shipper_id = fields.Many2one('res.partner', 'Shipper', help="Shipper's Details")
     consignee_id = fields.Many2one('res.partner', 'Consignee',help="Details of consignee")
     departure_time = fields.Datetime(string='Departure Time')
     arrival_time = fields.Datetime(string='Arrival Time')
@@ -62,6 +62,7 @@ class FreightOrder(models.Model):
         string="Partner",
         states=READONLY_FIELD_STATES,
     )
+
     # product_id = fields.Many2one(
     #     "product.product",
     #     related="line_ids.product_id",
@@ -81,7 +82,7 @@ class FreightOrder(models.Model):
         string="Analytic Account",
         copy=False,
         check_company=True,
-        states=READONLY_FIELD_STATES,
+        readonly=True,
         domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]",
     )
 
@@ -90,7 +91,7 @@ class FreightOrder(models.Model):
         string="Analytic Plan",
         copy=False,
         check_company=True,
-        states=READONLY_FIELD_STATES,
+        readonly=True,
         domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]",
     )
     payment_term_id = fields.Many2one(
@@ -107,9 +108,13 @@ class FreightOrder(models.Model):
     so_count = fields.Integer(compute='compute_count')
     po_count = fields.Integer(compute='compute_count')
     # order_ids = fields.One2many('freight.order.line', 'order_id')
-
-    agent_id = fields.Many2one('res.partner', 'Agent', required=True,
+    agent_id = fields.Many2one('res.partner', 'Agent Muat', required=True,
                                help="Details of agent")
+    agent_muat_id = fields.Many2one('res.partner', 'Agent Muat', required=True,
+                               help="Details of agent")
+    agent_bongkar_id = fields.Many2one('res.partner', 'Agent Bongkar', required=True,
+                            help="Details of agent")
+
     expected_date = fields.Date('Expected Date')
     # track_ids = fields.One2many('freight.track', 'track_id')
     vehicle_id = fields.Many2one(comodel_name='fleet.vehicle', string='Nama Kapal')
@@ -169,9 +174,16 @@ class FreightOrder(models.Model):
     # line_ids = fields.One2many("sale.order.line", "id", string="Order lines", copy=True)
     # line_ids = fields.One2many("freight.order.line", "order_id", string="Order lines", copy=True)
 
-    route_id = fields.Many2one(comodel_name='freight.route', string='Rute')
-    
+    route_id = fields.Many2one(comodel_name='freight.routes', string='Rute')
+    route_code_id = fields.Char(related='route_id.route_code', string='Rute ID')
+    freight_port_id = fields.Many2one('freight.port', 'POL / Source Location')
+    region_id = fields.Char(related='route_id.region_id', string='Region')
+    source_loc_id = fields.Many2one(related='route_id.source_loc', string='source_loc')
+    destination_loc_id = fields.Many2one(related='route_id.destination_loc', string='destination_loc')
 
+
+    # route_code = fields.Char(string='Kode Rute', required=True)
+    # destination_loc = fields.Char(related='source_loc.destination_loc', string= 'POD / Destination Location')
 
     
     @api.model
@@ -298,38 +310,38 @@ class FreightOrder(models.Model):
         """Submitting order"""
         for rec in self:
             rec.state = 'submit'
-            base_url = self.env['ir.config_parameter'].sudo().get_param(
-                'web.base.url')
-            Urls = urls.url_join(base_url, 'web#id=%(id)s&model=freight.order&view_type=form' % {'id': self.id})
+            # base_url = self.env['ir.config_parameter'].sudo().get_param(
+            #     'web.base.url')
+            # Urls = urls.url_join(base_url, 'web#id=%(id)s&model=freight.order&view_type=form' % {'id': self.id})
 
-            mail_content = _('Hi %s,<br>'
-                             'The Freight Order %s is Submitted'
-                             '<div style = "text-align: center; '
-                             'margin-top: 16px;"><a href = "%s"'
-                             'style = "padding: 5px 10px; font-size: 12px; '
-                             'line-height: 18px; color: #FFFFFF; '
-                             'border-color:#875A7B;text-decoration: none; '
-                             'display: inline-block; margin-bottom: 0px; '
-                             'font-weight: 400;text-align: center; '
-                             'vertical-align: middle; cursor: pointer; '
-                             'white-space: nowrap; background-image: none; '
-                             'background-color: #875A7B; '
-                             'border: 1px solid #875A7B; border-radius:3px;">'
-                             'View %s</a></div>'
-                             ) % (rec.agent_id.name, rec.name, Urls, rec.name)
-            email_to = self.env['res.partner'].search([
-                ('id', 'in', (self.shipper_id.id, self.consignee_id.id,
-                              self.agent_id.id))])
-            for mail in email_to:
-                main_content = {
-                    'subject': _('Freight Order %s is Submitted') % self.name,
-                    'author_id': self.env.user.partner_id.id,
-                    'body_html': mail_content,
-                    'email_to': mail.email
-                }
-                mail_id = self.env['mail.mail'].create(main_content)
-                mail_id.mail_message_id.body = mail_content
-                mail_id.send()
+            # mail_content = _('Hi %s,<br>'
+            #                  'The Freight Order %s is Submitted'
+            #                  '<div style = "text-align: center; '
+            #                  'margin-top: 16px;"><a href = "%s"'
+            #                  'style = "padding: 5px 10px; font-size: 12px; '
+            #                  'line-height: 18px; color: #FFFFFF; '
+            #                  'border-color:#875A7B;text-decoration: none; '
+            #                  'display: inline-block; margin-bottom: 0px; '
+            #                  'font-weight: 400;text-align: center; '
+            #                  'vertical-align: middle; cursor: pointer; '
+            #                  'white-space: nowrap; background-image: none; '
+            #                  'background-color: #875A7B; '
+            #                  'border: 1px solid #875A7B; border-radius:3px;">'
+            #                  'View %s</a></div>'
+            #                  ) % (rec.agent_id.name, rec.name, Urls, rec.name)
+            # email_to = self.env['res.partner'].search([
+            #     ('id', 'in', (self.shipper_id.id, self.consignee_id.id,
+            #                   self.agent_id.id))])
+            # for mail in email_to:
+            #     main_content = {
+            #         'subject': _('Freight Order %s is Submitted') % self.name,
+            #         'author_id': self.env.user.partner_id.id,
+            #         'body_html': mail_content,
+            #         'email_to': mail.email
+            #     }
+            #     mail_id = self.env['mail.mail'].create(main_content)
+            #     mail_id.mail_message_id.body = mail_content
+            #     mail_id.send()
 
     def action_confirm(self):
         """Confirm order"""
