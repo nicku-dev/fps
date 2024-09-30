@@ -288,11 +288,11 @@ class FreightOrder(models.Model):
                     [('fo_id', 'in', rec.name)])
             else:
                 rec.line_count = 0
-            if rec.env['purchase.order'].search([('fo_number', '=', rec.name)]):
-                rec.po_count = rec.env['purchase.order'].search_count(
-                    [('po_count', 'in', rec.name)])
-            else:
-                rec.line_count = 0
+            # if rec.env['purchase.order'].search([('fo_id', '=', rec.name)]):
+            #     rec.po_count = rec.env['purchase.order'].search_count(
+            #         [('po_count', 'in', rec.name)])
+            # else:
+            #     rec.line_count = 0
                 
     def action_submit(self):
         """Submitting order"""

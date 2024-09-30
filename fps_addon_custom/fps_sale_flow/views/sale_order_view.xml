@@ -14,13 +14,13 @@
                 <field name="state" widget="statusbar" statusbar_visible="draft,sale"/>
             </xpath>
 
-            <!-- <xpath expr="//field[@name='show_update_pricelist']" position="before">
+            <xpath expr="//field[@name='show_update_pricelist']" position="before">
                 <label for="commitment_date" string="Delivery Date"/>
                 <div name="commitment_date_div" class="o_row">
                     <field name="commitment_date" required="1"/>
                     <span name="expected_date_span" class="text-muted">Expected: <field name="expected_date" class="oe_inline" widget="date"/></span>
                 </div>
-            </xpath> -->
+            </xpath>
 
             <!-- <xpath expr="//page[@name='other_information']//group[2]//group[@name='sale_shipping']//label[@for='commitment_date']" position="replace"/> -->
             <xpath expr="//page[@name='other_information']//group[2]//group[@name='sale_shipping']//div" position="replace"/>
@@ -34,7 +34,7 @@
             <xpath expr="//field[@name='partner_id']" position="before">
                 <!-- <field name="sales_type" attrs="{'readonly': [('state', '!=', 'draft')]}"/> -->
                 <field name="spal_format" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
-                <field name="shippment_type_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                <!-- <field name="shippment_type_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/> -->
                 <field name="fo_number" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
             </xpath>
 
@@ -43,6 +43,8 @@
                 <field name="consignee_id"/>
                 <!-- <field name="partner_shipping_id"/> -->
             </xpath>
+            
+
 
             <xpath expr="//field[@name='date_order']" position="after">
                 <field name="order_date"/>
@@ -66,10 +68,9 @@
                 <attribute name="invisible">True</attribute>
             </xpath>
 
-            <xpath expr="//field[@name='validity_date']" position="attributes"> 
+            <xpath expr="//page[@name='optional_products']" position="attributes">
                 <attribute name="invisible">True</attribute>
             </xpath>
-            
             <xpath expr="//page[@name='order_lines']//field[@name='order_line']//tree//field[@name='qty_invoiced']" position="after">
                 <field name="load_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                 <field name="qty_delivered" attrs="{'invisible': [('parent.state', 'not in', ['sale', 'done'])]}" optional="hide"/>

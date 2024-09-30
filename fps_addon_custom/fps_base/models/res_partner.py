@@ -13,7 +13,7 @@ class ResPartner(models.Model):
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
-    file_spal = fields.Binary(string='File SPAL')
+    file_si = fields.Binary(string='File Shipping Instruction')
     file_po = fields.Binary(string='File SIUPAL')
 
 

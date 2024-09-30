@@ -31,7 +31,7 @@
               <page name="dokumen_so" string="Dokumen">
                   <form>
                     <group name="group_name">
-                      <field name="file_spal" string="File SPAL"/>
+                      <field name="file_si" string="File Shipping Instruction"/>
                       <field name="file_po"  string="File PO"/>
                     </group>
                   </form>
